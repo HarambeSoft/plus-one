@@ -1,4 +1,4 @@
-# plus-one
+# +1
 
 +1 (Plus One): The project of an application for location-based polls by Harambe Software.
 
