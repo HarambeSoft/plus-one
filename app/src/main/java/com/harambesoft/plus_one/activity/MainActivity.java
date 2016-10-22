@@ -10,7 +10,7 @@ import com.harambesoft.plus_one.R;
 import com.harambesoft.plus_one.adapter.ViewPagerAdapter;
 import com.harambesoft.plus_one.fragment.CategoryListFragment;
 import com.harambesoft.plus_one.fragment.MapFragment;
-import com.harambesoft.plus_one.fragment.SurveyListFragment;
+import com.harambesoft.plus_one.fragment.PollListFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(CategoryListFragment.newInstance(), getString(R.string.category));
-        adapter.addFragment(SurveyListFragment.newInstance(), getString(R.string.survey));
+        adapter.addFragment(PollListFragment.newInstance(), getString(R.string.poll));
         adapter.addFragment(MapFragment.newInstance(), getString(R.string.map));
 
         viewPager.setAdapter(adapter);
