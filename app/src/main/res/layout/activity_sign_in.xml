@@ -73,7 +73,7 @@
             android:textColor="@color/white" />
 
         <Button
-            android:text="CALISIN LAN"
+            android:text="SKIP BUTTON FOR TEAM"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/buttonCalisin"

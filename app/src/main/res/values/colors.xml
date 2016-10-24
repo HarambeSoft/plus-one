@@ -16,4 +16,7 @@
     <color name="buttonShadow">#2c537b</color>
     <color name="googleRed">#dd4b39</color>
     <color name="buttonCalisin">#1eff00</color>
+    <color name="tableLayout1">#f99068</color>
+    <color name="colorTabs">#ffdc46</color>
+    <color name="signInOrange">#fbaa5c</color>
 </resources>
