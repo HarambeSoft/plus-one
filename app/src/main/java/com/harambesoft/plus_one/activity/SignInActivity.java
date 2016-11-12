@@ -30,7 +30,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void openMainActivity() {
-        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+        Intent intent = new Intent(SignInActivity.this, NavigationActivity.class);
         startActivity(intent);
     }
 }
