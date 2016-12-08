@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="7fd9a35d01bf3fd188254c3823c01ea786377f8b">
+        <dex dex="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_eabe963073e696ab75f4934baaf3e4bc6167f2c4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="2131baf23cba15f5227918464920b79b131f970a">
+        <dex dex="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_eb8813f1d08de948b674146ff53cd2c6230e87f6/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
+        <dex dex="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-ui-25.0.1_1820d7c6216f69cf22c6d634d34311ead747f8e2/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
+        <dex dex="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_b76c6bd1ad18ceef2e6565ea3495c55628167e78/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="26c6eef571592c91f29e56fda0bac73321de0c92">
+        <dex dex="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-fragment-25.0.1_082ac89705e9635cf270c4c5a6aef19039d2d848/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-25.0.1_71a60aab104f1714b9c3a6b7f1046acb4fbbaed4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="6a1479afe9f1b3645e1cd9a87318976893472818">
+        <dex dex="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-media-compat-25.0.1_3db77fcdbcc3c0b9af55c1c671174d2a54eae945/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
+        <dex dex="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_17be1b7ca150c0f49fda2aa69cc0c8c9b7766c22/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="f83b00041ecfba705603fec40363416c7de69719">
+        <dex dex="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_4a0988bbea5c46fb591572999158fe41065e6186/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/asus/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/25.0.1/support-annotations-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="a09194311f8f89c3e6db09d79f50897a889d615e">
+        <dex dex="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-25.0.1_168a1d83f74f88a30fd8099730020b3462946945/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/asus/Desktop/Empty/HarambeNavigation/app/libs/ketai.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c3546969147f27e97552bbc0585410f3a8036525">
+        <dex dex="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/2/ketai_6a0d51723a5c5f82a0db0b9f291808fb1b0fcf0a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="297d4bcf6ed4e747a1bf7d0d094a2d911a8d3a8e">
+        <dex dex="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-25.0.1_904d28663582f2b973ae594fcb42cb9199c16e21/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/exploded-aar/com.android.support/design/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="3b236883e0df6002cabb01ce57d00a5b1e5de610">
+        <dex dex="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-25.0.1_34b67a3deff01e6e1825a55d6ef5c6218679b0fc/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
+        <dex dex="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-utils-25.0.1_1745f7955e28e21c00772af85999b92b1e608f75/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c0bd6ffb002a85b5e7cad29f8558d1cc59539679">
+        <dex dex="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_bd179e37a217a1e565f12823e0a5ddf76aeb2fc7/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
+        <dex dex="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-25.0.1_8bbf060066a3c9c638bc94df31d3ff817aecbdf5/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
+        <dex dex="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-compat-25.0.1_6a4ed8ba47c508e4d0b8c4a63567eb1911cfd224/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c5b7145fb34779b6639147b8f2f8dd77c0db771b">
+        <dex dex="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_c82da007aed831f7d6d3e22143fc3f54fb88f826/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/asus/Desktop/Empty/HarambeNavigation/app/libs/android-core.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="66e5276749876594ca8272cdc96a74ac875e2c4e">
+        <dex dex="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/2/android-core_460622b2c4fbfe3b7a6d02dc4f930043b4da6feb/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
+        <dex dex="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-25.0.1_f5f940c94873d4fca70c1282b2e22ebf3f5e4a88/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/exploded-aar/com.android.support/transition/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c1b6ab157e8e12cb08b9ee82bb5e3c5d22632eb3">
+        <dex dex="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-transition-25.0.1_93cb99b1bcd2497b337962b08cd94b681d4bf083/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="f7ac4b327fdb9e2ee386f5adc46164927658de4b">
+        <dex dex="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-25.0.1_0149fba0e8836fb48ed0122ef7559bbd4f276c10/classes.dex" />
+    </item>
+
+</items>

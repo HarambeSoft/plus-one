@@ -1,0 +1,7 @@
+#Thu Dec 08 22:09:03 EET 2016
+base.0=/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_eabe963073e696ab75f4934baaf3e4bc6167f2c4
+renamed.1=classes2.dex
+renamed.0=classes.dex
+file.1=/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_eb8813f1d08de948b674146ff53cd2c6230e87f6/classes.dex
+base.1=/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_eb8813f1d08de948b674146ff53cd2c6230e87f6
+file.0=/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_eabe963073e696ab75f4934baaf3e4bc6167f2c4/classes.dex
