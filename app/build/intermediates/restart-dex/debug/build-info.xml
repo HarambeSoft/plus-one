@@ -1,44 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <instant-run
-    abi="x86_64,x86"
-    api-level="24"
-    density="hdpi"
+    abi="x86"
+    api-level="23"
+    density="420dpi"
     format="8"
     plugin-version="2.2.2"
-    timestamp="16730226441776"
-    token="9002698016610613297"
-    verifier="COLD_SWAP_REQUESTED" >
+    timestamp="2573089684853"
+    token="1006384294674226711"
+    verifier="FULL_BUILD_REQUESTED" >
 
     <task
         name="javac"
-        duration="82" />
+        duration="1672" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="18" />
+        duration="97" />
     <task
         name="verifier"
-        duration="0" />
+        duration="3" />
 
     <artifact
-        location="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_2/classes.dex"
-        type="DEX" />
+        location="/home/isa/public_html/plus-one/plus-one/app/build/outputs/apk/app-debug.apk"
+        type="MAIN" />
 
     <build
-        timestamp="16357732396065"
+        timestamp="2573089684853"
         verifier="FULL_BUILD_REQUESTED" >
         <artifact
-            location="/home/asus/Desktop/Empty/HarambeNavigation/app/build/outputs/apk/app-debug.apk"
+            location="/home/isa/public_html/plus-one/plus-one/app/build/outputs/apk/app-debug.apk"
             type="MAIN" />
-    </build>
-    <build
-        timestamp="16730226441776"
-        verifier="COLD_SWAP_REQUESTED" >
-        <artifact
-            location="/home/asus/Desktop/Empty/HarambeNavigation/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_2/classes.dex"
-            type="DEX" />
     </build>
 
 </instant-run>
