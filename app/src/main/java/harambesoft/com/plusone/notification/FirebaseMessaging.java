@@ -21,12 +21,10 @@ import harambesoft.com.plusone.R;
 
 public class FirebaseMessaging extends FirebaseMessagingService {
 
-    private static final String TAG = "MyFirebaseMsgService";
+    private static final String TAG = "FirebaseMessaging";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        //Displaying data in log
-        //It is optional
         Log.d(TAG, "From: " + remoteMessage.getFrom());
         Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
 
@@ -34,8 +32,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
         sendNotification(remoteMessage.getNotification().getBody());
     }
 
-    //This method is only generating push notification
-    //It is same as we did in earlier posts
+    // This method is only generating push notification
     private void sendNotification(String messageBody) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

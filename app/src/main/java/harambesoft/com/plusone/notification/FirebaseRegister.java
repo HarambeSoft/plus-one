@@ -11,7 +11,7 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 
 public class FirebaseRegister extends FirebaseInstanceIdService {
 
-    private static final String TAG = "MyFirebaseIIDService";
+    private static final String TAG = "FirebaseRegister";
 
     @Override
     public void onTokenRefresh() {

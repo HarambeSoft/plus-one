@@ -3,6 +3,7 @@ package harambesoft.com.plusone;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +17,8 @@ import android.view.MenuItem;
 import processing.core.PApplet;
 import processing.android.PFragment;
 import android.app.FragmentManager;
+
+import com.google.firebase.iid.FirebaseInstanceId;
 
 
 public class MainActivity extends AppCompatActivity
@@ -45,6 +48,10 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        Log.d("AHAAAAAAAAAAAAAAAAAAAA", "Refreshed token: " + refreshedToken);
     }
 
     @Override
