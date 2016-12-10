@@ -30,6 +30,7 @@ dependencies {
     compile files('libs/android-core.jar')
     compile files('libs/ketai.jar')
 
-    compile "com.google.android.gms:play-services:8.3.0"
-    apply plugin: 'com.google.gms.google-services'
+    compile 'com.google.firebase:firebase-messaging:9.6.0'
 }
+
+apply plugin: 'com.google.gms.google-services'
