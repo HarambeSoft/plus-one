@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
     defaultConfig {
-        applicationId "harambesoft.com.harambenavigation"
+        applicationId "harambesoft.com.plusone"
         minSdkVersion 17
         targetSdkVersion 25
         versionCode 1
@@ -29,4 +29,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile files('libs/android-core.jar')
     compile files('libs/ketai.jar')
+
+    compile "com.google.android.gms:play-services:8.3.0"
+    apply plugin: 'com.google.gms.google-services'
 }

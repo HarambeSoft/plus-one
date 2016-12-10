@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "323076104897",
+    "project_id": "plus-one-59ee5"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323076104897:android:b17a1e495e106851",
+        "android_client_info": {
+          "package_name": "harambesoft.com.plusone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiQ6SALJXh4lXaignkMaXqPwMyYznbmrE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
