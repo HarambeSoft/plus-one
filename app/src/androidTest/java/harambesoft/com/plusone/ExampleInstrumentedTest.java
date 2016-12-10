@@ -1,4 +1,4 @@
-package harambesoft.com.harambenavigation;
+package harambesoft.com.plusone;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

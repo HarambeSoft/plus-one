@@ -1,4 +1,4 @@
-package harambesoft.com.harambenavigation;
+package harambesoft.com.plusone;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,13 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+
 import processing.core.PApplet;
 import processing.android.PFragment;
 import android.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 
 public class MainActivity extends AppCompatActivity

@@ -1,15 +1,7 @@
-package harambesoft.com.harambenavigation;
+package harambesoft.com.plusone;
 
 import processing.core.*;
-import processing.data.*;
-import processing.event.*;
-import processing.opengl.*;
 
-import processing.core.*;
-import processing.data.*;
-import processing.event.*;
-import processing.opengl.*;
-import android.view.MotionEvent;
 import java.util.ArrayList;
 
 public class Sketch extends PApplet {
