@@ -18,6 +18,8 @@ import android.app.FragmentManager;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import harambesoft.com.plusone.fragments.SignInFragment;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -89,17 +91,22 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
 
         //TODO: Add maps view
-        /* FragmentManager fragmentManager = getFragmentManager();
-        PApplet sketch = new Sketch();
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        /* PApplet sketch = new Sketch();
         PFragment fragment = new PFragment();
         fragment.setSketch(sketch); */
-        int id = item.getItemId();
 
+        SignInFragment fragmentSignIn = new SignInFragment();
+
+        int id = item.getItemId();
         if (id == R.id.nav_camera) {
             /*fragmentManager.beginTransaction()
                     .replace(R.id.container, fragment)
                     .commit();*/
         } else if (id == R.id.nav_gallery) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, fragmentSignIn)
+                    .commit();
 
         } else if (id == R.id.nav_slideshow) {
 
