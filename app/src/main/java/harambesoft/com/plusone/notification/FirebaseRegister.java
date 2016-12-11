@@ -15,13 +15,13 @@ public class FirebaseRegister extends FirebaseInstanceIdService {
 
     @Override
     public void onTokenRefresh() {
-
         //Getting registration token
-        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        String token = FirebaseInstanceId.getInstance().getToken();
 
         //Displaying token on logcat
-        Log.d(TAG, "Refreshed token: " + refreshedToken);
+        Log.d(TAG, "FCM Refreshed token: " + token);
 
+        //sendRegistrationToServer(token);
     }
 
     private void sendRegistrationToServer(String token) {

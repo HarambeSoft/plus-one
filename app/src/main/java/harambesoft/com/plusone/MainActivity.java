@@ -14,11 +14,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import processing.core.PApplet;
-import processing.android.PFragment;
 import android.app.FragmentManager;
 
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 
 public class MainActivity extends AppCompatActivity
@@ -49,9 +47,8 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Log.d("AHAAAAAAAAAAAAAAAAAAAA", "Refreshed token: " + refreshedToken);
+        //TODO: get current user and subscribe to user_USERID
+        // FirebaseMessaging.getInstance().subscribeToTopic("user_USERID");
     }
 
     @Override
@@ -90,17 +87,18 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        FragmentManager fragmentManager = getFragmentManager();
+
+        //TODO: Add maps view
+        /* FragmentManager fragmentManager = getFragmentManager();
         PApplet sketch = new Sketch();
         PFragment fragment = new PFragment();
-        fragment.setSketch(sketch);
+        fragment.setSketch(sketch); */
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            
-            fragmentManager.beginTransaction()
+            /*fragmentManager.beginTransaction()
                     .replace(R.id.container, fragment)
-                    .commit();
+                    .commit();*/
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {

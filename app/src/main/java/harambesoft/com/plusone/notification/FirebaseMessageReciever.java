@@ -19,21 +19,33 @@ import harambesoft.com.plusone.R;
  * Created by isa on 10.12.2016.
  */
 
-public class FirebaseMessaging extends FirebaseMessagingService {
+public class FirebaseMessageReciever extends FirebaseMessagingService {
 
-    private static final String TAG = "FirebaseMessaging";
+    private static final String TAG = "FirebaseMessageReciever";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
-        Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
+        // Check if message contains a data payload.
+        if (remoteMessage.getData().size() > 0) {
+            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
 
-        //Calling method to generate notification
-        sendNotification(remoteMessage.getNotification().getBody());
+            //TODO: Process extra data here.
+            // remoteMessage.getData()
+        }
+
+
+        String title = "PlusOne Notification";
+        String body = "No info about this notification.";
+        if (remoteMessage.getNotification() != null) {
+            title = remoteMessage.getNotification().getTitle();
+            body = remoteMessage.getNotification().getBody();
+        }
+
+        sendNotification(title, body);
     }
 
     // This method is only generating push notification
-    private void sendNotification(String messageBody) {
+    private void sendNotification(String title, String body) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
@@ -41,9 +53,9 @@ public class FirebaseMessaging extends FirebaseMessagingService {
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Firebase Push Notification")
-                .setContentText(messageBody)
+                .setSmallIcon(R.mipmap.ic_launcher) //FIXME: find icon for notificaton
+                .setContentTitle(title)
+                .setContentText(body)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
