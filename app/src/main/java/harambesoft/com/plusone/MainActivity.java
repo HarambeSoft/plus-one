@@ -19,6 +19,7 @@ import android.app.FragmentManager;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import harambesoft.com.plusone.fragments.SignInFragment;
+import harambesoft.com.plusone.fragments.SignUpFragment;
 
 
 public class MainActivity extends AppCompatActivity
@@ -96,7 +97,10 @@ public class MainActivity extends AppCompatActivity
         PFragment fragment = new PFragment();
         fragment.setSketch(sketch); */
 
+        //TODO: Fix fragments
+        // Maybe create just one instance?
         SignInFragment fragmentSignIn = new SignInFragment();
+        SignUpFragment fragmentSignUp = new SignUpFragment();
 
         int id = item.getItemId();
         if (id == R.id.nav_camera) {
@@ -107,9 +111,10 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.container, fragmentSignIn)
                     .commit();
-
         } else if (id == R.id.nav_slideshow) {
-
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, fragmentSignUp)
+                    .commit();
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
