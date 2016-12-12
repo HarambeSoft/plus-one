@@ -42,14 +42,19 @@ public class SignInFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 try {
-                    boolean result = PlusOneAPI.login(textViewUserName.getText().toString(), textViewPassword.getText().toString());
-                    if (result) {
-                        // To set related things about user, and redirect
-                        ((MainActivity) getActivity()).checkUserLogin();
-                    } else {
-                        //TODO: show error message about why that fucker is fucking retarded enough to write wrong shits to login page
-                    }
-                } catch (IOException | JSONException e) {
+                    PlusOneAPI.login(textViewUserName.getText().toString(), textViewPassword.getText().toString(), new PlusOneAPI.LoginFinishedHandler() {
+                        @Override
+                        public void onLoginFinished(boolean success) {
+                            if (success) {
+                                // To set related things about user, and redirect
+                                ((MainActivity) getActivity()).checkUserLogin();
+                            } else {
+                                //TODO: show error message about why that fucker is fucking retarded enough to write wrong shits to login page
+                            }
+                        }
+                    });
+
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }

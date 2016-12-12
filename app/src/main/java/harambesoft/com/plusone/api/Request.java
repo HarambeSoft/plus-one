@@ -1,5 +1,6 @@
 package harambesoft.com.plusone.api;
 
+import android.os.AsyncTask;
 import android.os.StrictMode;
 
 import java.io.BufferedReader;
@@ -23,6 +24,75 @@ import javax.net.ssl.HttpsURLConnection;
 class POSTData extends HashMap<String, String> {}
 
 public class Request {
+    public interface RequestFinishedHandler {
+        public void onRequestFinished(String result);
+    }
+
+    private static class PostRequestParams {
+        String url;
+        POSTData postData;
+        RequestFinishedHandler handler;
+
+        PostRequestParams(String url, POSTData postData, RequestFinishedHandler handler) {
+            this.url = url;
+            this.postData = postData;
+            this.handler = handler;
+        }
+    }
+
+    private static class MakePostRequest extends AsyncTask<PostRequestParams, Integer, String> {
+        RequestFinishedHandler handler;
+
+        protected String doInBackground(PostRequestParams... params) {
+            this.handler = params[0].handler;
+            String url = params[0].url;
+            POSTData postData = params[0].postData;
+
+            StringBuilder response = new StringBuilder();
+
+
+            try {
+                HttpURLConnection con = (HttpURLConnection) connection(url, "POST");
+                String urlParameters = getPostDataString(postData);
+
+                // Send post request
+                con.setDoOutput(true);
+                DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+                wr.writeBytes(urlParameters);
+                wr.flush();
+                wr.close();
+
+                /*int responseCode = con.getResponseCode();
+                System.out.println("\nSending 'POST' request to URL : " + url);
+                System.out.println("Post parameters : " + urlParameters);
+                System.out.println("Response Code : " + responseCode);*/
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String inputLine;
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return response.toString();
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+            //setProgressPercent(progress[0]);
+        }
+
+        protected void onPostExecute(String result) {
+            handler.onRequestFinished(result);
+        }
+    }
+
+
+
     public static String get(String url) throws IOException {
         HttpURLConnection con = (HttpURLConnection) connection(url, "GET");
 
@@ -44,40 +114,12 @@ public class Request {
         return response.toString();
     }
 
-    public static String post(String url, HashMap<String, String> postData) throws IOException {
-        //FIXME: move to async thread, this is really bad
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
-        HttpURLConnection con = (HttpURLConnection) connection(url, "POST");
-        String urlParameters = getPostDataString(postData);
-
-        // Send post request
-        con.setDoOutput(true);
-        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-        wr.writeBytes(urlParameters);
-        wr.flush();
-        wr.close();
-
-        /*int responseCode = con.getResponseCode();
-        System.out.println("\nSending 'POST' request to URL : " + url);
-        System.out.println("Post parameters : " + urlParameters);
-        System.out.println("Response Code : " + responseCode);*/
-
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuilder response = new StringBuilder();
-
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
-        }
-        in.close();
-
-        return response.toString();
+    public static void post(String url, POSTData postData, RequestFinishedHandler handler) throws IOException {
+        new MakePostRequest().execute(new PostRequestParams(url, postData, handler));
     }
 
     // http://stackoverflow.com/a/29561084
-    private static String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
+    private static String getPostDataString(POSTData params) throws UnsupportedEncodingException {
         StringBuilder result = new StringBuilder();
         boolean first = true;
         for (Map.Entry<String, String> entry : params.entrySet()) {
