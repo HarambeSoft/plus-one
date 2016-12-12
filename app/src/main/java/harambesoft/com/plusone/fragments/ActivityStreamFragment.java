@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import harambesoft.com.plusone.MainActivity;
 import harambesoft.com.plusone.PlusOne;
 import harambesoft.com.plusone.R;
 
@@ -30,7 +31,10 @@ public class ActivityStreamFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         final TextView textViewWelcome = (TextView) view.findViewById(R.id.textViewWelcome);
-        String userName = PlusOne.settings().getString("name", "Not logged in.");
+        String userName = PlusOne.settings().getString("name", "");
+        if (userName.isEmpty())
+            ((MainActivity)getActivity()).checkUserLogin();
+        
         textViewWelcome.setText("Welcome " + userName + "!");
     }
 
