@@ -14,10 +14,10 @@
         android:background="@drawable/textview_border"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Username"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:layout_marginTop="100dp" />
+        android:layout_marginTop="100dp"
+        android:hint="Username" />
 
     <EditText
         android:id="@+id/textviewPasswordSignIn"
@@ -29,9 +29,9 @@
         android:background="@drawable/textview_border"
         android:ems="10"
         android:inputType="textPassword"
-        android:text="Password"
         android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp" />
+        android:layout_marginRight="30dp"
+        android:hint="Password" />
 
     <Button
         android:id="@+id/buttonSignIn"
