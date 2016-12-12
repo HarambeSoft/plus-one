@@ -45,9 +45,10 @@ public class Request {
     }
 
     public static String post(String url, HashMap<String, String> postData) throws IOException {
+        //FIXME: move to async thread, this is really bad
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
         StrictMode.setThreadPolicy(policy);
+
         HttpURLConnection con = (HttpURLConnection) connection(url, "POST");
         String urlParameters = getPostDataString(postData);
 
@@ -63,8 +64,7 @@ public class Request {
         System.out.println("Post parameters : " + urlParameters);
         System.out.println("Response Code : " + responseCode);*/
 
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String inputLine;
         StringBuilder response = new StringBuilder();
 
@@ -99,8 +99,8 @@ public class Request {
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
         con.setRequestMethod(method);
-        //con.setRequestProperty("Content-Type", "te");
-        //con.setRequestProperty("Authorization", "key="+APIKEY);
+        //con.setRequestProperty("Content-Type", "");
+        //con.setRequestProperty("Authorization", "");
 
         return con;
     }

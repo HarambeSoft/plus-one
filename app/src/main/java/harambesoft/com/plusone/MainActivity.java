@@ -1,9 +1,11 @@
 package harambesoft.com.plusone;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,10 +16,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import android.app.FragmentManager;
+import android.support.v4.app.FragmentManager;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import harambesoft.com.plusone.fragments.ActivityStreamFragment;
 import harambesoft.com.plusone.fragments.SignInFragment;
 import harambesoft.com.plusone.fragments.SignUpFragment;
 
@@ -25,13 +30,44 @@ import harambesoft.com.plusone.fragments.SignUpFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static Context appContext;
+
+    private NavigationView navigationView = null;
+    private TextView textViewUserNameNavHeader = null;
+    private TextView textViewEmailNavHeader = null;
+
+    public static Context getAppContext() {
+        return appContext;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        appContext = this.getApplicationContext();
+
         setContentView(R.layout.activity_main);
+
+        loadDrawer();
+        loadActionButton();
+
+        assignWidgets();
+        checkUserLogin();
+    }
+
+    private void loadDrawer() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void loadActionButton() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,18 +76,47 @@ public class MainActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
+    }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+    private void assignWidgets() {
+        // WORKAROUND: Need to inflate navigation header programmatically, otherwise we get a nullpointer
+        // This does not work:
+        // app:headerLayout="@layout/nav_header_main"
+        // in activity_main -> android.support.design.widget.NavigationView
+        View header = LayoutInflater.from(this).inflate(R.layout.nav_header_main, null);
+        navigationView.addHeaderView(header);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        textViewEmailNavHeader = (TextView) header.findViewById(R.id.textViewEmailNavHeader);
+        textViewUserNameNavHeader = (TextView) header.findViewById(R.id.textViewUsernameNavHeader);
+    }
 
-        //TODO: get current user and subscribe to user_USERID
-        // FirebaseMessaging.getInstance().subscribeToTopic("user_USERID");
+    public boolean checkUserLogin() {
+        // Check if user logged in
+        String userName = PlusOne.settings().getString("name", "");
+        String email = PlusOne.settings().getString("email", "");
+
+        if (!userName.isEmpty()) {
+            // Subscribe to user notification channel
+            FirebaseMessaging.getInstance().subscribeToTopic("user_" + userName);
+            Log.d("MainActivity", "User is logged in.");
+            Log.d("MainActivity", "Subbed to notifications of " + userName);
+
+            textViewUserNameNavHeader.setText(userName);
+            textViewEmailNavHeader.setText(email);
+
+            // User is logged in, redirect to ActivityStream
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, new ActivityStreamFragment())
+                    .commit();
+
+            return true;
+        } else {
+            // Redirect to login screen
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, new SignInFragment())
+                    .commit();
+            return false;
+        }
     }
 
     @Override
@@ -92,13 +157,12 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
 
         //TODO: Add maps view
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         /* PApplet sketch = new Sketch();
         PFragment fragment = new PFragment();
         fragment.setSketch(sketch); */
 
         //TODO: Fix fragments
-        // Maybe create just one instance?
         SignInFragment fragmentSignIn = new SignInFragment();
         SignUpFragment fragmentSignUp = new SignUpFragment();
 
@@ -116,7 +180,9 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.container, fragmentSignUp)
                     .commit();
         } else if (id == R.id.nav_manage) {
-
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, new ActivityStreamFragment())
+                    .commit();
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

@@ -1,11 +1,15 @@
 package harambesoft.com.plusone.api;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+
+import harambesoft.com.plusone.MainActivity;
 
 /**
  * Created by isa on 11.12.2016.
@@ -20,13 +24,39 @@ public class PlusOneAPI {
         return Request.post(url, postData);
     }
 
-    public static boolean signUp(String userName, String email, String password) throws IOException {
+    public static boolean login(String name, String password) throws IOException, JSONException {
         POSTData postData = new POSTData();
-        postData.put("name", userName);
+        postData.put("name", name);
+        postData.put("password", password);
+
+        String result = PlusOneAPI.sendPOSTRequest("token", new String[] {}, postData);
+        JSONObject resultJson = new JSONObject(result);
+        JSONObject userJson = resultJson.getJSONObject("user");
+
+        boolean error = resultJson.getBoolean("error");
+        if (!error) {
+            // Add token to SharedPreferences for later use
+            SharedPreferences settings = PreferenceManager
+                    .getDefaultSharedPreferences(MainActivity.getAppContext());
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString("api_token", resultJson.getString("api_token"));
+            editor.putString("name", name);
+            editor.putString("email", userJson.getString("email"));
+            editor.putString("id", userJson.getString("id"));
+            editor.apply();
+            return true;
+        }
+
+        return false;
+    }
+
+    public static boolean signUp(String name, String email, String password) throws IOException {
+        POSTData postData = new POSTData();
+        postData.put("name", name);
         postData.put("email", email);
         postData.put("password", password);
 
-        Log.d("USER REGISTER:", PlusOneAPI.sendPOSTRequest("user", new String[] {}, postData));
+        String result = PlusOneAPI.sendPOSTRequest("user", new String[] {}, postData);
         return true;
     }
 
