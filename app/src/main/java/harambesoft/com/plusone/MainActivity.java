@@ -22,6 +22,9 @@ import android.widget.TextView;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.io.IOException;
+
+import harambesoft.com.plusone.api.PlusOneAPI;
 import harambesoft.com.plusone.fragments.ActivityStreamFragment;
 import harambesoft.com.plusone.fragments.SignInFragment;
 import harambesoft.com.plusone.fragments.SignUpFragment;
@@ -52,6 +55,12 @@ public class MainActivity extends AppCompatActivity
 
         assignWidgets();
         checkUserLogin();
+
+        try {
+            PlusOneAPI.user();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadDrawer() {

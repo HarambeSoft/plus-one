@@ -1,6 +1,6 @@
 package harambesoft.com.plusone.api;
 
-import android.os.StrictMode;
+import android.os.AsyncTask;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -8,13 +8,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.net.ssl.HttpsURLConnection;
+import harambesoft.com.plusone.PlusOne;
 
 /**
  * Created by isa on 11.12.2016.
@@ -23,61 +22,132 @@ import javax.net.ssl.HttpsURLConnection;
 class POSTData extends HashMap<String, String> {}
 
 public class Request {
-    public static String get(String url) throws IOException {
-        HttpURLConnection con = (HttpURLConnection) connection(url, "GET");
-
-        /*int responseCode = con.getResponseCode();
-        System.out.println("\nSending 'GET' request to URL : " + url);
-        System.out.println("Response Code : " + responseCode);*/
-
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuilder response = new StringBuilder();
-
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
-        }
-        in.close();
-
-
-        return response.toString();
+    public interface RequestFinishedHandler {
+        public void onRequestFinished(String result);
     }
 
-    public static String post(String url, HashMap<String, String> postData) throws IOException {
-        //FIXME: move to async thread, this is really bad
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+    private static class RequestParams {
+        String url;
+        POSTData postData;
+        RequestFinishedHandler handler;
 
-        HttpURLConnection con = (HttpURLConnection) connection(url, "POST");
-        String urlParameters = getPostDataString(postData);
-
-        // Send post request
-        con.setDoOutput(true);
-        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-        wr.writeBytes(urlParameters);
-        wr.flush();
-        wr.close();
-
-        /*int responseCode = con.getResponseCode();
-        System.out.println("\nSending 'POST' request to URL : " + url);
-        System.out.println("Post parameters : " + urlParameters);
-        System.out.println("Response Code : " + responseCode);*/
-
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuilder response = new StringBuilder();
-
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
+        RequestParams(String url, POSTData postData, RequestFinishedHandler handler) {
+            this.url = url;
+            this.postData = postData;
+            this.handler = handler;
         }
-        in.close();
+    }
 
-        return response.toString();
+
+    private static class MakePostRequest extends AsyncTask<RequestParams, Integer, String> {
+        RequestFinishedHandler handler;
+
+        protected String doInBackground(RequestParams... params) {
+            this.handler = params[0].handler;
+            String url = params[0].url + "?api_token=" + PlusOne.settings().getString("api_token", ""); //FIXME
+            POSTData postData = params[0].postData;
+
+            StringBuilder response = new StringBuilder();
+
+
+            try {
+                HttpURLConnection con = (HttpURLConnection) connection(url, "POST");
+                //FIXME: fix api token
+                //con.setRequestProperty("Authorization",  "Bearer " + PlusOne.settings().getString("api_token", ""));
+                String urlParameters = getPostDataString(postData);
+
+                // Send post request
+                con.setDoOutput(true);
+                DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+                wr.writeBytes(urlParameters);
+                wr.flush();
+                wr.close();
+
+                /*int responseCode = con.getResponseCode();
+                System.out.println("\nSending 'POST' request to URL : " + url);
+                System.out.println("Post parameters : " + urlParameters);
+                System.out.println("Response Code : " + responseCode);*/
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String inputLine;
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return response.toString();
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+            //setProgressPercent(progress[0]);
+        }
+
+        protected void onPostExecute(String result) {
+            handler.onRequestFinished(result);
+        }
+    }
+
+    private static class MakeGetRequest extends AsyncTask<RequestParams, Integer, String> {
+        RequestFinishedHandler handler;
+
+        protected String doInBackground(RequestParams... params) {
+            String url = params[0].url + "?api_token=" + PlusOne.settings().getString("api_token", ""); //FIXME
+            this.handler = params[0].handler;
+
+            StringBuilder response = new StringBuilder();
+
+            try {
+                HttpURLConnection con = (HttpURLConnection) connection(url, "GET");
+                //FIXME:
+                //con.setRequestProperty("Authorization",  "Bearer" + PlusOne.settings().getString("api_token", ""));
+                /*int responseCode = con.getResponseCode();
+                System.out.println("\nSending 'GET' request to URL : " + url);
+                System.out.println("Response Code : " + responseCode);*/
+
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(con.getInputStream()));
+                String inputLine;
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+
+                return response.toString();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return response.toString();
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+            //setProgressPercent(progress[0]);
+        }
+
+        protected void onPostExecute(String result) {
+            handler.onRequestFinished(result);
+        }
+    }
+
+
+    public static void get(String url, RequestFinishedHandler handler) throws IOException {
+        new MakeGetRequest().execute(new RequestParams(url, new POSTData(), handler)); //FIXME: get rid of postdata
+    }
+
+    public static void post(String url, POSTData postData, RequestFinishedHandler handler) throws IOException {
+        new MakePostRequest().execute(new RequestParams(url, postData, handler));
     }
 
     // http://stackoverflow.com/a/29561084
-    private static String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
+    private static String getPostDataString(POSTData params) throws UnsupportedEncodingException {
         StringBuilder result = new StringBuilder();
         boolean first = true;
         for (Map.Entry<String, String> entry : params.entrySet()) {
