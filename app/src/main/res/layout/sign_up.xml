@@ -10,74 +10,65 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_column="0"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="100dp"
         android:layout_row="0"
         android:background="@drawable/textview_border"
         android:ems="10"
-        android:hint="Username"
         android:inputType="textPersonName"
-        android:paddingLeft="10dp" />
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:hint="Username" />
 
     <EditText
         android:id="@+id/textviewEmailSignUp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_column="0"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
         android:layout_marginTop="30dp"
         android:layout_row="1"
         android:background="@drawable/textview_border"
         android:ems="10"
-        android:hint="E-mail"
         android:inputType="textEmailAddress"
-        android:paddingLeft="10dp" />
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:hint="E-mail" />
 
     <EditText
         android:id="@+id/textviewPasswordSignUp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_column="0"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
         android:layout_marginTop="30dp"
         android:layout_row="2"
         android:background="@drawable/textview_border"
         android:ems="10"
-        android:hint="Password"
         android:inputType="textPassword"
-        android:paddingLeft="10dp" />
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:hint="Password" />
 
     <Button
         android:id="@+id/buttonSignUp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_column="0"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
         android:layout_marginTop="30dp"
         android:layout_row="3"
         android:background="@color/signButton"
         android:text="Sign Up"
-        android:textAllCaps="false"
-        android:textColor="@color/textColor"
-        android:textStyle="normal|bold" />
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp" />
 
     <Button
         android:id="@+id/buttonGoogleSignIn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_column="0"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
         android:layout_marginTop="30dp"
         android:layout_row="4"
         android:background="@color/googleButton"
         android:text="Sign In With Google"
-        android:textAllCaps="false"
-        android:textColor="@color/textColor"
-        android:textStyle="normal|bold" />
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp" />
 
 </LinearLayout>
