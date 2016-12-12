@@ -38,6 +38,7 @@ public class SignInFragment extends Fragment {
         final TextView textViewUserName = (TextView) view.findViewById(R.id.textviewUsernameSignIn);
         final TextView textViewPassword = (TextView) view.findViewById(R.id.textviewPasswordSignIn);
         final Button buttonGoSignUp = (Button) view.findViewById(R.id.buttonGoSignUp);
+        final TextView textViewError = (TextView) view.findViewById(R.id.textViewErrorSignIn);
 
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,13 +46,12 @@ public class SignInFragment extends Fragment {
                 try {
                     PlusOneAPI.login(textViewUserName.getText().toString(), textViewPassword.getText().toString(), new PlusOneAPI.LoginFinishedHandler() {
                         @Override
-                        public void onLoginFinished(boolean success) {
+                        public void onLoginFinished(boolean success, String message) {
                             if (success) {
                                 // To set related things about user, and redirect
                                 ((MainActivity) getActivity()).checkUserLogin();
                             } else {
-                                //TODO: show error message about why that fucker is fucking retarded enough to write wrong shits to login page
-                                Log.d("LOGIN ERROR", "Error while logging in.");
+                                textViewError.setText(message);
                             }
                         }
                     });

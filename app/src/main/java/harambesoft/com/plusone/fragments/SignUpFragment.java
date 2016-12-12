@@ -36,15 +36,23 @@ public class SignUpFragment extends Fragment {
         final TextView textViewUserName = (TextView) view.findViewById(R.id.textviewUsernameSignUp);
         final TextView textViewEmail = (TextView) view.findViewById(R.id.textviewEmailSignUp);
         final TextView textViewPassword = (TextView) view.findViewById(R.id.textviewPasswordSignUp);
+        final TextView textViewError = (TextView) view.findViewById(R.id.textViewErrorSignUp);
 
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    PlusOneAPI.signUp(textViewUserName.getText().toString(), textViewEmail.getText().toString(), textViewPassword.getText().toString());
-
-                    // Go log in.
-                    ((MainActivity)getActivity()).checkUserLogin();
+                    PlusOneAPI.signUp(textViewUserName.getText().toString(), textViewEmail.getText().toString(), textViewPassword.getText().toString(), new PlusOneAPI.SignupFinishedHandler() {
+                        @Override
+                        public void onSignupFinished(boolean success, String message) {
+                            if (success) {
+                                // Go log in.
+                                ((MainActivity)getActivity()).checkUserLogin();
+                            } else {
+                                textViewError.setText(message);
+                            }
+                        }
+                    });
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

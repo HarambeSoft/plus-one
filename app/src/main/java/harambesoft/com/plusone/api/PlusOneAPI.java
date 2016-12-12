@@ -10,6 +10,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.StreamCorruptedException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import harambesoft.com.plusone.MainActivity;
 import harambesoft.com.plusone.PlusOne;
@@ -24,16 +26,31 @@ public class PlusOneAPI {
     //FIXME: change at production
 
     public interface LoginFinishedHandler {
-        public void onLoginFinished(boolean success);
+        public void onLoginFinished(boolean success, String message);
+    }
+
+    public interface SignupFinishedHandler {
+        public void onSignupFinished(boolean success, String message);
+    }
+
+    private static String[] encodeParams(String[] strings) {
+        for (int i = 0; i < strings.length; i++) {
+            try {
+                strings[i] = URLEncoder.encode(strings[i], "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        return strings;
     }
 
     private static void sendPOSTRequest(String path, String[] pathArgs, POSTData postData, Request.RequestFinishedHandler handler) throws IOException {
-        String url = PlusOneAPI.URL + String.format(path, (Object[]) pathArgs);
+        String url = PlusOneAPI.URL + String.format(path, ((Object[]) encodeParams(pathArgs)));
         Request.post(url, postData, handler);
     }
 
     private static void sendGETRequest(String path, String[] pathArgs, Request.RequestFinishedHandler handler) throws IOException {
-        String url = PlusOneAPI.URL + String.format(path, (Object[]) pathArgs);
+        String url = PlusOneAPI.URL + String.format(path, ((Object[]) encodeParams(pathArgs)));
         Request.get(url, handler);
     }
 
@@ -61,11 +78,11 @@ public class PlusOneAPI {
                         editor.putString("id", userJson.getString("id"));
                         editor.commit();
 
-                        handler.onLoginFinished(true);
+                        handler.onLoginFinished(true, "");
                     } else {
-                        handler.onLoginFinished(false);
+                        handler.onLoginFinished(false, resultJson.getString("message"));
                     }
-            } catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -73,7 +90,7 @@ public class PlusOneAPI {
 
     }
 
-    public static boolean signUp(String name, String email, String password) throws IOException {
+    public static boolean signUp(final String name, String email, String password, final SignupFinishedHandler handler) throws IOException {
         POSTData postData = new POSTData();
         postData.put("name", name);
         postData.put("email", email);
@@ -82,8 +99,19 @@ public class PlusOneAPI {
         PlusOneAPI.sendPOSTRequest("user", new String[]{}, postData, new Request.RequestFinishedHandler() {
             @Override
             public void onRequestFinished(String result) {
-                Log.d("USER REGISTER RESULT", result);
-                //TODO: parse result, then login if user has created
+                try {
+                    JSONObject resultJson = new JSONObject(result);
+                    boolean error = resultJson.getBoolean("error");
+                    Log.d("USER REGISTER RESULT", result);
+
+                    if (!error) {
+                        handler.onSignupFinished(true, "");
+                    } else {
+                        handler.onSignupFinished(false, resultJson.getString("message"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
         return true;

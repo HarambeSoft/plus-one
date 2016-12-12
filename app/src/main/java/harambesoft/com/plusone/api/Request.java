@@ -22,6 +22,10 @@ import harambesoft.com.plusone.PlusOne;
 class POSTData extends HashMap<String, String> {}
 
 public class Request {
+    public enum RequestType {
+        GET,
+        POST
+    }
     public interface RequestFinishedHandler {
         public void onRequestFinished(String result);
     }
@@ -29,40 +33,53 @@ public class Request {
     private static class RequestParams {
         String url;
         POSTData postData;
+        RequestType requestType;
         RequestFinishedHandler handler;
 
-        RequestParams(String url, POSTData postData, RequestFinishedHandler handler) {
+        RequestParams(String url, RequestType requestType, RequestFinishedHandler handler) {
             this.url = url;
-            this.postData = postData;
+            this.requestType = requestType;
             this.handler = handler;
+        }
+
+        RequestParams(String url, POSTData postData, RequestFinishedHandler handler) {
+            this(url, RequestType.POST, handler);
+            this.postData = postData;
         }
     }
 
-
-    private static class MakePostRequest extends AsyncTask<RequestParams, Integer, String> {
+    private static class MakeRequest extends AsyncTask<RequestParams, Integer, String> {
         RequestFinishedHandler handler;
 
         protected String doInBackground(RequestParams... params) {
             this.handler = params[0].handler;
             String url = params[0].url;
-            POSTData postData = params[0].postData;
+            RequestType requestType = params[0].requestType;
 
             StringBuilder response = new StringBuilder();
 
 
             try {
-                HttpURLConnection con = (HttpURLConnection) connection(url, "POST");
-                //FIXME: fix api token
-                //con.setRequestProperty("Authorization",  "Bearer " + PlusOne.settings().getString("api_token", ""));
-                String urlParameters = getPostDataString(postData);
+                HttpURLConnection con = connection(url, requestType == RequestType.POST ? "POST":"GET");
 
-                // Send post request
-                con.setDoOutput(true);
-                DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-                wr.writeBytes(urlParameters);
-                wr.flush();
-                wr.close();
+                // Add api token to header
+                String apiToken = PlusOne.settings().getString("api_token", "");
+                if (!apiToken.isEmpty())
+                    con.setRequestProperty("Authorization",  "Bearer " + apiToken);
 
+                if (requestType == RequestType.POST) {
+                    POSTData postData = params[0].postData;
+                    String urlParameters = getPostDataString(postData);
+
+                    // Send post request
+                    con.setDoOutput(true);
+                    DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+                    wr.writeBytes(urlParameters);
+                    wr.flush();
+                    wr.close();
+                }
+
+                //FIXME: look for response code
                 /*int responseCode = con.getResponseCode();
                 System.out.println("\nSending 'POST' request to URL : " + url);
                 System.out.println("Post parameters : " + urlParameters);
@@ -92,60 +109,6 @@ public class Request {
         }
     }
 
-    private static class MakeGetRequest extends AsyncTask<RequestParams, Integer, String> {
-        RequestFinishedHandler handler;
-
-        protected String doInBackground(RequestParams... params) {
-            String url = params[0].url + "?api_token=" + PlusOne.settings().getString("api_token", ""); //FIXME
-            this.handler = params[0].handler;
-
-            StringBuilder response = new StringBuilder();
-
-            try {
-                HttpURLConnection con = (HttpURLConnection) connection(url, "GET");
-                //FIXME:
-                //con.setRequestProperty("Authorization",  "Bearer" + PlusOne.settings().getString("api_token", ""));
-                /*int responseCode = con.getResponseCode();
-                System.out.println("\nSending 'GET' request to URL : " + url);
-                System.out.println("Response Code : " + responseCode);*/
-
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(con.getInputStream()));
-                String inputLine;
-
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                in.close();
-
-
-                return response.toString();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return response.toString();
-        }
-
-        protected void onProgressUpdate(Integer... progress) {
-            //setProgressPercent(progress[0]);
-        }
-
-        protected void onPostExecute(String result) {
-            handler.onRequestFinished(result);
-        }
-    }
-
-
-    public static void get(String url, RequestFinishedHandler handler) throws IOException {
-        new MakeGetRequest().execute(new RequestParams(url, new POSTData(), handler)); //FIXME: get rid of postdata
-    }
-
-    public static void post(String url, POSTData postData, RequestFinishedHandler handler) throws IOException {
-        new MakePostRequest().execute(new RequestParams(url, postData, handler));
-    }
-
     // http://stackoverflow.com/a/29561084
     private static String getPostDataString(POSTData params) throws UnsupportedEncodingException {
         StringBuilder result = new StringBuilder();
@@ -164,14 +127,18 @@ public class Request {
         return result.toString();
     }
 
+    public static void get(String url, RequestFinishedHandler handler) throws IOException {
+        new MakeRequest().execute(new RequestParams(url, RequestType.GET, handler));
+    }
+
+    public static void post(String url, POSTData postData, RequestFinishedHandler handler) throws IOException {
+        new MakeRequest().execute(new RequestParams(url, postData, handler));
+    }
+
     private static HttpURLConnection connection(String url, String method) throws IOException {
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
         con.setRequestMethod(method);
-        //con.setRequestProperty("Content-Type", "");
-        //con.setRequestProperty("Authorization", "");
-
         return con;
     }
 }
