@@ -17,7 +17,7 @@ import harambesoft.com.plusone.PlusOne;
  */
 
 public class PlusOneAPI {
-    private static final String URL = "http://192.168.1.192/~isa/plus-one-server/public/index.php/api/v1/";
+    private static final String URL = "http://192.168.1.28/~isa/plus-one-server/public/index.php/api/v1/";
     //FIXME: change at production
 
 

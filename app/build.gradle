@@ -30,8 +30,17 @@ dependencies {
     compile files('libs/android-core.jar')
     compile files('libs/ketai.jar')
 
+    // Google Services
     compile 'com.google.android.gms:play-services:9.2.0'
+
+    //Firebase Messaging
     compile 'com.google.firebase:firebase-messaging:9.2.0'
+
+    // retrofit, gson
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
 }
 
+//Google Services
 apply plugin: 'com.google.gms.google-services'
