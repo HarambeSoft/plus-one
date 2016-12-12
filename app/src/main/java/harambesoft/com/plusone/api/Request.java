@@ -26,8 +26,9 @@ public class Request {
         GET,
         POST
     }
+
     public interface RequestFinishedHandler {
-        public void onRequestFinished(String result);
+        void onRequestFinished(String result);
     }
 
     private static class RequestParams {
