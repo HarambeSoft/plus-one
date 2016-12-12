@@ -163,29 +163,24 @@ public class MainActivity extends AppCompatActivity
         fragment.setSketch(sketch); */
 
         //TODO: Fix fragments
-        SignInFragment fragmentSignIn = new SignInFragment();
-        SignUpFragment fragmentSignUp = new SignUpFragment();
 
         int id = item.getItemId();
-        if (id == R.id.nav_camera) {
-            /*fragmentManager.beginTransaction()
-                    .replace(R.id.container, fragment)
-                    .commit();*/
-        } else if (id == R.id.nav_gallery) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, fragmentSignIn)
-                    .commit();
-        } else if (id == R.id.nav_slideshow) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, fragmentSignUp)
-                    .commit();
-        } else if (id == R.id.nav_manage) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, new ActivityStreamFragment())
-                    .commit();
-        } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        if (id == R.id.nav_activity_stream) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, ActivityStreamFragment.newInstance())
+                    .commit();
+        } else if (id == R.id.nav_polls) {
+
+        } else if (id == R.id.nav_categories) {
+
+        } else if (id == R.id.nav_discover) {
+
+        } else if (id == R.id.nav_me) {
+
+        } else if (id == R.id.nav_settings) {
+
+        } else if (id == R.id.nav_logout) {
 
         }
 

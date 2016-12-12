@@ -10,16 +10,18 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 import harambesoft.com.plusone.MainActivity;
+import harambesoft.com.plusone.PlusOne;
 
 /**
  * Created by isa on 11.12.2016.
  */
 
 public class PlusOneAPI {
-    public static final String URL = "http://192.168.1.192/~isa/plus-one-server/public/index.php/api/v1/";
+    private static final String URL = "http://192.168.1.192/~isa/plus-one-server/public/index.php/api/v1/";
+    //FIXME: change at production
 
 
-    public static String sendPOSTRequest(String path, String[] pathArgs, POSTData postData) throws IOException {
+    private static String sendPOSTRequest(String path, String[] pathArgs, POSTData postData) throws IOException {
         String url = PlusOneAPI.URL + String.format(path, (Object[]) pathArgs);
         return Request.post(url, postData);
     }
@@ -36,9 +38,7 @@ public class PlusOneAPI {
         boolean error = resultJson.getBoolean("error");
         if (!error) {
             // Add token to SharedPreferences for later use
-            SharedPreferences settings = PreferenceManager
-                    .getDefaultSharedPreferences(MainActivity.getAppContext());
-            SharedPreferences.Editor editor = settings.edit();
+            SharedPreferences.Editor editor = PlusOne.settings().edit();
             editor.putString("api_token", resultJson.getString("api_token"));
             editor.putString("name", name);
             editor.putString("email", userJson.getString("email"));
@@ -57,6 +57,7 @@ public class PlusOneAPI {
         postData.put("password", password);
 
         String result = PlusOneAPI.sendPOSTRequest("user", new String[] {}, postData);
+        //TODO: parse result, then login if user has created
         return true;
     }
 

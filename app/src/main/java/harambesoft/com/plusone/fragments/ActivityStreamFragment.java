@@ -33,4 +33,9 @@ public class ActivityStreamFragment extends Fragment {
         String userName = PlusOne.settings().getString("name", "Not logged in.");
         textViewWelcome.setText("Welcome " + userName + "!");
     }
+
+    public static Fragment newInstance() {
+        //TODO: implement this
+        return new ActivityStreamFragment();
+    }
 }
