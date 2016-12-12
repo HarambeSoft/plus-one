@@ -4,7 +4,10 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="side_nav_bar">#048c95</color>
+    <color name="side_nav_bar_dark">#007F88</color>
+    <color name="side_nav_bar_darker">#00737C</color>
     <color name="googleButton">#dd4b39</color>
     <color name="signButton">#de8258</color>
     <color name="textColor">#fff</color>
+    <color name="white">#fff</color>
 </resources>
