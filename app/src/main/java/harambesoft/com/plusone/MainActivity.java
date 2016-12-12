@@ -56,11 +56,12 @@ public class MainActivity extends AppCompatActivity
         assignWidgets();
         checkUserLogin();
 
-        try {
+        //FIXME:
+        /*try {
             PlusOneAPI.user();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     private void loadDrawer() {
@@ -190,7 +191,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_logout) {
-
+            PlusOne.settings().edit().clear().commit();
+            this.checkUserLogin();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

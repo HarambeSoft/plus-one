@@ -47,17 +47,19 @@ public class PlusOneAPI {
             public void onRequestFinished(String result) {
                 try {
                     JSONObject resultJson = new JSONObject(result);
-                    JSONObject userJson = resultJson.getJSONObject("user");
-
                     boolean error = resultJson.getBoolean("error");
+                    Log.d("LOGIN RESPONSE", result);
+
                     if (!error) {
+                        JSONObject userJson = resultJson.getJSONObject("user");
+
                         // Add token to SharedPreferences for later use
                         SharedPreferences.Editor editor = PlusOne.settings().edit();
                         editor.putString("api_token", resultJson.getString("api_token"));
                         editor.putString("name", name);
                         editor.putString("email", userJson.getString("email"));
                         editor.putString("id", userJson.getString("id"));
-                        editor.apply();
+                        editor.commit();
 
                         handler.onLoginFinished(true);
                     } else {
@@ -77,8 +79,13 @@ public class PlusOneAPI {
         postData.put("email", email);
         postData.put("password", password);
 
-        //String result = PlusOneAPI.sendPOSTRequest("user", new String[] {}, postData);
-        //TODO: parse result, then login if user has created
+        PlusOneAPI.sendPOSTRequest("user", new String[]{}, postData, new Request.RequestFinishedHandler() {
+            @Override
+            public void onRequestFinished(String result) {
+                Log.d("USER REGISTER RESULT", result);
+                //TODO: parse result, then login if user has created
+            }
+        });
         return true;
     }
 

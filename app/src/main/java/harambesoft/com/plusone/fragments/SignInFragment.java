@@ -37,6 +37,7 @@ public class SignInFragment extends Fragment {
         final Button buttonSignIn = (Button) view.findViewById(R.id.buttonSignIn);
         final TextView textViewUserName = (TextView) view.findViewById(R.id.textviewUsernameSignIn);
         final TextView textViewPassword = (TextView) view.findViewById(R.id.textviewPasswordSignIn);
+        final Button buttonGoSignUp = (Button) view.findViewById(R.id.buttonGoSignUp);
 
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +51,7 @@ public class SignInFragment extends Fragment {
                                 ((MainActivity) getActivity()).checkUserLogin();
                             } else {
                                 //TODO: show error message about why that fucker is fucking retarded enough to write wrong shits to login page
+                                Log.d("LOGIN ERROR", "Error while logging in.");
                             }
                         }
                     });
@@ -57,6 +59,16 @@ public class SignInFragment extends Fragment {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+
+        buttonGoSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, new SignUpFragment())
+                        .commit();
             }
         });
     }

@@ -44,7 +44,7 @@ public class Request {
 
         protected String doInBackground(RequestParams... params) {
             this.handler = params[0].handler;
-            String url = params[0].url + "?api_token=" + PlusOne.settings().getString("api_token", ""); //FIXME
+            String url = params[0].url;
             POSTData postData = params[0].postData;
 
             StringBuilder response = new StringBuilder();

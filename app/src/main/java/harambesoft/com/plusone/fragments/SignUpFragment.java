@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import java.io.IOException;
 
+import harambesoft.com.plusone.MainActivity;
 import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.api.PlusOneAPI;
 
@@ -41,6 +42,9 @@ public class SignUpFragment extends Fragment {
             public void onClick(View view) {
                 try {
                     PlusOneAPI.signUp(textViewUserName.getText().toString(), textViewEmail.getText().toString(), textViewPassword.getText().toString());
+
+                    // Go log in.
+                    ((MainActivity)getActivity()).checkUserLogin();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
