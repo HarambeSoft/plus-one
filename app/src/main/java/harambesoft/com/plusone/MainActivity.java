@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity
 
         if (!userName.isEmpty()) {
             // Subscribe to user notification channel
-            FirebaseMessaging.getInstance().subscribeToTopic("user_" + userName);
+            FirebaseMessaging.getInstance().subscribeToTopic(PlusOne.firebaseUserTopic());
             Log.d("MainActivity", "User is logged in.");
             Log.d("MainActivity", "Subbed to notifications of " + userName);
 
@@ -191,7 +191,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_logout) {
+            // Logout
             PlusOne.settings().edit().clear().commit();
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(PlusOne.firebaseUserTopic());
             this.checkUserLogin();
         }
 

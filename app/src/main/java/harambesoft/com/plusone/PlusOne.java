@@ -15,4 +15,10 @@ public class PlusOne {
             mSettings = PreferenceManager.getDefaultSharedPreferences(MainActivity.getAppContext());
         return mSettings;
     }
+
+    public static String firebaseUserTopic() {
+        // if user is not logged in, we choose NotLoggedIn as topic
+        // so we can send notifications to users that are not logged in
+        return "user_" + PlusOne.settings().getString("name", "NotLoggedIn");
+    }
 }
