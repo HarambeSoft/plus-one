@@ -28,7 +28,7 @@ public class ActivityStreamFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d("HERE", "FUCKING HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+
         final TextView textViewWelcome = (TextView) view.findViewById(R.id.textViewWelcome);
         String userName = PlusOne.settings().getString("name", "Not logged in.");
         textViewWelcome.setText("Welcome " + userName + "!");
