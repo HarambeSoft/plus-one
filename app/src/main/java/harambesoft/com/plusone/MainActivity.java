@@ -1,9 +1,17 @@
 package harambesoft.com.plusone;
 
+import android.*;
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,17 +25,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import android.support.v4.app.FragmentManager;
-import android.widget.LinearLayout;
+
 import android.widget.TextView;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import java.io.IOException;
-
-import harambesoft.com.plusone.api.PlusOneAPI;
 import harambesoft.com.plusone.fragments.ActivityStreamFragment;
 import harambesoft.com.plusone.fragments.SignInFragment;
-import harambesoft.com.plusone.fragments.SignUpFragment;
+import harambesoft.com.plusone.services.LocationTrackerService;
 
 
 public class MainActivity extends AppCompatActivity
@@ -46,6 +51,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Set appContext
         appContext = this.getApplicationContext();
 
         setContentView(R.layout.activity_main);
@@ -56,12 +63,7 @@ public class MainActivity extends AppCompatActivity
         assignWidgets();
         checkUserLogin();
 
-        //FIXME:
-        /*try {
-            PlusOneAPI.user();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+        startService(new Intent(this, LocationTrackerService.class));
     }
 
     private void loadDrawer() {

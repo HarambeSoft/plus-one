@@ -39,6 +39,7 @@
             </intent-filter>
         </service>
 
+        <service android:name=".services.LocationTrackerService" />
     </application>
 
 </manifest>

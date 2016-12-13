@@ -34,7 +34,7 @@ public class ActivityStreamFragment extends Fragment {
         String userName = PlusOne.settings().getString("name", "");
         if (userName.isEmpty())
             ((MainActivity)getActivity()).checkUserLogin();
-        
+
         textViewWelcome.setText("Welcome " + userName + "!");
     }
 
