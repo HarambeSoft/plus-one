@@ -26,6 +26,11 @@ import java.io.IOException;
 
 import harambesoft.com.plusone.api.PlusOneAPI;
 import harambesoft.com.plusone.fragments.ActivityStreamFragment;
+import harambesoft.com.plusone.fragments.CategoriesFragment;
+import harambesoft.com.plusone.fragments.DiscoverFragment;
+import harambesoft.com.plusone.fragments.MeFragment;
+import harambesoft.com.plusone.fragments.PollsFragment;
+import harambesoft.com.plusone.fragments.SettingsFragment;
 import harambesoft.com.plusone.fragments.SignInFragment;
 import harambesoft.com.plusone.fragments.SignUpFragment;
 
@@ -181,15 +186,25 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.container, ActivityStreamFragment.newInstance())
                     .commit();
         } else if (id == R.id.nav_polls) {
-
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, new PollsFragment())
+                    .commit();
         } else if (id == R.id.nav_categories) {
-
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, new CategoriesFragment())
+                    .commit();
         } else if (id == R.id.nav_discover) {
-
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, new DiscoverFragment())
+                    .commit();
         } else if (id == R.id.nav_me) {
-
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, new MeFragment())
+                    .commit();
         } else if (id == R.id.nav_settings) {
-
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, new SettingsFragment())
+                    .commit();
         } else if (id == R.id.nav_logout) {
             // Logout
             PlusOne.settings().edit().clear().commit();
