@@ -9,6 +9,7 @@ public class UserModel {
     private Integer id;
     private String name;
     private String email;
+    private String profilePicture;
     private String xp;
     private String createDate;
     private String fullname;
@@ -28,6 +29,7 @@ public class UserModel {
      *
      * @param id
      * @param email
+     * @param profilePicture
      * @param profession
      * @param name
      * @param gender
@@ -37,7 +39,7 @@ public class UserModel {
      * @param city
      * @param country
      */
-    public UserModel(Integer id, String name, String email, String xp, String createDate, String fullname, String gender, String country, String city, String profession) {
+    public UserModel(Integer id, String name, String email, String profilePicture, String xp, String createDate, String fullname, String gender, String country, String city, String profession) {
         super();
         this.id = id;
         this.name = name;
@@ -74,6 +76,15 @@ public class UserModel {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
 
     public String getXp() {
         return xp;
