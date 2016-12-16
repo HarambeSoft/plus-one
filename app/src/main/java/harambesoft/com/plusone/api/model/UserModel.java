@@ -18,184 +18,117 @@ public class UserModel {
     private String profession;
 
     /**
+     * No args constructor for use in serialization
      *
-     * @return
-     *     The id
      */
-    public Integer getId() {
-        return id;
+    public UserModel() {
     }
 
     /**
      *
      * @param id
-     *     The id
+     * @param email
+     * @param profession
+     * @param name
+     * @param gender
+     * @param xp
+     * @param createDate
+     * @param fullname
+     * @param city
+     * @param country
      */
+    public UserModel(Integer id, String name, String email, String xp, String createDate, String fullname, String gender, String country, String city, String profession) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.xp = xp;
+        this.createDate = createDate;
+        this.fullname = fullname;
+        this.gender = gender;
+        this.country = country;
+        this.city = city;
+        this.profession = profession;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     *
-     * @return
-     *     The name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     *
-     * @param name
-     *     The name
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     *
-     * @return
-     *     The email
-     */
     public String getEmail() {
         return email;
     }
 
-    /**
-     *
-     * @param email
-     *     The email
-     */
     public void setEmail(String email) {
         this.email = email;
     }
 
-    /**
-     *
-     * @return
-     *     The xp
-     */
     public String getXp() {
         return xp;
     }
 
-    /**
-     *
-     * @param xp
-     *     The xp
-     */
     public void setXp(String xp) {
         this.xp = xp;
     }
 
-    /**
-     *
-     * @return
-     *     The createDate
-     */
     public String getCreateDate() {
         return createDate;
     }
 
-    /**
-     *
-     * @param createDate
-     *     The create_date
-     */
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 
-    /**
-     *
-     * @return
-     *     The fullname
-     */
     public String getFullname() {
         return fullname;
     }
 
-    /**
-     *
-     * @param fullname
-     *     The fullname
-     */
     public void setFullname(String fullname) {
         this.fullname = fullname;
     }
 
-    /**
-     *
-     * @return
-     *     The gender
-     */
     public String getGender() {
         return gender;
     }
 
-    /**
-     *
-     * @param gender
-     *     The gender
-     */
     public void setGender(String gender) {
         this.gender = gender;
     }
 
-    /**
-     *
-     * @return
-     *     The country
-     */
     public String getCountry() {
         return country;
     }
 
-    /**
-     *
-     * @param country
-     *     The country
-     */
     public void setCountry(String country) {
         this.country = country;
     }
 
-    /**
-     *
-     * @return
-     *     The city
-     */
     public String getCity() {
         return city;
     }
 
-    /**
-     *
-     * @param city
-     *     The city
-     */
     public void setCity(String city) {
         this.city = city;
     }
 
-    /**
-     *
-     * @return
-     *     The profession
-     */
     public String getProfession() {
         return profession;
     }
 
-    /**
-     *
-     * @param profession
-     *     The profession
-     */
     public void setProfession(String profession) {
         this.profession = profession;
     }
 
 }
-

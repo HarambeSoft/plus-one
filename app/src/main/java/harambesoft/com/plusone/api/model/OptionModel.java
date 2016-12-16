@@ -12,76 +12,57 @@ public class OptionModel {
     private String vote;
 
     /**
+     * No args constructor for use in serialization
      *
-     * @return
-     *     The pollId
      */
-    public String getPollId() {
-        return pollId;
-    }
-
-    /**
-     *
-     * @param pollId
-     *     The poll_id
-     */
-    public void setPollId(String pollId) {
-        this.pollId = pollId;
-    }
-
-    /**
-     *
-     * @return
-     *     The id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     *
-     * @param id
-     *     The id
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    /**
-     *
-     * @return
-     *     The content
-     */
-    public String getContent() {
-        return content;
+    public OptionModel() {
     }
 
     /**
      *
      * @param content
-     *     The content
+     * @param id
+     * @param pollId
+     * @param vote
      */
+    public OptionModel(String pollId, Integer id, String content, String vote) {
+        super();
+        this.pollId = pollId;
+        this.id = id;
+        this.content = content;
+        this.vote = vote;
+    }
+
+    public String getPollId() {
+        return pollId;
+    }
+
+    public void setPollId(String pollId) {
+        this.pollId = pollId;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
     public void setContent(String content) {
         this.content = content;
     }
 
-    /**
-     *
-     * @return
-     *     The vote
-     */
     public String getVote() {
         return vote;
     }
 
-    /**
-     *
-     * @param vote
-     *     The vote
-     */
     public void setVote(String vote) {
         this.vote = vote;
     }
 
 }
-

@@ -1,10 +1,10 @@
 package harambesoft.com.plusone.api.model;
 
 /**
- * Created by yucel on 12.12.2016.
+ * Created by yucel on 16.12.2016.
  */
 
-public class OptionCommentsModel {
+public class CommentsModel {
 
     private String userId;
     private Integer id;
@@ -14,109 +14,75 @@ public class OptionCommentsModel {
     private String downVote;
 
     /**
+     * No args constructor for use in serialization
      *
-     * @return
-     *     The userId
      */
-    public String getUserId() {
-        return userId;
-    }
-
-    /**
-     *
-     * @param userId
-     *     The user_id
-     */
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    /**
-     *
-     * @return
-     *     The id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     *
-     * @param id
-     *     The id
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    /**
-     *
-     * @return
-     *     The createDate
-     */
-    public String getCreateDate() {
-        return createDate;
-    }
-
-    /**
-     *
-     * @param createDate
-     *     The create_date
-     */
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
-    }
-
-    /**
-     *
-     * @return
-     *     The content
-     */
-    public String getContent() {
-        return content;
+    public CommentsModel() {
     }
 
     /**
      *
      * @param content
-     *     The content
+     * @param id
+     * @param downVote
+     * @param userId
+     * @param upVote
+     * @param createDate
      */
+    public CommentsModel(String userId, Integer id, String createDate, String content, String upVote, String downVote) {
+        super();
+        this.userId = userId;
+        this.id = id;
+        this.createDate = createDate;
+        this.content = content;
+        this.upVote = upVote;
+        this.downVote = downVote;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
     public void setContent(String content) {
         this.content = content;
     }
 
-    /**
-     *
-     * @return
-     *     The upVote
-     */
     public String getUpVote() {
         return upVote;
     }
 
-    /**
-     *
-     * @param upVote
-     *     The up_vote
-     */
     public void setUpVote(String upVote) {
         this.upVote = upVote;
     }
 
-    /**
-     *
-     * @return
-     *     The downVote
-     */
     public String getDownVote() {
         return downVote;
     }
 
-    /**
-     *
-     * @param downVote
-     *     The down_vote
-     */
     public void setDownVote(String downVote) {
         this.downVote = downVote;
     }

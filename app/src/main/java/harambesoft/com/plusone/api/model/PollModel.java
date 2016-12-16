@@ -19,202 +19,129 @@ public class PollModel {
     private String diameter;
 
     /**
+     * No args constructor for use in serialization
      *
-     * @return
-     *     The userId
      */
-    public String getUserId() {
-        return userId;
-    }
-
-    /**
-     *
-     * @param userId
-     *     The user_id
-     */
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    /**
-     *
-     * @return
-     *     The categoryId
-     */
-    public String getCategoryId() {
-        return categoryId;
-    }
-
-    /**
-     *
-     * @param categoryId
-     *     The category_id
-     */
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    /**
-     *
-     * @return
-     *     The id
-     */
-    public Integer getId() {
-        return id;
+    public PollModel() {
     }
 
     /**
      *
      * @param id
-     *     The id
+     * @param diameter
+     * @param duration
+     * @param categoryId
+     * @param userId
+     * @param pollType
+     * @param longitude
+     * @param latitude
+     * @param question
+     * @param stat
+     * @param optionType
      */
+    public PollModel(String userId, String categoryId, Integer id, String question, String pollType, String optionType, String stat, String duration, String latitude, String longitude, String diameter) {
+        super();
+        this.userId = userId;
+        this.categoryId = categoryId;
+        this.id = id;
+        this.question = question;
+        this.pollType = pollType;
+        this.optionType = optionType;
+        this.stat = stat;
+        this.duration = duration;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.diameter = diameter;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     *
-     * @return
-     *     The question
-     */
     public String getQuestion() {
         return question;
     }
 
-    /**
-     *
-     * @param question
-     *     The question
-     */
     public void setQuestion(String question) {
         this.question = question;
     }
 
-    /**
-     *
-     * @return
-     *     The pollType
-     */
     public String getPollType() {
         return pollType;
     }
 
-    /**
-     *
-     * @param pollType
-     *     The poll_type
-     */
     public void setPollType(String pollType) {
         this.pollType = pollType;
     }
 
-    /**
-     *
-     * @return
-     *     The optionType
-     */
     public String getOptionType() {
         return optionType;
     }
 
-    /**
-     *
-     * @param optionType
-     *     The option_type
-     */
     public void setOptionType(String optionType) {
         this.optionType = optionType;
     }
 
-    /**
-     *
-     * @return
-     *     The stat
-     */
     public String getStat() {
         return stat;
     }
 
-    /**
-     *
-     * @param stat
-     *     The stat
-     */
     public void setStat(String stat) {
         this.stat = stat;
     }
 
-    /**
-     *
-     * @return
-     *     The duration
-     */
     public String getDuration() {
         return duration;
     }
 
-    /**
-     *
-     * @param duration
-     *     The duration
-     */
     public void setDuration(String duration) {
         this.duration = duration;
     }
 
-    /**
-     *
-     * @return
-     *     The latitude
-     */
     public String getLatitude() {
         return latitude;
     }
 
-    /**
-     *
-     * @param latitude
-     *     The latitude
-     */
     public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
 
-    /**
-     *
-     * @return
-     *     The longitude
-     */
     public String getLongitude() {
         return longitude;
     }
 
-    /**
-     *
-     * @param longitude
-     *     The longitude
-     */
     public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
-    /**
-     *
-     * @return
-     *     The diameter
-     */
     public String getDiameter() {
         return diameter;
     }
 
-    /**
-     *
-     * @param diameter
-     *     The diameter
-     */
     public void setDiameter(String diameter) {
         this.diameter = diameter;
     }
 
 }
+
 
