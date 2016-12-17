@@ -35,6 +35,12 @@ dependencies {
 
     //Firebase Messaging
     compile 'com.google.firebase:firebase-messaging:9.2.0'
+
+
+    //Butterknife
+    compile 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+
 }
 
 //Google Services
