@@ -13,6 +13,7 @@ import java.io.StreamCorruptedException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import harambesoft.com.plusone.CurrentUser;
 import harambesoft.com.plusone.MainActivity;
 import harambesoft.com.plusone.PlusOne;
 import harambesoft.com.plusone.api.model.UserModel;
@@ -69,15 +70,10 @@ public class PlusOneAPI {
 
                     if (!error) {
                         JSONObject userJson = resultJson.getJSONObject("user");
-
-                        // Add token to SharedPreferences for later use
-                        SharedPreferences.Editor editor = PlusOne.settings().edit();
-                        editor.putString("api_token", resultJson.getString("api_token"));
-                        editor.putString("name", name);
-                        editor.putString("email", userJson.getString("email"));
-                        editor.putString("id", userJson.getString("id"));
-                        editor.commit();
-
+                        CurrentUser.login(userJson.getString("id"),
+                                            userJson.getString("name"),
+                                            userJson.getString("email"),
+                                            resultJson.getString("api_token"));
                         handler.onLoginFinished(true, "");
                     } else {
                         handler.onLoginFinished(false, resultJson.getString("message"));

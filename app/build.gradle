@@ -33,8 +33,9 @@ dependencies {
     // Google Services
     compile 'com.google.android.gms:play-services:9.2.0'
 
-    //Firebase Messaging
+    //Firebase Messaging & Database
     compile 'com.google.firebase:firebase-messaging:9.2.0'
+    compile 'com.google.firebase:firebase-database:9.2.0'
 }
 
 //Google Services
