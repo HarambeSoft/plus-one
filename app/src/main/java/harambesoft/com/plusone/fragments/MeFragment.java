@@ -13,6 +13,7 @@ import java.util.List;
 
 import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.api.PlusOneAPI;
+import harambesoft.com.plusone.api.model.TokenModel;
 import harambesoft.com.plusone.api.model.UserModel;
 import harambesoft.com.plusone.services.ApiClient;
 import harambesoft.com.plusone.services.ApiInterface;
@@ -26,8 +27,8 @@ import retrofit2.Response;
 
 public class MeFragment extends Fragment {
 
-    private static String API_KEY;
-    private static String userId;
+    private static String name = "YucelT";
+    private static String password = "14593683762";
 
     private static final String TAG = MeFragment.class.getSimpleName();
 
@@ -48,28 +49,24 @@ public class MeFragment extends Fragment {
     public void getUser() {
 
         PlusOneAPI plusOneAPI = new PlusOneAPI();
-        API_KEY = plusOneAPI.getUserToken();
-        userId = plusOneAPI.getUserId();
-        Log.e("TEST", "User ID: " + userId);
-        Log.e("TEST", "User API_KEY: " + API_KEY);
 
-        /*ApiInterface apiService =
+        ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
-        Call<List<UserModel>> call = apiService.getUserInfos(userId, API_KEY);
-        call.enqueue(new Callback<List<UserModel>>() {
+        Call<TokenModel> call = apiService.getToken(name, password);
+        call.enqueue(new Callback<TokenModel>() {
             @Override
-            public void onResponse(Call<List<UserModel>> call, Response<List<UserModel>> response) {
-                List<UserModel> userModels = new ArrayList<UserModel>();
-                userModels = response.body();
-                Log.d(TAG, "Number of users received: " + userModels.size());
+            public void onResponse(Call<TokenModel> call, Response<TokenModel> response) {
+                TokenModel tokenModel;
+                tokenModel = response.body();
+                Log.d(TAG, "USER: " + tokenModel.getUserModel().getEmail());
             }
 
             @Override
-            public void onFailure(Call<List<UserModel>> call, Throwable t) {
+            public void onFailure(Call<TokenModel> call, Throwable t) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString());
             }
-        });*/
+        });
     }
 }
