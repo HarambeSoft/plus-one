@@ -15,11 +15,20 @@ import android.widget.TextView;
 
 import java.io.IOException;
 
+import butterknife.BindView;
 import harambesoft.com.plusone.MainActivity;
 import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.api.PlusOneAPI;
 
 public class SignUpFragment extends Fragment {
+    @BindView(R.id.buttonSignUp)Button buttonSignUp;
+    @BindView(R.id.textviewUsernameSignUp)TextView textviewUsernameSignUp;
+    @BindView(R.id.textviewEmailSignUp)TextView textViewEmail;
+    @BindView(R.id.textviewPasswordSignUp)TextView textViewPassword;
+    @BindView(R.id.textViewErrorSignUp)TextView textViewError;
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -32,17 +41,11 @@ public class SignUpFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button buttonSignUp = (Button) view.findViewById(R.id.buttonSignUp);
-        final TextView textViewUserName = (TextView) view.findViewById(R.id.textviewUsernameSignUp);
-        final TextView textViewEmail = (TextView) view.findViewById(R.id.textviewEmailSignUp);
-        final TextView textViewPassword = (TextView) view.findViewById(R.id.textviewPasswordSignUp);
-        final TextView textViewError = (TextView) view.findViewById(R.id.textViewErrorSignUp);
-
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    PlusOneAPI.signUp(textViewUserName.getText().toString(), textViewEmail.getText().toString(), textViewPassword.getText().toString(), new PlusOneAPI.SignupFinishedHandler() {
+                    PlusOneAPI.signUp(textviewUsernameSignUp.getText().toString(), textViewEmail.getText().toString(), textViewPassword.getText().toString(), new PlusOneAPI.SignupFinishedHandler() {
                         @Override
                         public void onSignupFinished(boolean success, String message) {
                             if (success) {
