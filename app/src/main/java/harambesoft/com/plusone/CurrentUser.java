@@ -50,7 +50,9 @@ public class CurrentUser {
             userMap.put("long", location.getLongitude());
             userMap.put("last_update", time);
             locationMap.put(CurrentUser.id(), userMap);
-            userRef.setValue(locationMap);
+
+            DatabaseReference newRef = userRef.push();
+            newRef.setValue(locationMap);
         }
     }
 

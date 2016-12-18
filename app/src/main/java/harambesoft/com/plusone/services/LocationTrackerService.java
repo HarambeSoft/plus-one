@@ -68,7 +68,7 @@ public class LocationTrackerService extends Service implements GoogleApiClient.C
     public void onConnected(@Nullable Bundle bundle) {
         LocationRequest mLocationRequest = LocationRequest.create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        mLocationRequest.setInterval(2 * 60 * 1000); // Refresh every 2 mins
+        mLocationRequest.setInterval(30 * 1000); // Refresh every 1/2 mins
         mLocationRequest.setFastestInterval(3 * 1000);
         try { //FIXME: get permissions from user Android 6+
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
