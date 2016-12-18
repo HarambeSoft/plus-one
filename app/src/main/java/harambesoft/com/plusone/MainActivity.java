@@ -27,6 +27,7 @@ import harambesoft.com.plusone.fragments.ActivityStreamFragment;
 import harambesoft.com.plusone.fragments.CategoriesFragment;
 import harambesoft.com.plusone.fragments.DiscoverFragment;
 import harambesoft.com.plusone.fragments.MeFragment;
+import harambesoft.com.plusone.fragments.NewPollFragment;
 import harambesoft.com.plusone.fragments.PollsFragment;
 import harambesoft.com.plusone.fragments.SettingsFragment;
 import harambesoft.com.plusone.fragments.SignInFragment;
@@ -88,8 +89,11 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, new NewPollFragment())
+                        .commit();
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //        .setAction("Action", null).show();
             }
         });
     }
