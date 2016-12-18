@@ -109,9 +109,14 @@ public class MeFragment extends Fragment {
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
-        Call<ResponseModel> call = apiService.updateUser(CurrentUser.id(), editTextrEMail.getText().toString(),
-                editTextrFullName.getText().toString(), editTextrCountry.getText().toString(),
-                editTextrCıty.getText().toString(), editTextProfession.getText().toString(), CurrentUser.apiToken());
+        Call<ResponseModel> call = apiService.updateUser(CurrentUser.id(),
+                editTextrEMail.getText().toString(),
+                editTextrFullName.getText().toString(),
+                editTextrCountry.getText().toString(),
+                editTextrCıty.getText().toString(),
+                editTextProfession.getText().toString(),
+                editTextGender.getText().toString(),
+                CurrentUser.apiToken());
         call.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {

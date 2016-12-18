@@ -37,6 +37,7 @@ public interface ApiInterface {
                                    @Query("country") String country,
                                    @Query("city") String city,
                                    @Query("profession") String profession,
+                                   @Query("gender") String gender,
                                    @Query("api_token") String api_token);
 
     @GET("category")
