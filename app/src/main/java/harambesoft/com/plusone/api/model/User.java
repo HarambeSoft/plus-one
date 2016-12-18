@@ -26,19 +26,19 @@ public class User {
     private String createDate;
     @SerializedName("fullname")
     @Expose
-    private Object fullname;
+    private String fullname;
     @SerializedName("gender")
     @Expose
-    private Object gender;
+    private String gender;
     @SerializedName("country")
     @Expose
-    private Object country;
+    private String country;
     @SerializedName("city")
     @Expose
-    private Object city;
+    private String city;
     @SerializedName("profession")
     @Expose
-    private Object profession;
+    private String profession;
 
     public Integer getId() {
         return id;
@@ -80,43 +80,43 @@ public class User {
         this.createDate = createDate;
     }
 
-    public Object getFullname() {
+    public String getFullname() {
         return fullname;
     }
 
-    public void setFullname(Object fullname) {
+    public void setFullname(String fullname) {
         this.fullname = fullname;
     }
 
-    public Object getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Object gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
-    public Object getCountry() {
+    public String getCountry() {
         return country;
     }
 
-    public void setCountry(Object country) {
+    public void setCountry(String country) {
         this.country = country;
     }
 
-    public Object getCity() {
+    public String getCity() {
         return city;
     }
 
-    public void setCity(Object city) {
+    public void setCity(String city) {
         this.city = city;
     }
 
-    public Object getProfession() {
+    public String getProfession() {
         return profession;
     }
 
-    public void setProfession(Object profession) {
+    public void setProfession(String profession) {
         this.profession = profession;
     }
 

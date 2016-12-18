@@ -114,13 +114,29 @@ android:layout_height="match_parent">
     android:layout_marginTop="12dp" />
 
     <EditText
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:inputType="textPersonName"
-    android:ems="10"
-    android:id="@+id/editTextProfession"
-    android:hint="Profession"
-    android:background="@drawable/textview_border" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextProfession"
+        android:hint="Profession"
+        android:background="@drawable/textview_border" />
+
+    <TextView
+        android:text="Gender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView8"
+        android:layout_marginTop="12dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextGender"
+        android:hint="Gender"
+        android:background="@drawable/textview_border" />
 
     <Button
         android:layout_width="match_parent"

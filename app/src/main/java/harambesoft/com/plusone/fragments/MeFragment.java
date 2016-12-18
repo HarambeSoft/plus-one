@@ -21,6 +21,7 @@ import harambesoft.com.plusone.CurrentUser;
 import harambesoft.com.plusone.PlusOne;
 import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.api.PlusOneAPI;
+import harambesoft.com.plusone.api.model.ResponseModel;
 import harambesoft.com.plusone.api.model.TokenModel;
 import harambesoft.com.plusone.api.model.User;
 import harambesoft.com.plusone.services.ApiClient;
@@ -64,6 +65,9 @@ public class MeFragment extends Fragment {
     @BindView(R.id.textViewXp)
     TextView textViewXp;
 
+    @BindView(R.id.editTextGender)
+    EditText editTextGender;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,15 +95,14 @@ public class MeFragment extends Fragment {
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                Log.d(TAG, "onResponse: " + response.body().getId());
-                Log.d(TAG, "onResponse: " + response.body().getName());
-                Log.d(TAG, "onResponse: " + response.body().getEmail());
-                Log.d(TAG, "onResponse: " + response.body().getXp());
-                Log.d(TAG, "onResponse: " + response.body().getCreateDate());
-                editTextrFullName.setText(response.body().getName());
+                editTextrFullName.setText(response.body().getFullname());
                 textViewXp.setText("XP: " + response.body().getXp());
                 editTextrEMail.setText(response.body().getEmail());
                 textViewCreatedDate.setText("CD: " + response.body().getCreateDate());
+                editTextGender.setText(response.body().getGender());
+                editTextProfession.setText(response.body().getProfession());
+                editTextrCountry.setText(response.body().getCountry());
+                editTextrCıty.setText(response.body().getCity());
             }
 
             @Override
@@ -111,7 +114,23 @@ public class MeFragment extends Fragment {
     }
 
     @OnClick(R.id.buttonMeSave)
-    public void saveUser(){
+    public void saveUser() {
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
 
+        Call<ResponseModel> call = apiService.updateUser(CurrentUser.id(), editTextrEMail.getText().toString(),
+                editTextrFullName.getText().toString(), editTextrCountry.getText().toString(),
+                editTextrCıty.getText().toString(), editTextProfession.getText().toString(), CurrentUser.apiToken());
+        call.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                Log.d("TEST", "Save response: " + response.body().getMessage());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+
+            }
+        });
     }
 }
