@@ -8,6 +8,7 @@
     <color name="side_nav_bar_darker">#00737C</color>
     <color name="googleButton">#dd4b39</color>
     <color name="signButton">#de8258</color>
-    <color name="textColor">#fff</color>
+    <color name="textColor">#ffffff</color>
     <color name="white">#fff</color>
+    <color name="removeButton">#c10909</color>
 </resources>

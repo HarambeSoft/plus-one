@@ -17,6 +17,8 @@ import com.google.android.gms.location.LocationServices;
 import java.text.DateFormat;
 import java.util.Date;
 
+import harambesoft.com.plusone.CurrentUser;
+
 public class LocationTrackerService extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
     private static final String TAG = "LocationTrackerService";
     private GoogleApiClient mGoogleApiClient;
@@ -49,11 +51,12 @@ public class LocationTrackerService extends Service implements GoogleApiClient.C
 
     @Override
     public void onLocationChanged(Location location) {
-        //TODO: write them to firebase and maybe SharedPreferences
-        String mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
+        String mLastUpdateTime = DateFormat.getTimeInstance().format(new Date()); //FIXME: add day/date
         Log.d("LOCATION NEW", "Updated: " + mLastUpdateTime);
         Log.d("LOCATION Latitude", Double.toString(location.getLatitude()));
         Log.d("LOCATION Longitude", Double.toString(location.getLongitude()));
+
+        CurrentUser.updateLocation(location, mLastUpdateTime);
     }
 
     @Override
@@ -72,7 +75,6 @@ public class LocationTrackerService extends Service implements GoogleApiClient.C
         } catch (SecurityException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override

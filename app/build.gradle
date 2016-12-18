@@ -33,15 +33,13 @@ dependencies {
     // Google Services
     compile 'com.google.android.gms:play-services:9.2.0'
 
-    //Firebase Messaging
+    //Firebase Messaging & Database
     compile 'com.google.firebase:firebase-messaging:9.2.0'
 
-
-    //Butterknife
+}
+ //Butterknife
     compile 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-
-}
 
 //Google Services
 apply plugin: 'com.google.gms.google-services'
