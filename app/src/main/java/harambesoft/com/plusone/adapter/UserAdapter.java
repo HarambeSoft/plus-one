@@ -5,5 +5,5 @@ package harambesoft.com.plusone.adapter;
  */
 
 public class UserAdapter {
-    
+
 }

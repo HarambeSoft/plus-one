@@ -41,7 +41,7 @@ android:layout_height="match_parent">
     android:layout_height="wrap_content"
     android:inputType="textPersonName"
     android:ems="10"
-    android:id="@+id/editText"
+    android:id="@+id/editTextrFullName"
     android:hint="Name Surname"
     android:background="@drawable/textview_border" />
 
@@ -52,32 +52,32 @@ android:layout_height="match_parent">
     android:id="@+id/textView2"
     android:layout_marginTop="12dp" />
 
-<EditText
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:inputType="textEmailAddress"
-    android:ems="10"
-    android:id="@+id/editText9"
-    android:hint="E mail"
-    android:background="@drawable/textview_border" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/editTextrEMail"
+        android:hint="E mail"
+        android:background="@drawable/textview_border" />
 
-<TextView
+    <TextView
     android:text="Country"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/textView3"
     android:layout_marginTop="12dp" />
 
-<EditText
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:inputType="textPersonName"
-    android:ems="10"
-    android:id="@+id/editText10"
-    android:hint="Country"
-    android:background="@drawable/textview_border" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextrCountry"
+        android:hint="Country"
+        android:background="@drawable/textview_border" />
 
-<TextView
+    <TextView
     android:text="City"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -89,36 +89,42 @@ android:layout_height="match_parent">
     android:layout_height="wrap_content"
     android:inputType="textPersonName"
     android:ems="10"
-    android:id="@+id/editText11"
+    android:id="@+id/editTextrCıty"
     android:hint="City"
     android:background="@drawable/textview_border" />
 
-<TextView
-    android:text="createDate"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/textView5"
-    android:layout_marginTop="12dp" />
+    <TextView
+        android:text="createDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewCreatedDate"
+        android:layout_marginTop="12dp" />
 
-<TextView
+    <TextView
     android:text="XP"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/textView6" />
+    android:id="@+id/textViewXp" />
 
-<TextView
+    <TextView
     android:text="Profession"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/textView7"
     android:layout_marginTop="12dp" />
 
-<EditText
+    <EditText
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:inputType="textPersonName"
     android:ems="10"
-    android:id="@+id/editText12"
+    android:id="@+id/editTextProfession"
     android:hint="Profession"
     android:background="@drawable/textview_border" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonMeSave"
+        android:text="SAVE"/>
 </LinearLayout>
