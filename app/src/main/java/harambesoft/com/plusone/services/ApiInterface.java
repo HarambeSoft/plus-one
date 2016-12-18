@@ -49,7 +49,5 @@ public interface ApiInterface {
 
     @POST("poll/{id}/option")
     Call<ResponseModel<OptionModel>> createOption(@Path("id") String id,
-                                   @Query("content") String content);
-
-
+                                                  @Query("content") String content);
 }

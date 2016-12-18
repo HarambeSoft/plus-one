@@ -49,6 +49,9 @@ public class CurrentUser {
             userMap.put("long", location.getLongitude());
             userMap.put("last_update", time);
             locationsRef.child(CurrentUser.id()).setValue(userMap);
+
+            PlusOne.settings().edit().putString("latitude", Double.toString(location.getLatitude()))
+                    .putString("longitude", Double.toString(location.getLongitude())).commit();
         }
     }
 
@@ -67,6 +70,15 @@ public class CurrentUser {
     public static String apiToken() {
         return PlusOne.settings().getString("api_token", "");
     }
+
+    public static String latitude() {
+        return PlusOne.settings().getString("latitude", "");
+    }
+
+    public static String longitude() {
+        return PlusOne.settings().getString("longitude", "");
+    }
+
 
     public static String notificationTopic() {
         // if user is not logged in, we choose NotLoggedIn as topic
