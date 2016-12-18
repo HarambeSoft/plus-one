@@ -1,6 +1,9 @@
 package harambesoft.com.plusone.services;
 
 
+import java.util.List;
+
+import harambesoft.com.plusone.api.model.CategoryModel;
 import harambesoft.com.plusone.api.model.OptionModel;
 import harambesoft.com.plusone.api.model.PollModel;
 import harambesoft.com.plusone.api.model.ResponseModel;
@@ -35,6 +38,9 @@ public interface ApiInterface {
                                    @Query("city") String city,
                                    @Query("profession") String profession,
                                    @Query("api_token") String api_token);
+
+    @GET("category")
+    Call<List<CategoryModel>> getCategories(@Query("api_token") String api_token);
 
     @POST("poll")
     Call<ResponseModel<PollModel>> createPoll(@Query("question") String question,

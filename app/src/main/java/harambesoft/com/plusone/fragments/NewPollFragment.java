@@ -56,15 +56,21 @@ public class NewPollFragment extends Fragment {
         // Inflate the layout for this fragment
         ButterKnife.bind(this, view);
 
-        String[] arrayOptionType = new String[]{
-                "multi","single"
-        };
-       // ArrayAdapter<String> adapterOptionType = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayOptionType);
+        String arrayOptionType[] = {"multi", "single"};
+        ArrayAdapter<String> adapterOptionType = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, arrayOptionType);
+        spinnerOptionType.setAdapter(adapterOptionType);
+
+        String arrayPollType[] = {"global", "local"};
+        ArrayAdapter<String> adapterPollType = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, arrayPollType);
+        spinnerPollType.setAdapter(adapterPollType);
+
+
+
 
         return view;
     }
 
-    public void createPoll(){
+    public void createPoll() {
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
         Call<ResponseModel<PollModel>> call = apiService.createPoll(editTextQuestion.getText().toString(),
