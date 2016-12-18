@@ -53,54 +53,12 @@ android:layout_height="match_parent">
     </LinearLayout>
 
 
-
-
     <TextView
     android:text="Name Surname:"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/textView"
-    android:layout_marginTop="12dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp" />
-
-<EditText
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:inputType="textPersonName"
-    android:ems="10"
-    android:id="@+id/editTextrFullName"
-    android:hint="Name Surname"
-    android:background="@drawable/textview_border"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp" />
-
-<TextView
-    android:text="E Mail"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/textView2"
-    android:layout_marginTop="12dp"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:id="@+id/editTextrEMail"
-        android:hint="E mail"
-        android:background="@drawable/textview_border"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp" />
-
-    <TextView
-    android:text="Country"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/textView3"
-    android:layout_marginTop="12dp"
+    android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp" />
 
@@ -108,39 +66,79 @@ android:layout_height="match_parent">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/editTextrCountry"
-        android:hint="Country"
-        android:background="@drawable/textview_border"
+        android:id="@+id/editTextrFullName"
+        android:hint="Name Surname"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="?android:attr/editTextBackground"
+        android:textSize="10sp" />
+
+    <TextView
+    android:text="E Mail"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/textView2"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:id="@+id/editTextrEMail"
+        android:hint="E mail"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="?android:attr/editTextBackground"
+        android:textSize="10sp" />
+
+    <TextView
+    android:text="Country"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/textView3"
+    android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:id="@+id/editTextrCountry"
+        android:hint="Country"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="?android:attr/editTextBackground"
+        android:textSize="10sp" />
 
     <TextView
     android:text="City"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/textView4"
-    android:layout_marginTop="12dp"
+    android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp" />
 
-<EditText
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:inputType="textPersonName"
-    android:ems="10"
-    android:id="@+id/editTextrCıty"
-    android:hint="City"
-    android:background="@drawable/textview_border"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:id="@+id/editTextrCıty"
+        android:hint="City"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="?android:attr/editTextBackground"
+        android:textSize="10sp" />
 
     <TextView
         android:text="createDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textViewCreatedDate"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp" />
 
@@ -157,7 +155,7 @@ android:layout_height="match_parent">
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/textView7"
-    android:layout_marginTop="12dp"
+    android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp" />
 
@@ -165,19 +163,19 @@ android:layout_height="match_parent">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:ems="10"
         android:id="@+id/editTextProfession"
         android:hint="Profession"
-        android:background="@drawable/textview_border"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp" />
+        android:layout_marginRight="20dp"
+        android:background="?android:attr/editTextBackground"
+        android:textSize="10sp" />
 
     <TextView
         android:text="Gender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView8"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp" />
 
@@ -185,12 +183,12 @@ android:layout_height="match_parent">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:ems="10"
         android:id="@+id/editTextGender"
         android:hint="Gender"
-        android:background="@drawable/textview_border"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp" />
+        android:layout_marginRight="20dp"
+        android:background="?android:attr/editTextBackground"
+        android:textSize="10sp" />
 
     <Button
         android:layout_width="match_parent"
@@ -201,4 +199,5 @@ android:layout_height="match_parent">
         android:textColor="@color/textColor"
         android:background="@android:color/holo_green_dark"
         android:layout_marginTop="5dp" />
+
 </LinearLayout>
