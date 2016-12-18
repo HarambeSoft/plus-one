@@ -79,16 +79,16 @@
     <Button
         android:id="@+id/buttonGoogleSignIn"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
         android:layout_column="0"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="20dp"
         android:layout_row="4"
-        android:background="@color/googleButton"
+        android:background="@drawable/common_plus_signin_btn_text_dark_normal"
         android:text="Sign In With Google"
         android:textAllCaps="false"
         android:textColor="@color/textColor"
-        android:textStyle="normal|bold" />
+        android:textStyle="normal|bold"
+        android:layout_height="60dp" />
 
 </LinearLayout>
