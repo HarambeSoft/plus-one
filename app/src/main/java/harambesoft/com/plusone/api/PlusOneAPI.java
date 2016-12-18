@@ -13,6 +13,7 @@ import java.io.StreamCorruptedException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import harambesoft.com.plusone.CurrentUser;
 import harambesoft.com.plusone.MainActivity;
 import harambesoft.com.plusone.PlusOne;
 import harambesoft.com.plusone.api.model.UserModel;
@@ -79,6 +80,11 @@ public class PlusOneAPI {
                         editor.putString("email", userJson.getString("email"));
                         editor.putString("id", userJson.getString("id"));
 
+
+                        CurrentUser.login(userJson.getString("id"),
+                                            userJson.getString("name"),
+                                            userJson.getString("email"),
+                                            resultJson.getString("api_token"));
                         handler.onLoginFinished(true, "");
                     } else {
                         handler.onLoginFinished(false, resultJson.getString("message"));

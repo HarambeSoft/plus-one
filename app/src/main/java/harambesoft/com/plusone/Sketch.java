@@ -8,9 +8,6 @@ public class Sketch extends PApplet {
 
 
 
-
-
-
     double longitude, latitude, altitude;
     String tmp  = "https://maps.googleapis.com/maps/api/staticmap?&center=39.78492138772224,30.509143963437293&zoom=16&size=480x800&key=AIzaSyAc356Rv5G_qfLWokpLdTt5apP8ToSiiV8";
     boolean loaded = false;

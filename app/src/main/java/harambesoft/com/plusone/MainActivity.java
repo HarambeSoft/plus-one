@@ -19,6 +19,8 @@ import android.view.MenuItem;
 import android.support.v4.app.FragmentManager;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import harambesoft.com.plusone.fragments.ActivityStreamFragment;
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity
         assignWidgets();
         checkUserLogin();
 
-        //
+        // Start location tracker
         startService(new Intent(this, LocationTrackerService.class));
 
     }
@@ -105,18 +107,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     public boolean checkUserLogin() {
-        // Check if user logged in
-        String userName = PlusOne.settings().getString("name", "");
-        String email = PlusOne.settings().getString("email", "");
-
-        if (!userName.isEmpty()) {
-            // Subscribe to user notification channel
-            FirebaseMessaging.getInstance().subscribeToTopic(PlusOne.firebaseUserTopic());
-            Log.d("MainActivity", "User is logged in.");
-            Log.d("MainActivity", "Subbed to notifications of " + userName);
-
-            textViewUserNameNavHeader.setText(userName);
-            textViewEmailNavHeader.setText(email);
+        if (CurrentUser.exists()) {
+            textViewUserNameNavHeader.setText(CurrentUser.name());
+            textViewEmailNavHeader.setText(CurrentUser.email());
 
             // User is logged in, redirect to ActivityStream
             getSupportFragmentManager().beginTransaction()
@@ -206,8 +199,7 @@ public class MainActivity extends AppCompatActivity
                     .commit();
         } else if (id == R.id.nav_logout) {
             // Logout
-            PlusOne.settings().edit().clear().commit();
-            FirebaseMessaging.getInstance().unsubscribeFromTopic(PlusOne.firebaseUserTopic());
+            CurrentUser.logout();
             this.checkUserLogin();
         }
 
