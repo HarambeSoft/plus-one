@@ -1,35 +1,25 @@
 package harambesoft.com.plusone.api.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by yucel on 12.12.2016.
  */
 
 public class OptionModel {
-
+    @SerializedName("poll_id")
+    @Expose
     private String pollId;
+    @SerializedName("id")
+    @Expose
     private Integer id;
+    @SerializedName("content")
+    @Expose
     private String content;
+    @SerializedName("vote")
+    @Expose
     private String vote;
-
-    /**
-     * No args constructor for use in serialization
-     */
-    public OptionModel() {
-    }
-
-    /**
-     * @param content
-     * @param id
-     * @param pollId
-     * @param vote
-     */
-    public OptionModel(String pollId, Integer id, String content, String vote) {
-        super();
-        this.pollId = pollId;
-        this.id = id;
-        this.content = content;
-        this.vote = vote;
-    }
 
     public String getPollId() {
         return pollId;

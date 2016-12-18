@@ -1,56 +1,51 @@
 package harambesoft.com.plusone.api.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 /**
  * Created by yucel on 12.12.2016.
  */
 
 public class PollModel {
-
+    @SerializedName("user_id")
+    @Expose
     private String userId;
+    @SerializedName("category_id")
+    @Expose
     private String categoryId;
+    @SerializedName("id")
+    @Expose
     private Integer id;
+    @SerializedName("question")
+    @Expose
     private String question;
+    @SerializedName("poll_type")
+    @Expose
     private String pollType;
+    @SerializedName("option_type")
+    @Expose
     private String optionType;
+    @SerializedName("stat")
+    @Expose
     private String stat;
+    @SerializedName("duration")
+    @Expose
     private String duration;
+    @SerializedName("latitude")
+    @Expose
     private String latitude;
+    @SerializedName("longitude")
+    @Expose
     private String longitude;
+    @SerializedName("diameter")
+    @Expose
     private String diameter;
-
-    /**
-     * No args constructor for use in serialization
-     */
-    public PollModel() {
-    }
-
-    /**
-     * @param id
-     * @param diameter
-     * @param duration
-     * @param categoryId
-     * @param userId
-     * @param pollType
-     * @param longitude
-     * @param latitude
-     * @param question
-     * @param stat
-     * @param optionType
-     */
-    public PollModel(String userId, String categoryId, Integer id, String question, String pollType, String optionType, String stat, String duration, String latitude, String longitude, String diameter) {
-        super();
-        this.userId = userId;
-        this.categoryId = categoryId;
-        this.id = id;
-        this.question = question;
-        this.pollType = pollType;
-        this.optionType = optionType;
-        this.stat = stat;
-        this.duration = duration;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.diameter = diameter;
-    }
+    @SerializedName("options")
+    @Expose
+    private List<OptionModel> optionModels;
 
     public String getUserId() {
         return userId;
@@ -140,6 +135,13 @@ public class PollModel {
         this.diameter = diameter;
     }
 
+    public List<OptionModel> getOptionModels() {
+        return optionModels;
+    }
+
+    public void setOptionModels(List<OptionModel> optionModels) {
+        this.optionModels = optionModels;
+    }
 }
 
 

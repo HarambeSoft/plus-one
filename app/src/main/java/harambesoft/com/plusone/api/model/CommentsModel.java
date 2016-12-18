@@ -1,41 +1,32 @@
 package harambesoft.com.plusone.api.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by yucel on 16.12.2016.
  */
 
 public class CommentsModel {
 
+    @SerializedName("user_id")
+    @Expose
     private String userId;
+    @SerializedName("id")
+    @Expose
     private Integer id;
+    @SerializedName("create_date")
+    @Expose
     private String createDate;
+    @SerializedName("content")
+    @Expose
     private String content;
+    @SerializedName("up_vote")
+    @Expose
     private String upVote;
+    @SerializedName("down_vote")
+    @Expose
     private String downVote;
-
-    /**
-     * No args constructor for use in serialization
-     */
-    public CommentsModel() {
-    }
-
-    /**
-     * @param content
-     * @param id
-     * @param downVote
-     * @param userId
-     * @param upVote
-     * @param createDate
-     */
-    public CommentsModel(String userId, Integer id, String createDate, String content, String upVote, String downVote) {
-        super();
-        this.userId = userId;
-        this.id = id;
-        this.createDate = createDate;
-        this.content = content;
-        this.upVote = upVote;
-        this.downVote = downVote;
-    }
 
     public String getUserId() {
         return userId;
