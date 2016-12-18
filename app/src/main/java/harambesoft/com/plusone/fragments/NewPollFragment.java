@@ -9,17 +9,14 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import java.lang.reflect.Array;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import harambesoft.com.plusone.CurrentUser;
 import harambesoft.com.plusone.R;
-import harambesoft.com.plusone.api.model.PollModel;
-import harambesoft.com.plusone.api.model.ResponseModel;
+import harambesoft.com.plusone.model.PollModel;
+import harambesoft.com.plusone.model.ResponseModel;
 import harambesoft.com.plusone.services.ApiClient;
 import harambesoft.com.plusone.services.ApiInterface;
-import harambesoft.com.plusone.services.LocationTrackerService;
 import retrofit2.Call;
 
 /**

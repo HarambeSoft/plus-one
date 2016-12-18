@@ -79,9 +79,9 @@ public class PlusOneAPI {
 
 
                         CurrentUser.login(userJson.getString("id"),
-                                            userJson.getString("name"),
-                                            userJson.getString("email"),
-                                            resultJson.getString("api_token"));
+                                userJson.getString("name"),
+                                userJson.getString("email"),
+                                resultJson.getString("api_token"));
                         handler.onLoginFinished(true, "");
                     } else {
                         handler.onLoginFinished(false, resultJson.getString("message"));

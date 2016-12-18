@@ -1,4 +1,4 @@
-package harambesoft.com.plusone.api.model;
+package harambesoft.com.plusone.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

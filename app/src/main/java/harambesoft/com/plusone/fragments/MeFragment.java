@@ -7,31 +7,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import harambesoft.com.plusone.CurrentUser;
-import harambesoft.com.plusone.PlusOne;
 import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.api.PlusOneAPI;
-import harambesoft.com.plusone.api.model.ResponseModel;
-import harambesoft.com.plusone.api.model.TokenModel;
-import harambesoft.com.plusone.api.model.User;
+import harambesoft.com.plusone.model.ResponseModel;
+import harambesoft.com.plusone.model.User;
 import harambesoft.com.plusone.services.ApiClient;
 import harambesoft.com.plusone.services.ApiInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-
-import harambesoft.com.plusone.R;
 
 /**
  * Created by gizemfitoz on 13/12/16.

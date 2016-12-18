@@ -3,12 +3,12 @@ package harambesoft.com.plusone.services;
 
 import java.util.List;
 
-import harambesoft.com.plusone.api.model.CategoryModel;
-import harambesoft.com.plusone.api.model.OptionModel;
-import harambesoft.com.plusone.api.model.PollModel;
-import harambesoft.com.plusone.api.model.ResponseModel;
-import harambesoft.com.plusone.api.model.TokenModel;
-import harambesoft.com.plusone.api.model.User;
+import harambesoft.com.plusone.model.CategoryModel;
+import harambesoft.com.plusone.model.OptionModel;
+import harambesoft.com.plusone.model.PollModel;
+import harambesoft.com.plusone.model.ResponseModel;
+import harambesoft.com.plusone.model.TokenModel;
+import harambesoft.com.plusone.model.User;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
