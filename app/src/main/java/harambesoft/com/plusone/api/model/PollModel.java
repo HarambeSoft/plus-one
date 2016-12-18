@@ -20,13 +20,11 @@ public class PollModel {
 
     /**
      * No args constructor for use in serialization
-     *
      */
     public PollModel() {
     }
 
     /**
-     *
      * @param id
      * @param diameter
      * @param duration

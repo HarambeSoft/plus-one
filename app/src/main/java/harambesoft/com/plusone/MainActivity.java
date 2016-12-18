@@ -40,6 +40,10 @@ public class MainActivity extends AppCompatActivity
     private TextView textViewUserNameNavHeader = null;
     private TextView textViewEmailNavHeader = null;
 
+    private static final String TAG = MainActivity.class.getSimpleName();
+
+    // TODO - insert your themoviedb.org API KEY here
+
     public static Context getAppContext() {
         return appContext;
     }
@@ -61,6 +65,7 @@ public class MainActivity extends AppCompatActivity
 
         //
         startService(new Intent(this, LocationTrackerService.class));
+
     }
 
     private void loadDrawer() {

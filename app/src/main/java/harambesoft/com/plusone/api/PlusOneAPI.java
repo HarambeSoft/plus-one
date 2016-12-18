@@ -22,6 +22,10 @@ import harambesoft.com.plusone.api.model.UserModel;
  */
 
 public class PlusOneAPI {
+
+    private static String userToken;
+    private static String userId;
+
     private static final String URL = "http://plusone.isamert.net/public/api/v1/";
     //FIXME: change at production
 
@@ -55,9 +59,10 @@ public class PlusOneAPI {
     }
 
     public static void login(final String name, String password, final LoginFinishedHandler handler) throws IOException {
-        POSTData postData = new POSTData();
+        final POSTData postData = new POSTData();
         postData.put("name", name);
-        postData.put("password", password);
+        postData.put("password"
+                , password);
 
         PlusOneAPI.sendPOSTRequest("token", new String[]{}, postData, new Request.RequestFinishedHandler() {
             @Override
@@ -66,17 +71,22 @@ public class PlusOneAPI {
                     JSONObject resultJson = new JSONObject(result);
                     boolean error = resultJson.getBoolean("error");
                     Log.d("LOGIN RESPONSE", result);
+                    Log.d("TEST", resultJson.getString("api_token"));
+                    Log.d("TEST", resultJson.toString());
 
                     if (!error) {
                         JSONObject userJson = resultJson.getJSONObject("user");
 
                         // Add token to SharedPreferences for later use
                         SharedPreferences.Editor editor = PlusOne.settings().edit();
-                        editor.putString("api_token", resultJson.getString("api_token"));
+                        editor.putString(" ", resultJson.getString("api_token"));
                         editor.putString("name", name);
                         editor.putString("email", userJson.getString("email"));
                         editor.putString("id", userJson.getString("id"));
                         editor.commit();
+
+                        userToken = resultJson.getString("api_token");
+                        userId = resultJson.getString("user");
 
                         handler.onLoginFinished(true, "");
                     } else {
@@ -155,5 +165,13 @@ public class PlusOneAPI {
                 }
             }
         });
+    }
+
+    public static String getUserToken() {
+        return userToken;
+    }
+
+    public static String getUserId() {
+        return userId;
     }
 }

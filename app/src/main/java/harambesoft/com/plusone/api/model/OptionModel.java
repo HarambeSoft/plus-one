@@ -13,13 +13,11 @@ public class OptionModel {
 
     /**
      * No args constructor for use in serialization
-     *
      */
     public OptionModel() {
     }
 
     /**
-     *
      * @param content
      * @param id
      * @param pollId

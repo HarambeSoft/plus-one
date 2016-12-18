@@ -1,5 +1,7 @@
 package harambesoft.com.plusone.api.model;
 
+import java.util.List;
+
 /**
  * Created by yucel on 12.11.2016.
  */
@@ -20,13 +22,11 @@ public class UserModel {
 
     /**
      * No args constructor for use in serialization
-     *
      */
     public UserModel() {
     }
 
     /**
-     *
      * @param id
      * @param email
      * @param profilePicture
@@ -84,7 +84,6 @@ public class UserModel {
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
     }
-
 
     public String getXp() {
         return xp;
