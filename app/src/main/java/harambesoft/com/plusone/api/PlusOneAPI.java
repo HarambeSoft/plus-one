@@ -23,6 +23,7 @@ import harambesoft.com.plusone.api.model.UserModel;
  */
 
 public class PlusOneAPI {
+
     private static final String URL = "http://plusone.isamert.net/public/api/v1/";
     //FIXME: change at production
 
@@ -56,9 +57,10 @@ public class PlusOneAPI {
     }
 
     public static void login(final String name, String password, final LoginFinishedHandler handler) throws IOException {
-        POSTData postData = new POSTData();
+        final POSTData postData = new POSTData();
         postData.put("name", name);
-        postData.put("password", password);
+        postData.put("password"
+                , password);
 
         PlusOneAPI.sendPOSTRequest("token", new String[]{}, postData, new Request.RequestFinishedHandler() {
             @Override
@@ -70,6 +72,15 @@ public class PlusOneAPI {
 
                     if (!error) {
                         JSONObject userJson = resultJson.getJSONObject("user");
+
+                        // Add token to SharedPreferences for later use
+                        SharedPreferences.Editor editor = PlusOne.settings().edit();
+                        editor.putString("api_token", resultJson.getString("api_token"));
+                        editor.putString("name", name);
+                        editor.putString("email", userJson.getString("email"));
+                        editor.putString("id", userJson.getString("id"));
+
+
                         CurrentUser.login(userJson.getString("id"),
                                             userJson.getString("name"),
                                             userJson.getString("email"),

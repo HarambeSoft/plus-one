@@ -15,13 +15,11 @@ public class CommentsModel {
 
     /**
      * No args constructor for use in serialization
-     *
      */
     public CommentsModel() {
     }
 
     /**
-     *
      * @param content
      * @param id
      * @param downVote
