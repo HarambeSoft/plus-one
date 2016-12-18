@@ -14,7 +14,6 @@ import java.util.List;
 import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.api.PlusOneAPI;
 import harambesoft.com.plusone.api.model.TokenModel;
-import harambesoft.com.plusone.api.model.UserModel;
 import harambesoft.com.plusone.services.ApiClient;
 import harambesoft.com.plusone.services.ApiInterface;
 import retrofit2.Call;
@@ -48,8 +47,6 @@ public class MeFragment extends Fragment {
 
     public void getUser() {
 
-        PlusOneAPI plusOneAPI = new PlusOneAPI();
-
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
@@ -57,9 +54,7 @@ public class MeFragment extends Fragment {
         call.enqueue(new Callback<TokenModel>() {
             @Override
             public void onResponse(Call<TokenModel> call, Response<TokenModel> response) {
-                TokenModel tokenModel;
-                tokenModel = response.body();
-                Log.d(TAG, "USER: " + tokenModel.getUserModel().getEmail());
+                Log.d("TEST", response.body().getApiToken());
             }
 
             @Override

@@ -9,14 +9,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.StreamCorruptedException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import harambesoft.com.plusone.CurrentUser;
-import harambesoft.com.plusone.MainActivity;
 import harambesoft.com.plusone.PlusOne;
-import harambesoft.com.plusone.api.model.UserModel;
 
 /**
  * Created by isa on 11.12.2016.
@@ -130,12 +127,6 @@ public class PlusOneAPI {
             public void onRequestFinished(String result) {
                 try {
                     JSONObject jsonUser = new JSONObject(result);
-                    UserModel userModel = new UserModel();
-
-                    userModel.setName(jsonUser.getString("name"));
-                    userModel.setId(jsonUser.getInt("id"));
-
-                    Log.d("USER FOUND:", userModel.getName() + "  " + userModel.getId());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -151,11 +142,7 @@ public class PlusOneAPI {
                     JSONArray jsonUsers = new JSONArray(result);
                     for (int i = 0; i < jsonUsers.length(); i++) {
                         JSONObject jsonUser = jsonUsers.getJSONObject(i);
-                        UserModel userModel = new UserModel();
 
-                        userModel.setName(jsonUser.getString("name"));
-                        userModel.setId(jsonUser.getInt("id"));
-                        Log.d("USER FOUND:", userModel.getName() + "  " + userModel.getId());
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

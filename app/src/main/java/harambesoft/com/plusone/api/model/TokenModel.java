@@ -4,29 +4,27 @@ package harambesoft.com.plusone.api.model;
  * Created by yucel on 18.12.2016.
  */
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class TokenModel {
 
+    @SerializedName("error")
+    @Expose
     private Boolean error;
+    @SerializedName("api_token")
+    @Expose
     private String apiToken;
-    private UserModel userModel;
+    @SerializedName("user")
+    @Expose
+    private User user;
 
-    /**
-     * No args constructor for use in serialization
-     * TokenModel
-     * public Example() {
-     * }
-     * <p>
-     * /**
-     *
-     * @param apiToken
-     * @param error
-     * @param userModel
-     */
-    public TokenModel(Boolean error, String apiToken, UserModel userModel) {
-        super();
+    public Boolean getError() {
+        return error;
+    }
+
+    public void setError(Boolean error) {
         this.error = error;
-        this.apiToken = apiToken;
-        this.userModel = userModel;
     }
 
     public String getApiToken() {
@@ -37,21 +35,12 @@ public class TokenModel {
         this.apiToken = apiToken;
     }
 
-    public Boolean getError() {
-        return error;
+    public User getUser() {
+        return user;
     }
 
-    public void setError(Boolean error) {
-        this.error = error;
+    public void setUser(User user) {
+        this.user = user;
     }
-
-    public UserModel getUserModel() {
-        return userModel;
-    }
-
-    public void setUserModel(UserModel userModel) {
-        this.userModel = userModel;
-    }
-
 
 }
