@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class ApiClient {
-    public static final String BASE_URL = "http://192.198.1.174/~isa/plus-one-server/public/index.php/api/v1/";
+    public static final String BASE_URL = "http://plusone.isamert.net/public/api/v1/";
     private static Retrofit retrofit = null;
 
 
