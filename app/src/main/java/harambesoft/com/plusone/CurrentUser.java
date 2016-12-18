@@ -42,17 +42,13 @@ public class CurrentUser {
     public static void updateLocation(Location location, String time) {
         if (CurrentUser.exists()) {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference userRef = database.getReference("locations");
+            DatabaseReference locationsRef = database.getReference("locations");
 
-            Map<String, Object> locationMap = new HashMap<>();
-            Map<String, Object> userMap= new HashMap<>();
+            Map<String, Object> userMap = new HashMap<>();
             userMap.put("lat", location.getLatitude());
             userMap.put("long", location.getLongitude());
             userMap.put("last_update", time);
-            locationMap.put(CurrentUser.id(), userMap);
-
-            DatabaseReference newRef = userRef.push();
-            newRef.setValue(locationMap);
+            locationsRef.child(CurrentUser.id()).setValue(userMap);
         }
     }
 
