@@ -59,6 +59,24 @@
             </LinearLayout>
 
             <TextView
+                android:text="createDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewCreatedDate"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp" />
+
+            <TextView
+            android:text="XP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewXp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp" />
+
+            <TextView
             android:text="Name Surname:"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -137,24 +155,6 @@
                 android:layout_marginRight="20dp"
                 android:background="?android:attr/editTextBackground"
                 android:textSize="18sp" />
-
-            <TextView
-                android:text="createDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewCreatedDate"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp" />
-
-            <TextView
-            android:text="XP"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewXp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp" />
 
             <TextView
             android:text="Profession"
