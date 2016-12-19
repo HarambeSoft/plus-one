@@ -4,13 +4,15 @@ package harambesoft.com.plusone.services;
 import java.util.List;
 
 import harambesoft.com.plusone.model.CategoryModel;
-import harambesoft.com.plusone.model.OptionModel;
+import harambesoft.com.plusone.model.RequestOptionModel;
 import harambesoft.com.plusone.model.PollModel;
 import harambesoft.com.plusone.model.ResponseModel;
 import harambesoft.com.plusone.model.TokenModel;
 import harambesoft.com.plusone.model.User;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -54,7 +56,8 @@ public interface ApiInterface {
                                               @Query("category_id") String categoryId,
                                               @Query("api_token") String api_token);
 
-    @POST("poll/{id}/option")
-    Call<ResponseModel<List<OptionModel>>> createOption(@Path("id") String id,
-                                                  @Query("content") String content);
+    @Headers("Content-Type: application/json")
+    @POST("poll/{id}/options")
+    Call<List<RequestOptionModel>> createOption(@Path("id") String id,
+                                                @Body List<RequestOptionModel> optionModelList);
 }

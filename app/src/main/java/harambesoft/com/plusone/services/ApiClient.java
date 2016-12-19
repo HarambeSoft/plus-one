@@ -11,7 +11,6 @@ public class ApiClient {
     public static final String BASE_URL = "http://plusone.isamert.net/public/api/v1/";
     private static Retrofit retrofit = null;
 
-
     public static Retrofit getClient() {
 
         if (retrofit == null) {

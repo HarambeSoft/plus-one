@@ -10,6 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,7 +22,7 @@ import butterknife.OnClick;
 import harambesoft.com.plusone.CurrentUser;
 import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.model.CategoryModel;
-import harambesoft.com.plusone.model.OptionModel;
+import harambesoft.com.plusone.model.RequestOptionModel;
 import harambesoft.com.plusone.model.PollModel;
 import harambesoft.com.plusone.model.ResponseModel;
 import harambesoft.com.plusone.services.ApiClient;
@@ -123,19 +126,38 @@ public class NewPollFragment extends Fragment {
                 Log.e("TEST", response.body().getMessage());
                 if (!response.body().getError()) {
 
-                    Call<ResponseModel<List<OptionModel>>> callOption = apiService.createOption(response.body().getResponse().getId().toString(),
-                            editTextChoice1.getText().toString());
-                    callOption.enqueue(new Callback<ResponseModel<List<OptionModel>>>() {
+                    RequestOptionModel requestOptionModel = new RequestOptionModel();
+                    requestOptionModel.setContent(editTextChoice1.getText().toString());
+                    RequestOptionModel requestOptionModel2 = new RequestOptionModel();
+                    requestOptionModel2.setContent(editTextChoice2.getText().toString());
+                    RequestOptionModel requestOptionModel3 = new RequestOptionModel();
+                    requestOptionModel3.setContent(editTextChoice3.getText().toString());
+                    RequestOptionModel requestOptionModel4 = new RequestOptionModel();
+                    requestOptionModel4.setContent(editTextChoice4.getText().toString());
+
+                    List<RequestOptionModel> requestOptionModels = new ArrayList<RequestOptionModel>();
+                    requestOptionModels.add(requestOptionModel);
+                    requestOptionModels.add(requestOptionModel2);
+                    requestOptionModels.add(requestOptionModel3);
+                    requestOptionModels.add(requestOptionModel4);
+
+                    Gson gson = new Gson();
+                    Log.d("TEST", "GSON: " +   gson.toJson(requestOptionModels));
+                    Call<List<RequestOptionModel>> callOption = apiService.createOption(response.body().getResponse().getId().toString(),
+                            requestOptionModels);
+
+                    callOption.enqueue(new Callback<List<RequestOptionModel>>() {
                         @Override
-                        public void onResponse(Call<ResponseModel<List<OptionModel>>> call, Response<ResponseModel<List<OptionModel>>> response) {
+                        public void onResponse(Call<List<RequestOptionModel>> call, Response<List<RequestOptionModel>> response) {
 
                         }
 
                         @Override
-                        public void onFailure(Call<ResponseModel<List<OptionModel>>> call, Throwable t) {
+                        public void onFailure(Call<List<RequestOptionModel>> call, Throwable t) {
 
                         }
                     });
+
                 }
             }
 
