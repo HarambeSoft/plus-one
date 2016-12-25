@@ -143,6 +143,7 @@ public class MainActivity extends AppCompatActivity
         View header = LayoutInflater.from(this).inflate(R.layout.nav_header_main, null);
         navigationView.addHeaderView(header);
 
+        // TODO: replace with Butterknife calls
         textViewEmailNavHeader = (TextView) header.findViewById(R.id.textViewEmailNavHeader);
         textViewUserNameNavHeader = (TextView) header.findViewById(R.id.textViewUsernameNavHeader);
     }

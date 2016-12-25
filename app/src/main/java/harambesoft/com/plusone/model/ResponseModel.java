@@ -7,32 +7,10 @@ import com.google.gson.annotations.SerializedName;
  * Created by yucel on 18.12.2016.
  */
 
-public class ResponseModel<T> {
-    @SerializedName("error")
-    @Expose
-    private Boolean error;
-    @SerializedName("message")
-    @Expose
-    private String message;
+public class ResponseModel<T> extends SimpleResponseModel {
     @SerializedName("response")
     @Expose
     private T response;
-
-    public Boolean getError() {
-        return error;
-    }
-
-    public void setError(Boolean error) {
-        this.error = error;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     public T getResponse() {
         return response;

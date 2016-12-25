@@ -7,6 +7,7 @@ import harambesoft.com.plusone.model.CategoryModel;
 import harambesoft.com.plusone.model.RequestOptionModel;
 import harambesoft.com.plusone.model.PollModel;
 import harambesoft.com.plusone.model.ResponseModel;
+import harambesoft.com.plusone.model.SimpleResponseModel;
 import harambesoft.com.plusone.model.TokenModel;
 import harambesoft.com.plusone.model.User;
 import retrofit2.Call;
@@ -58,6 +59,6 @@ public interface ApiInterface {
 
     @Headers("Content-Type: application/json")
     @POST("poll/{id}/options")
-    Call<List<RequestOptionModel>> createOption(@Path("id") String id,
-                                                @Body List<RequestOptionModel> optionModelList);
+    Call<SimpleResponseModel> createOption(@Path("id") String id,
+                                           @Body List<RequestOptionModel> optionModelList);
 }

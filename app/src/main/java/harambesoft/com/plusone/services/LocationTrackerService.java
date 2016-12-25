@@ -63,9 +63,9 @@ public class LocationTrackerService extends Service implements GoogleApiClient.C
     @Override
     public void onLocationChanged(Location location) {
         String mLastUpdateTime = DateFormat.getTimeInstance().format(new Date()); //FIXME: add day/date
-        Log.d("LOCATION NEW", "Updated: " + mLastUpdateTime);
-        Log.d("LOCATION Latitude", Double.toString(location.getLatitude()));
-        Log.d("LOCATION Longitude", Double.toString(location.getLongitude()));
+        Log.d(TAG, "Updated: " + mLastUpdateTime);
+        Log.d(TAG, "Latitude: " + Double.toString(location.getLatitude()));
+        Log.d(TAG, "Longitude: " + Double.toString(location.getLongitude()));
 
         CurrentUser.updateLocation(location, mLastUpdateTime);
     }
@@ -81,7 +81,7 @@ public class LocationTrackerService extends Service implements GoogleApiClient.C
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
         mLocationRequest.setInterval(30 * 1000); // Refresh every 1/2 mins
         mLocationRequest.setFastestInterval(3 * 1000);
-        try { //FIXME: get permissions from user Android 6+
+        try {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         } catch (SecurityException e) {
             e.printStackTrace();
