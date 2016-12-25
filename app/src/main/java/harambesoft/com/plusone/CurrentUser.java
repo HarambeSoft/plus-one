@@ -50,8 +50,10 @@ public class CurrentUser {
             userMap.put("last_update", time);
             locationsRef.child(CurrentUser.id()).setValue(userMap);
 
-            PlusOne.settings().edit().putString("latitude", Double.toString(location.getLatitude()))
-                    .putString("longitude", Double.toString(location.getLongitude())).commit();
+            PlusOne.settings().edit()
+                    .putString("latitude", Double.toString(location.getLatitude()))
+                    .putString("longitude", Double.toString(location.getLongitude()))
+                    .apply();
         }
     }
 

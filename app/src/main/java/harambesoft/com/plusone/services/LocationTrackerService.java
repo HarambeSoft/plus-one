@@ -1,6 +1,7 @@
 package harambesoft.com.plusone.services;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -19,9 +20,17 @@ import java.util.Date;
 
 import harambesoft.com.plusone.CurrentUser;
 
-public class LocationTrackerService extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class LocationTrackerService extends Service implements GoogleApiClient.ConnectionCallbacks,
+                                                                GoogleApiClient.OnConnectionFailedListener,
+                                                                LocationListener {
     private static final String TAG = "LocationTrackerService";
     private GoogleApiClient mGoogleApiClient;
+
+    private static Context context = null;
+
+    public static Context getContext() {
+        return context;
+    }
 
     @Override
     public void onCreate() {
@@ -33,6 +42,8 @@ public class LocationTrackerService extends Service implements GoogleApiClient.C
                 .build();
 
         mGoogleApiClient.connect();
+
+        context = this.getApplicationContext();
     }
 
     @Override

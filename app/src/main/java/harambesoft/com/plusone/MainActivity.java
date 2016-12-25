@@ -1,10 +1,14 @@
 package harambesoft.com.plusone;
 
+import android.*;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,15 +41,13 @@ import harambesoft.com.plusone.services.LocationTrackerService;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static Context appContext;
+    private static Context appContext = null;
+    private static int LOCATION_PERMISSION_REQUEST = 1;
+
 
     private NavigationView navigationView = null;
     private TextView textViewUserNameNavHeader = null;
     private TextView textViewEmailNavHeader = null;
-
-    private static final String TAG = MainActivity.class.getSimpleName();
-
-    // TODO - insert your themoviedb.org API KEY here
 
     public static Context getAppContext() {
         return appContext;
@@ -66,9 +68,44 @@ public class MainActivity extends AppCompatActivity
         assignWidgets();
         checkUserLogin();
 
-        // Start location tracker
-        startService(new Intent(this, LocationTrackerService.class));
 
+        // TODO: ask for location permission here, before service starts
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[] {
+                            android.Manifest.permission.ACCESS_FINE_LOCATION,
+                            android.Manifest.permission.ACCESS_COARSE_LOCATION
+                    },
+                    LOCATION_PERMISSION_REQUEST);
+        } else {
+            // We already have our permissions, so just start the service
+            startLocationTrackerService();
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == LOCATION_PERMISSION_REQUEST) {
+            for (int i = 0; i < permissions.length; i++) {
+                // String permission = permissions[i];
+                // No need to check what are the permissions, because we only have one request for now
+
+                int grantResult = grantResults[i];
+                if (grantResult == PackageManager.PERMISSION_GRANTED) {
+                    // We have permission now, so we can start service
+                    startLocationTrackerService();
+                }
+            }
+        }
+    }
+
+    private void startLocationTrackerService() {
+        startService(new Intent(this, LocationTrackerService.class));
+        Log.d("PLUSONE/SERVICE", "LocationTrackerService started.");
     }
 
     private void loadDrawer() {
