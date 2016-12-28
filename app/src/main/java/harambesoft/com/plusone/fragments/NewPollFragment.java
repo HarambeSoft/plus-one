@@ -10,8 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,13 +19,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import harambesoft.com.plusone.CurrentUser;
 import harambesoft.com.plusone.R;
-import harambesoft.com.plusone.model.CategoryModel;
-import harambesoft.com.plusone.model.RequestOptionModel;
-import harambesoft.com.plusone.model.PollModel;
-import harambesoft.com.plusone.model.ResponseModel;
-import harambesoft.com.plusone.model.SimpleResponseModel;
+import harambesoft.com.plusone.models.CategoryModel;
+import harambesoft.com.plusone.models.RequestOptionModel;
+import harambesoft.com.plusone.models.PollModel;
+import harambesoft.com.plusone.models.ResponseModel;
+import harambesoft.com.plusone.models.SimpleResponseModel;
 import harambesoft.com.plusone.services.ApiClient;
-import harambesoft.com.plusone.services.ApiInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
