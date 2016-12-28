@@ -1,8 +1,9 @@
 package harambesoft.com.plusone;
 
-import processing.core.*;
-
 import java.util.ArrayList;
+
+import processing.core.PApplet;
+import processing.core.PImage;
 
 public class Sketch extends PApplet {
 

@@ -6,8 +6,6 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import harambesoft.com.plusone.MainActivity;
-
 /**
  * Created by isa on 28.12.2016.
  */

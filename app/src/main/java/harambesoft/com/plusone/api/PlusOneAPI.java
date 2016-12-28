@@ -1,7 +1,6 @@
 package harambesoft.com.plusone.api;
 
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.json.JSONArray;

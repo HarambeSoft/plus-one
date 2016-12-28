@@ -1,7 +1,6 @@
 package harambesoft.com.plusone.services;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;

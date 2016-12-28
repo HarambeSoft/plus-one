@@ -4,8 +4,8 @@ package harambesoft.com.plusone.services;
 import java.util.List;
 
 import harambesoft.com.plusone.models.CategoryModel;
-import harambesoft.com.plusone.models.RequestOptionModel;
 import harambesoft.com.plusone.models.PollModel;
+import harambesoft.com.plusone.models.RequestOptionModel;
 import harambesoft.com.plusone.models.ResponseModel;
 import harambesoft.com.plusone.models.SimpleResponseModel;
 import harambesoft.com.plusone.models.TokenModel;
