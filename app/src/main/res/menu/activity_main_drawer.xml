@@ -13,10 +13,6 @@
         <item android:title="Misc">
             <menu>
                 <item
-                    android:id="@+id/nav_polls"
-                    android:icon="@drawable/ic_menu_slideshow"
-                    android:title="Polls" />
-                <item
                     android:id="@+id/nav_categories"
                     android:icon="@drawable/ic_menu_slideshow"
                     android:title="Categories" />

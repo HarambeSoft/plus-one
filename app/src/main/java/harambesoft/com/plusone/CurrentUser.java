@@ -23,7 +23,7 @@ public class CurrentUser {
     }
 
     public static void login(String id, String name, String email, String apiToken) {
-        SharedPreferences.Editor editor = PlusOne.settings().edit();
+        SharedPreferences.Editor editor = App.settings().edit();
         editor.putString("id", id);
         editor.putString("name", name);
         editor.putString("email", email);
@@ -35,7 +35,7 @@ public class CurrentUser {
     }
 
     public static void logout() {
-        PlusOne.settings().edit().clear().commit();
+        App.settings().edit().clear().commit();
         FirebaseMessaging.getInstance().unsubscribeFromTopic(CurrentUser.notificationTopic());
     }
 
@@ -50,7 +50,7 @@ public class CurrentUser {
             userMap.put("last_update", time);
             locationsRef.child(CurrentUser.id()).setValue(userMap);
 
-            PlusOne.settings().edit()
+            App.settings().edit()
                     .putString("latitude", Double.toString(location.getLatitude()))
                     .putString("longitude", Double.toString(location.getLongitude()))
                     .apply();
@@ -58,34 +58,34 @@ public class CurrentUser {
     }
 
     public static String id() {
-        return PlusOne.settings().getString("id", "");
+        return App.settings().getString("id", "");
     }
 
     public static String name() {
-        return PlusOne.settings().getString("name", "");
+        return App.settings().getString("name", "");
     }
 
     public static String email() {
-        return PlusOne.settings().getString("email", "");
+        return App.settings().getString("email", "");
     }
 
     public static String apiToken() {
-        return PlusOne.settings().getString("api_token", "");
+        return App.settings().getString("api_token", "");
     }
 
     public static String latitude() {
-        return PlusOne.settings().getString("latitude", "");
+        return App.settings().getString("latitude", "");
     }
 
     public static String longitude() {
-        return PlusOne.settings().getString("longitude", "");
+        return App.settings().getString("longitude", "");
     }
 
 
     public static String notificationTopic() {
         // if user is not logged in, we choose NotLoggedIn as topic
         // so we can send notifications to users that are not logged in
-        return "user_" + PlusOne.settings().getString("name", "NotLoggedIn");
+        return "user_" + App.settings().getString("name", "NotLoggedIn");
     }
 
 }

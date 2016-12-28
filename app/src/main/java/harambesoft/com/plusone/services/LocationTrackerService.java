@@ -26,12 +26,6 @@ public class LocationTrackerService extends Service implements GoogleApiClient.C
     private static final String TAG = "LocationTrackerService";
     private GoogleApiClient mGoogleApiClient;
 
-    private static Context context = null;
-
-    public static Context getContext() {
-        return context;
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -42,8 +36,6 @@ public class LocationTrackerService extends Service implements GoogleApiClient.C
                 .build();
 
         mGoogleApiClient.connect();
-
-        context = this.getApplicationContext();
     }
 
     @Override

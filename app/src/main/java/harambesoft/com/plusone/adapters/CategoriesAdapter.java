@@ -1,7 +1,6 @@
 package harambesoft.com.plusone.adapters;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +37,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     @Override
     public CategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.category_item, parent, false);
+                .inflate(R.layout.item_category, parent, false);
 
         return new CategoryViewHolder(itemView);
     }

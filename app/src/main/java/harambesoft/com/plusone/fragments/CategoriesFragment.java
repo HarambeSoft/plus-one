@@ -51,7 +51,6 @@ public class CategoriesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-
         categoriesAdapter = new CategoriesAdapter(categoryModelList);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerViewCategories.setLayoutManager(mLayoutManager);
@@ -62,7 +61,7 @@ public class CategoriesFragment extends Fragment {
             @Override
             public void onClick(View view, int position) {
                 CategoryModel category = categoryModelList.get(position);
-                Toast.makeText(getContext(), category.getName() + " is selected!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), category.getName(), Toast.LENGTH_SHORT).show();
             }
 
             @Override

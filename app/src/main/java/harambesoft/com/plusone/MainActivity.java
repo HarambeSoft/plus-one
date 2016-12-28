@@ -1,13 +1,11 @@
 package harambesoft.com.plusone;
 
-import android.*;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,16 +21,11 @@ import android.view.MenuItem;
 import android.support.v4.app.FragmentManager;
 import android.widget.TextView;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.messaging.FirebaseMessaging;
-
 import harambesoft.com.plusone.fragments.ActivityStreamFragment;
 import harambesoft.com.plusone.fragments.CategoriesFragment;
 import harambesoft.com.plusone.fragments.DiscoverFragment;
 import harambesoft.com.plusone.fragments.MeFragment;
 import harambesoft.com.plusone.fragments.NewPollFragment;
-import harambesoft.com.plusone.fragments.PollsFragment;
 import harambesoft.com.plusone.fragments.SettingsFragment;
 import harambesoft.com.plusone.fragments.SignInFragment;
 import harambesoft.com.plusone.services.LocationTrackerService;
@@ -41,24 +34,16 @@ import harambesoft.com.plusone.services.LocationTrackerService;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static Context appContext = null;
     private static int LOCATION_PERMISSION_REQUEST = 1;
-
 
     private NavigationView navigationView = null;
     private TextView textViewUserNameNavHeader = null;
     private TextView textViewEmailNavHeader = null;
 
-    public static Context getAppContext() {
-        return appContext;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Set appContext
-        appContext = this.getApplicationContext();
 
         setContentView(R.layout.activity_main);
 
@@ -217,10 +202,6 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_activity_stream) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, ActivityStreamFragment.newInstance())
-                    .commit();
-        } else if (id == R.id.nav_polls) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, new PollsFragment())
                     .commit();
         } else if (id == R.id.nav_categories) {
             getSupportFragmentManager().beginTransaction()

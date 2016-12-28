@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import harambesoft.com.plusone.App;
 import harambesoft.com.plusone.CurrentUser;
-import harambesoft.com.plusone.PlusOne;
 
 /**
  * Created by isa on 11.12.2016.
@@ -71,7 +71,7 @@ public class PlusOneAPI {
                         JSONObject userJson = resultJson.getJSONObject("user");
 
                         // Add token to SharedPreferences for later use
-                        SharedPreferences.Editor editor = PlusOne.settings().edit();
+                        SharedPreferences.Editor editor = App.settings().edit();
                         editor.putString("api_token", resultJson.getString("api_token"));
                         editor.putString("name", name);
                         editor.putString("email", userJson.getString("email"));

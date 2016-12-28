@@ -9,18 +9,23 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.google.android.gms.plus.Plus;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.Gson;
+
+import java.util.List;
 
 import harambesoft.com.plusone.MainActivity;
 import harambesoft.com.plusone.R;
+import harambesoft.com.plusone.helpers.ActivityStream;
+import harambesoft.com.plusone.models.ActivityModel;
 
 /**
  * Created by isa on 10.12.2016.
  */
 
 public class FirebaseMessageReciever extends FirebaseMessagingService {
-
     private static final String TAG = "FirebaseMessageReciever";
 
     @Override
@@ -40,6 +45,10 @@ public class FirebaseMessageReciever extends FirebaseMessagingService {
             title = remoteMessage.getNotification().getTitle();
             body = remoteMessage.getNotification().getBody();
         }
+
+        ActivityStream.add(title, body);
+        //TODO: add an event for activity(what happens when we click that activity?)
+        //FIXME: cant save notification if app is not running on foreground
 
         sendNotification(title, body);
     }
