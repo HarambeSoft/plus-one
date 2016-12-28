@@ -49,6 +49,11 @@ public class CategoriesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
+        loadAdapterAndRecyclerView();
+        getCategories();
+    }
+
+    private void loadAdapterAndRecyclerView() {
         categoriesAdapter = new CategoriesAdapter(categoryModelList);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerViewCategories.setLayoutManager(mLayoutManager);
@@ -67,8 +72,6 @@ public class CategoriesFragment extends Fragment {
 
             }
         }));
-
-        getCategories();
     }
 
     public void getCategories() {

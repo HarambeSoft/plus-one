@@ -77,7 +77,6 @@ public class MeFragment extends Fragment {
     }
 
     public void getUser() {
-
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
@@ -86,9 +85,9 @@ public class MeFragment extends Fragment {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 editTextrFullName.setText(response.body().getFullname());
-                textViewXp.setText("XP: " + response.body().getXp());
+                textViewXp.setText(String.format("XP: %s", response.body().getXp()));
                 editTextrEMail.setText(response.body().getEmail());
-                textViewCreatedDate.setText("CD: " + response.body().getCreateDate());
+                textViewCreatedDate.setText(String.format("CD: %s", response.body().getCreateDate()));
                 editTextGender.setText(response.body().getGender());
                 editTextProfession.setText(response.body().getProfession());
                 editTextrCountry.setText(response.body().getCountry());
