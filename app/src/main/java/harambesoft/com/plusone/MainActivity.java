@@ -35,7 +35,7 @@ import harambesoft.com.plusone.Constants.*;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static int LOCATION_PERMISSION_REQUEST = 1;
+    private static final int LOCATION_PERMISSION_REQUEST = 1;
 
     private NavigationView navigationView = null;
     private TextView textViewUserNameNavHeader = null;
@@ -50,10 +50,8 @@ public class MainActivity extends AppCompatActivity
 
         loadDrawer();
         loadActionButton();
-
         assignWidgets();
         checkUserLogin();
-
         kindlyAskForLocationPermissions();
 
         // Check intent data
