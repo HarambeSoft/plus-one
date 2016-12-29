@@ -12,6 +12,10 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import harambesoft.com.plusone.Constants.*;
 import harambesoft.com.plusone.MainActivity;
 import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.helpers.ActivityStream;
@@ -22,16 +26,12 @@ import harambesoft.com.plusone.helpers.ActivityStream;
 
 public class FirebaseMessageReciever extends FirebaseMessagingService {
     private static final String TAG = "FirebaseMessageReciever";
+    private Map<String, String> lastData = new HashMap<>();
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        // Check if message contains a data payload.
-        if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-
-            //TODO: Process extra data here.
-            // remoteMessage.getData()
-        }
+        Map<String, String> data = remoteMessage.getData();
+        lastData.putAll(data);
 
 
         String title = "PlusOne Notification";
@@ -53,6 +53,11 @@ public class FirebaseMessageReciever extends FirebaseMessagingService {
     private void sendNotification(String title, String body) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        if (lastData.containsKey(NotificationData.POLL_ID))
+            intent.putExtra(NotificationData.POLL_ID, Integer.valueOf(lastData.get(NotificationData.POLL_ID)));
+
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 

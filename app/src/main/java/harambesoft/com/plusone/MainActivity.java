@@ -25,9 +25,11 @@ import harambesoft.com.plusone.fragments.CategoriesFragment;
 import harambesoft.com.plusone.fragments.DiscoverFragment;
 import harambesoft.com.plusone.fragments.MeFragment;
 import harambesoft.com.plusone.fragments.NewPollFragment;
+import harambesoft.com.plusone.fragments.PollFragment;
 import harambesoft.com.plusone.fragments.SettingsFragment;
 import harambesoft.com.plusone.fragments.SignInFragment;
 import harambesoft.com.plusone.services.LocationTrackerService;
+import harambesoft.com.plusone.Constants.*;
 
 
 public class MainActivity extends AppCompatActivity
@@ -52,19 +54,15 @@ public class MainActivity extends AppCompatActivity
         assignWidgets();
         checkUserLogin();
 
+        kindlyAskForLocationPermissions();
 
-        // TODO: ask for location permission here, before service starts
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[] {
-                            android.Manifest.permission.ACCESS_FINE_LOCATION,
-                            android.Manifest.permission.ACCESS_COARSE_LOCATION
-                    },
-                    LOCATION_PERMISSION_REQUEST);
-        } else {
-            // We already have our permissions, so just start the service
-            startLocationTrackerService();
+        // Check intent data
+        Intent intent = getIntent();
+        if (intent.hasExtra(NotificationData.POLL_ID)) {
+            // We have a poll to show
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, PollFragment.newInstance(intent.getIntExtra(NotificationData.POLL_ID, 0)))
+                    .commit();
         }
 
     }
@@ -90,6 +88,22 @@ public class MainActivity extends AppCompatActivity
     private void startLocationTrackerService() {
         startService(new Intent(this, LocationTrackerService.class));
         Log.d("PLUSONE/SERVICE", "LocationTrackerService started.");
+    }
+
+    private void kindlyAskForLocationPermissions() {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[] {
+                            android.Manifest.permission.ACCESS_FINE_LOCATION,
+                            android.Manifest.permission.ACCESS_COARSE_LOCATION
+                    },
+                    LOCATION_PERMISSION_REQUEST);
+        } else {
+            // We already have our permissions, so just start the service
+            startLocationTrackerService();
+        }
+
     }
 
     private void loadDrawer() {

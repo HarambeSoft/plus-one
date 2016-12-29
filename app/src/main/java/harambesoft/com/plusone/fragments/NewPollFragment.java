@@ -144,7 +144,7 @@ public class NewPollFragment extends Fragment {
         RequestOptionModel requestOptionModel4 = new RequestOptionModel();
         requestOptionModel4.setContent(editTextChoice4.getText().toString());
 
-        List<RequestOptionModel> requestOptionModels = new ArrayList<RequestOptionModel>();
+        List<RequestOptionModel> requestOptionModels = new ArrayList<>();
         requestOptionModels.add(requestOptionModel);
         requestOptionModels.add(requestOptionModel2);
         requestOptionModels.add(requestOptionModel3);

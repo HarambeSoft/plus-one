@@ -5,5 +5,7 @@ package harambesoft.com.plusone;
  */
 
 public class Constants {
-
+    public class NotificationData {
+        public static final String POLL_ID = "poll_id";
+    }
 }

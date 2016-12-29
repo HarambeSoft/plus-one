@@ -54,7 +54,7 @@ public class PollFragment extends Fragment {
         return fragment;
     }
 
-    /*
+    /* TODO:
     public static PollFragment newInstance(PollModel poll) {
         Bundle args = new Bundle();
         args.putParcelable("poll", poll);
