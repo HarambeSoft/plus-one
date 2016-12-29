@@ -57,6 +57,10 @@ public interface ApiInterface {
                                               @Query("category_id") String categoryId,
                                               @Query("api_token") String api_token);
 
+    @GET("poll/{id}")
+    Call<PollModel> getPoll(@Path("id") int id,
+                            @Query("api_token") String api_token);
+
     @Headers("Content-Type: application/json")
     @POST("poll/{id}/options")
     Call<SimpleResponseModel> createOption(@Path("id") String id,

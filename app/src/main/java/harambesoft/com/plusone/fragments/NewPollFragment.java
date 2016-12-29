@@ -134,7 +134,7 @@ public class NewPollFragment extends Fragment {
         });
     }
 
-    private void addOptionsToPoll(String pollID) {
+    private void addOptionsToPoll(final String pollID) {
         RequestOptionModel requestOptionModel = new RequestOptionModel();
         requestOptionModel.setContent(editTextChoice1.getText().toString());
         RequestOptionModel requestOptionModel2 = new RequestOptionModel();
@@ -157,6 +157,9 @@ public class NewPollFragment extends Fragment {
             public void onResponse(Call<SimpleResponseModel> call, Response<SimpleResponseModel> response) {
                 Log.d(TAG, "Options added to poll.");
                 // It's now safe to show poll.
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, PollFragment.newInstance(Integer.valueOf(pollID)))
+                        .commit();
             }
 
             @Override
