@@ -67,7 +67,7 @@ public class NewPollFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         loadSpinners();
-        getCategories();
+        loadCategories();
 
         return view;
     }
@@ -82,7 +82,7 @@ public class NewPollFragment extends Fragment {
         spinnerPollType.setAdapter(adapterPollType);
     }
 
-    public void getCategories() {
+    public void loadCategories() {
         hashMapCategories = new HashMap<>();
         ApiClient.apiService().getCategories(CurrentUser.apiToken()).enqueue(new Callback<List<CategoryModel>>() {
             @Override

@@ -50,7 +50,7 @@ public class CategoriesFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         loadAdapterAndRecyclerView();
-        getCategories();
+        loadCategories();
     }
 
     private void loadAdapterAndRecyclerView() {
@@ -74,7 +74,7 @@ public class CategoriesFragment extends Fragment {
         }));
     }
 
-    public void getCategories() {
+    public void loadCategories() {
         ApiClient.apiService().getCategories(CurrentUser.apiToken()).enqueue(new Callback<List<CategoryModel>>() {
             @Override
             public void onResponse(Call<List<CategoryModel>> call, Response<List<CategoryModel>> response) {
