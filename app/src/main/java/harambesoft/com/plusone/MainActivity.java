@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,10 +23,8 @@ import processing.android.PFragment;
 
 import harambesoft.com.plusone.fragments.ActivityStreamFragment;
 import harambesoft.com.plusone.fragments.CategoriesFragment;
-import harambesoft.com.plusone.fragments.DiscoverFragment;
 import harambesoft.com.plusone.fragments.MeFragment;
 import harambesoft.com.plusone.fragments.NewPollFragment;
-import harambesoft.com.plusone.fragments.PollFragment;
 import harambesoft.com.plusone.fragments.SettingsFragment;
 import harambesoft.com.plusone.fragments.SignInFragment;
 import harambesoft.com.plusone.services.LocationTrackerService;
@@ -47,8 +44,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
+        // Update main activity
+        App.setMainActivity(this);
 
         loadDrawer();
         loadActionButton();
@@ -60,9 +58,7 @@ public class MainActivity extends AppCompatActivity
         Intent intent = getIntent();
         if (intent.hasExtra(NotificationData.POLL_ID)) {
             // We have a poll to show
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, PollFragment.newInstance(intent.getIntExtra(NotificationData.POLL_ID, 0)))
-                    .commit();
+            App.showPoll(intent.getIntExtra(Constants.NotificationData.POLL_ID, 0));
         }
 
     }
@@ -208,6 +204,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_activity_stream) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, new ActivityStreamFragment())
+                    .commit();
         } else if (id == R.id.nav_categories) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, new CategoriesFragment())

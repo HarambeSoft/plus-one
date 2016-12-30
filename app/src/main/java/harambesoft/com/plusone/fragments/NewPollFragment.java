@@ -17,6 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import harambesoft.com.plusone.App;
 import harambesoft.com.plusone.CurrentUser;
 import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.models.CategoryModel;
@@ -157,9 +158,7 @@ public class NewPollFragment extends Fragment {
             public void onResponse(Call<SimpleResponseModel> call, Response<SimpleResponseModel> response) {
                 Log.d(TAG, "Options added to poll.");
                 // It's now safe to show poll.
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.container, PollFragment.newInstance(Integer.valueOf(pollID)))
-                        .commit();
+                App.showPoll(Integer.valueOf(pollID));
             }
 
             @Override
