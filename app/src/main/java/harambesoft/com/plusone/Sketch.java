@@ -22,6 +22,7 @@ public class Sketch extends PApplet {
     float scaleX, scaleY;
     int time=0;
     public void setup() {
+        frameRate(60);
         //positionX =  (width/2) - mapImage.width/2 ;
         //positionY = (height/2) - mapImage.height/2;
         //scaleX =  mapImage.width ;
@@ -286,6 +287,7 @@ public class Sketch extends PApplet {
     }
     public void settings() {
         fullScreen(OPENGL,1);
+
     }
 
 
