@@ -10,20 +10,22 @@ public class Sketch extends PApplet {
 
 
     double longitude, latitude, altitude;
-    String tmp  = "https://maps.googleapis.com/maps/api/staticmap?&center=39.78492138772224,30.509143963437293&zoom=16&size=480x800&key=AIzaSyAc356Rv5G_qfLWokpLdTt5apP8ToSiiV8";
     boolean loaded = false;
     PImage mapImage;
-    String base_url = "https://maps.googleapis.com/maps/api/staticmap?&center=";
     String url = "";
     ArrayList<RotatingCube> woods = new ArrayList<RotatingCube>();
     ArrayList<BillBoard> billboards = new ArrayList<BillBoard>();
 
     public int unloadedTimeStart=0;
     boolean value = false;
-
+    int positionX , positionY;
+    float scaleX, scaleY;
     int time=0;
     public void setup() {
-
+        //positionX =  (width/2) - mapImage.width/2 ;
+        //positionY = (height/2) - mapImage.height/2;
+        //scaleX =  mapImage.width ;
+        //scaleY = mapImage.height;
         textAlign(CENTER, CENTER);
         textSize(36);
     }
@@ -92,7 +94,6 @@ public class Sketch extends PApplet {
         longitude = _longitude;
         latitude = _latitude;
         altitude = _altitude;
-        url = base_url +_latitude+","+_longitude+"&zoom=17"+"&size="+width+"x"+height+"&key=AIzaSyAc356Rv5G_qfLWokpLdTt5apP8ToSiiV8";
         if (_latitude!=0.0d && _longitude!=0.0d && _altitude!=0.0d)
             mapImage = loadImage(url);
         else {
@@ -105,16 +106,47 @@ public class Sketch extends PApplet {
    println(width+" - "+height+"\n"+mapImage.width+" - "+mapImage.height);*/
     }
     boolean loop = true;
+    int a=0;
+    float x=1.0f;
     public void mousePressed(){
 
-            if(loop) {
 
-                RotatingCube cube = new RotatingCube(mouseX,mouseY,0,false,false,true);
-                woods.add(cube);
+        int time=0;
+            if(a==0){
+                a++;
+                time = millis();
+                if(loop) {
+
+                    RotatingCube cube = new RotatingCube(mouseX,mouseY,0,false,false,true);
+                    woods.add(cube);
+                }
+            }else if(a==1){
+                if(millis() - time <= 800){
+                    scaleX *= 1.1;
+                    scaleY *=1.1;
+                    x*=1.1;
+                    positionX -= (mouseX - width/2);
+                    positionY -= (mouseY - height/2);
+                }
+                a--;
             }
+            println(a);
+
+
+
 
     }
+    public void mouseMoved(){
 
+        if(loop) {
+
+            pushMatrix();
+            fill(52);
+            ellipse(mouseX,mouseY,200,200);
+            popMatrix();
+        }
+
+    }
 
 /*if( loop){
 
@@ -252,7 +284,11 @@ public class Sketch extends PApplet {
             popMatrix();
         }
     }
-    public void settings() {  fullScreen(P3D,1); }
+    public void settings() {
+        fullScreen(OPENGL,1);
+    }
+
+
     static public void main(String[] passedArgs) {
         String[] appletArgs = new String[] { "Sketch" };
         if (passedArgs != null) {
@@ -261,4 +297,23 @@ public class Sketch extends PApplet {
             PApplet.main(appletArgs);
         }
     }
+
+
+
+    public void mouseDragged(){
+        positionX += (mouseX - pmouseX);
+        positionY += (mouseY - pmouseY);
+    }
+
+    public void keyPressed(){
+        if(key == 'r'){
+            scaleX = mapImage.width;
+            scaleY = mapImage.height;
+            positionX =  (width/2) - mapImage.width/2 ;
+            positionY = (height/2) - mapImage.height/2;
+        }
+
+    }
+
+
 }

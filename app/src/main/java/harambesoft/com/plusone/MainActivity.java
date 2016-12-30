@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
+import android.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,6 +19,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import processing.core.PApplet;
+import processing.android.PFragment;
 
 import harambesoft.com.plusone.fragments.ActivityStreamFragment;
 import harambesoft.com.plusone.fragments.CategoriesFragment;
@@ -201,26 +203,23 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
 
         //TODO: Add maps view
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        /* PApplet sketch = new Sketch();
-        PFragment fragment = new PFragment();
-        fragment.setSketch(sketch); */
-
         //TODO: Fix fragments
 
         int id = item.getItemId();
 
         if (id == R.id.nav_activity_stream) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, ActivityStreamFragment.newInstance())
-                    .commit();
         } else if (id == R.id.nav_categories) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, new CategoriesFragment())
                     .commit();
         } else if (id == R.id.nav_discover) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, new DiscoverFragment())
+            android.app.FragmentManager fragmentManager = getFragmentManager();
+            PApplet sketch = new Sketch();
+            PFragment fragment = new PFragment();
+            fragment.setSketch(sketch);
+
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, fragment)
                     .commit();
         } else if (id == R.id.nav_me) {
             getSupportFragmentManager().beginTransaction()
