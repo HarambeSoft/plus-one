@@ -16,6 +16,14 @@ public class ActivityModel {
     @Expose
     private String body;
 
+    @SerializedName("poll_id")
+    @Expose
+    private int pollID;
+
+    @SerializedName("comment_id")
+    @Expose
+    private int commentID;
+
     public String getTitle() {
         return title;
     }
@@ -30,5 +38,21 @@ public class ActivityModel {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public int getCommentID() {
+        return commentID;
+    }
+
+    public void setCommentID(int commentID) {
+        this.commentID = commentID;
+    }
+
+    public int getPollID() {
+        return pollID;
+    }
+
+    public void setPollID(int pollID) {
+        this.pollID = pollID;
     }
 }

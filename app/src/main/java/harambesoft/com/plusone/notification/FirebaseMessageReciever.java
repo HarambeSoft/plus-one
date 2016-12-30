@@ -26,14 +26,9 @@ import harambesoft.com.plusone.helpers.ActivityStream;
 
 public class FirebaseMessageReciever extends FirebaseMessagingService {
     private static final String TAG = "FirebaseMessageReciever";
-    private Map<String, String> lastData = new HashMap<>();
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        Map<String, String> data = remoteMessage.getData();
-        lastData.putAll(data);
-
-
         String title = "PlusOne Notification";
         String body = "No info about this notification.";
         if (remoteMessage.getNotification() != null) {
@@ -41,21 +36,28 @@ public class FirebaseMessageReciever extends FirebaseMessagingService {
             body = remoteMessage.getNotification().getBody();
         }
 
-        ActivityStream.add(title, body);
+
         //TODO: add an event for activity(what happens when we click that activity?)
         //FIXME: cant save notification if app is not running on foreground
         // maybe service and activity does not use same preferences
 
-        sendNotification(title, body);
+        sendNotification(title, body, remoteMessage.getData());
     }
 
     // This method is only generating push notification
-    private void sendNotification(String title, String body) {
+    private void sendNotification(String title, String body, Map<String, String> data) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        if (lastData.containsKey(NotificationData.POLL_ID))
-            intent.putExtra(NotificationData.POLL_ID, Integer.valueOf(lastData.get(NotificationData.POLL_ID)));
+
+        if (data.containsKey(NotificationData.POLL_ID)) {
+            int pollID = Integer.valueOf(data.get(NotificationData.POLL_ID));
+
+            intent.putExtra(NotificationData.POLL_ID, pollID);
+            ActivityStream.add(title, body, pollID);
+        } else {
+            ActivityStream.add(title, body);
+        }
 
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,

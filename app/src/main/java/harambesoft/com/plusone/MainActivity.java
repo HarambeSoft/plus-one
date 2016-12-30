@@ -58,7 +58,8 @@ public class MainActivity extends AppCompatActivity
         Intent intent = getIntent();
         if (intent.hasExtra(NotificationData.POLL_ID)) {
             // We have a poll to show
-            App.showPoll(intent.getIntExtra(Constants.NotificationData.POLL_ID, 0));
+            int pollID = intent.getIntExtra(Constants.NotificationData.POLL_ID, 0);
+            App.showPoll(pollID);
         }
 
     }

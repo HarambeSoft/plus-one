@@ -28,12 +28,24 @@ public class ActivityStream {
     }
 
     public static void add(String title, String body) {
-        List<ActivityModel> activityList = ActivityStream.get();
-
         ActivityModel activityModel = new ActivityModel();
         activityModel.setTitle(title);
         activityModel.setBody(body);
 
+        add(activityModel);
+    }
+
+    public static void add(String title, String body, int pollID) {
+        ActivityModel activityModel = new ActivityModel();
+        activityModel.setTitle(title);
+        activityModel.setBody(body);
+        activityModel.setPollID(pollID);
+
+        add(activityModel);
+    }
+
+    public static void add(ActivityModel activityModel) {
+        List<ActivityModel> activityList = ActivityStream.get();
         activityList.add(activityModel);
 
         String activityJson = new Gson().toJson(activityList);
