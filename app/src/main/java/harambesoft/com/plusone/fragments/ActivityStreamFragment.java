@@ -18,6 +18,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import harambesoft.com.plusone.App;
 import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.adapters.ActivitiesAdapter;
 import harambesoft.com.plusone.adapters.CategoriesAdapter;
@@ -57,6 +58,7 @@ public class ActivityStreamFragment extends Fragment {
         loadAdapterAndRecyclerView();
     }
 
+    @SuppressWarnings("StatementWithEmptyBody")
     private void loadAdapterAndRecyclerView() {
         activitiesAdapter = new ActivitiesAdapter(activityModelList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
@@ -68,6 +70,11 @@ public class ActivityStreamFragment extends Fragment {
             @Override
             public void onClick(View view, int position) {
                 ActivityModel activity = activityModelList.get(position);
+
+                if (activity.hasPoll())
+                    App.showPoll(activity.getPollID());
+                else if (activity.hasComment()) { /*FIXME: show comment*/}
+
                 Toast.makeText(getContext(), activity.getTitle(), Toast.LENGTH_SHORT).show();
             }
 

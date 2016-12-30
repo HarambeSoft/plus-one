@@ -55,4 +55,12 @@ public class ActivityModel {
     public void setPollID(int pollID) {
         this.pollID = pollID;
     }
+
+    public boolean hasPoll() {
+        return pollID > 0;
+    }
+
+    public boolean hasComment() {
+        return commentID > 0;
+    }
 }

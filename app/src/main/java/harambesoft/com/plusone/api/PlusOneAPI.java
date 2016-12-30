@@ -22,6 +22,7 @@ public class PlusOneAPI {
 
     private static final String URL = "http://plusone.isamert.net/public/api/v1/";
     //FIXME: change at production
+    //FIXME: DELET THIS
 
     public interface LoginFinishedHandler {
         public void onLoginFinished(boolean success, String message);
