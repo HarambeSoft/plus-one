@@ -120,34 +120,4 @@ public class PlusOneAPI {
         });
         return true;
     }
-
-    public static void user(int id) throws IOException {
-        PlusOneAPI.sendGETRequest("user/%s", new String[] {Integer.toString(id)}, new Request.RequestFinishedHandler() {
-            @Override
-            public void onRequestFinished(String result) {
-                try {
-                    JSONObject jsonUser = new JSONObject(result);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public static void user() throws IOException {
-        PlusOneAPI.sendGETRequest("user", new String[] {}, new Request.RequestFinishedHandler() {
-            @Override
-            public void onRequestFinished(String result) {
-                try {
-                    JSONArray jsonUsers = new JSONArray(result);
-                    for (int i = 0; i < jsonUsers.length(); i++) {
-                        JSONObject jsonUser = jsonUsers.getJSONObject(i);
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 }

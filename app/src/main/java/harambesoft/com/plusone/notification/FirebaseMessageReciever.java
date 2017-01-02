@@ -36,11 +36,6 @@ public class FirebaseMessageReciever extends FirebaseMessagingService {
             body = remoteMessage.getNotification().getBody();
         }
 
-
-        //TODO: add an event for activity(what happens when we click that activity?)
-        //FIXME: cant save notification if app is not running on foreground
-        // maybe service and activity does not use same preferences
-
         sendNotification(title, body, remoteMessage.getData());
     }
 
@@ -49,6 +44,9 @@ public class FirebaseMessageReciever extends FirebaseMessagingService {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
+
+        //FIXME: cant save notification if app is not running on foreground
+        // maybe service and activity does not use same preferences
 
         if (data.containsKey(NotificationData.POLL_ID)) {
             int pollID = Integer.valueOf(data.get(NotificationData.POLL_ID));

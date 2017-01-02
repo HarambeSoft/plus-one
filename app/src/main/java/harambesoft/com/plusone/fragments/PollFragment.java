@@ -95,13 +95,7 @@ public class PollFragment extends Fragment {
             @Override
             public void onResponse(Call<PollModel> call, Response<PollModel> response) {
                 PollModel poll = response.body();
-                textViewPollQuestion.setText(poll.getQuestion());
-
-                List<OptionModel> options = poll.getOptionModels();
-                for (int i = 0; i < options.size(); i++) {
-                    if (i < optionTextViews.size()) // FIXME: make options dynamically increase
-                        optionTextViews.get(i).setText(options.get(i).getContent());
-                }
+                loadPoll(poll);
             }
 
             @Override
@@ -109,5 +103,15 @@ public class PollFragment extends Fragment {
 
             }
         });
+    }
+
+    public void loadPoll(PollModel poll) {
+        textViewPollQuestion.setText(poll.getQuestion());
+
+        List<OptionModel> options = poll.getOptionModels();
+        for (int i = 0; i < options.size(); i++) {
+            if (i < optionTextViews.size()) // FIXME: make options dynamically increase
+                optionTextViews.get(i).setText(options.get(i).getContent());
+        }
     }
 }

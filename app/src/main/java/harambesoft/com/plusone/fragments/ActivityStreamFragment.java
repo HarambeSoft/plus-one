@@ -55,6 +55,8 @@ public class ActivityStreamFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         activityModelList.addAll(ActivityStream.get());
+        Log.d("AAAAAAAAAAAA:", ActivityStream.get().get(0).getTitle());
+        Log.d("AAAAAAAAAAAA:", String.valueOf(ActivityStream.get().get(0).getPollID()));
         loadAdapterAndRecyclerView();
     }
 
