@@ -93,8 +93,21 @@ public class Sketch extends PApplet {
             loadingImage = false;
         }
 
+        //ROTATE IMAGE
+        if(mousePressed){
+            if(mouseX-pmouseX < viewWidth/5 && pmouseX-mouseX < viewWidth/5 &&pmouseX != mouseX)rotationAngle += mouseX - pmouseX;
+            if(mouseY-pmouseY < viewHeight/5 && pmouseY-mouseY < viewWidth/5 &&pmouseY != mouseY)rotationAngle -= -mouseY + pmouseY;
+            println(rotationAngle);
+        }
+
+        //PUT THE IMAGE
         if(image!=null){
-            image(image, 0,0);
+            pushMatrix();
+            translate(viewWidth/2,viewHeight/2);
+            rotateZ(radians(rotationAngle/10));
+            image(image, -image.width/2, -image.height/2);
+
+            popMatrix();
         }
 
         //DRAW THE BUTTONS
@@ -111,7 +124,7 @@ public class Sketch extends PApplet {
         fill(255);
         text("-",viewWidth-(viewWidth/20) - (textWidth("+")/2),textWidth("-") + 3*viewHeight/20 );
 
-
+        //MAYBE THE GPS VALUES ARE INVALID
         if(viewWidth==0) {
             fill(0);
             text("No Signal!", viewWidth / 2, viewHeight / 2);
