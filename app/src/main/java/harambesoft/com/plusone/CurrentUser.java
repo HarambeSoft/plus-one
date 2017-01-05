@@ -50,7 +50,7 @@ public class CurrentUser {
             App.settings().edit()
                     .putString("latitude", Double.toString(location.getLatitude()))
                     .putString("longitude", Double.toString(location.getLongitude()))
-                    .apply();
+                    .commit();
         }
     }
 
