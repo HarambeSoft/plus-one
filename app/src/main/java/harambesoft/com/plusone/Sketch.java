@@ -7,14 +7,29 @@ import processing.core.PImage;
 import processing.core.PShape;
 
 public class Sketch extends PApplet {
+    //SKETCH VARIABLES
     public static int viewWidth= 0,viewHeight=0;
+    PShape backgroundImg;
+    PImage image ;
+    float rotationAngle = 0.0f;
 
-    String url = "";
+    //URL BASED VARIABLES
+    public int scaleTemp = 8;
+    boolean loadingImage = false;
+    String zoom = "&zoom="+scaleTemp;
+    String size = "&size=";
+    String scale = "&scale=1";
+    String keyf = "&key=AIzaSyBL98hzfjEja36P5xTwzUnCjwEs6e23WYs";
+    String urlbase = "https://maps.googleapis.com/maps/api/staticmap?";
+    String url = "https://maps.googleapis.com/maps/api/staticmap?";
+    String center = "center=";
+
+    //USER VARIABLES
     ArrayList<RotatingCube> woods = new ArrayList<RotatingCube>();
     ArrayList<BillBoard> billboards = new ArrayList<BillBoard>();
+    double userLatitude,userLongtitude;
 
 
-    PShape backgroundImg;
     public void setup() {
         frameRate(60);
         textAlign(CENTER);
@@ -33,19 +48,68 @@ public class Sketch extends PApplet {
             }
             backgroundImg.endShape(CLOSE);
         }
+
+        size += viewWidth+"x"+viewHeight;
+
+        //GET THE USER COORDINATES FROM CURRENTUSER CLASS
+        userLatitude = Double.parseDouble(CurrentUser.latitude());
+        userLongtitude = Double.parseDouble(CurrentUser.longitude());
+        url = urlbase + center +CurrentUser.latitude()+","+CurrentUser.longitude()+ zoom + size + scale+ keyf;
+        println(viewWidth+" width" +viewHeight);
+        image = loadImage(url);
+        println(url);
+
     }
 
     public void draw() {
         background(52);
 
+        //CHECK THE CHANGED GPS COORDINATES IF CHANGED LOAD IMAGE
+        if(frameCount%(60*5) == 0){
+            if(userLongtitude != Double.parseDouble(CurrentUser.longitude()) || userLatitude != Double.parseDouble(CurrentUser.latitude())) {
+                userLatitude = Double.parseDouble(CurrentUser.latitude());
+                userLongtitude = Double.parseDouble(CurrentUser.longitude());
+                url = urlbase + center +CurrentUser.latitude()+","+CurrentUser.longitude()+ zoom + size + scale+ keyf;
+                println("loading url ->" + url);
+                image = loadImage(url);
+            }
+
+        }
+
         //DRAW BACKGROUND IMAGE
+        pushMatrix();
+        translate(0,0,-10);
         shape(backgroundImg,0,0,viewWidth,viewHeight);
+        popMatrix();
 
+        //DOWNLOAD FOR NEW IMAGE
+        if (loadingImage) {
+            image = null;
+            zoom = "&zoom=" + scaleTemp;
+            println(zoom + " zoom scale");
+            url = urlbase + center + zoom + size + scale+ keyf;
+            println(url);
+            image = loadImage(urlbase + center +CurrentUser.latitude()+","+CurrentUser.longitude()+ zoom + size + scale+ keyf);
+            loadingImage = false;
+        }
 
+        if(image!=null){
+            image(image, 0,0);
+        }
 
-
-
-
+        //DRAW THE BUTTONS
+        noStroke();
+        fill(240,200);
+        rectMode(CENTER);
+        rect(viewWidth-(viewWidth/20), viewHeight/20,viewHeight/10,viewHeight/10);
+        textSize(viewHeight/20);
+        textAlign(CENTER);
+        fill(0);
+        text("+",viewWidth-(viewWidth/20) - (textWidth("+")/2), viewHeight/20 + (textWidth("+")/2 ));
+        fill(40,200);
+        rect(viewWidth-(viewWidth/20), viewHeight/20 + viewHeight/10,viewHeight/10,viewHeight/10);
+        fill(255);
+        text("-",viewWidth-(viewWidth/20) - (textWidth("+")/2),textWidth("-") + 3*viewHeight/20 );
 
 
         if(viewWidth==0) {
@@ -54,6 +118,30 @@ public class Sketch extends PApplet {
         }
 
 
+    }
+
+    public void mousePressed() {
+        if (mouseX >= viewWidth - (viewWidth / 10) && mouseY <= viewHeight / 10) {
+            keyPressed();
+            return;
+        }
+        if (mouseX >= viewWidth - (viewWidth / 10) && mouseY <= viewHeight / 5) {
+            zoomOut();
+            return;
+        }
+    }
+
+    public void keyPressed(){ // ZOOM IN
+        loadingImage = true;
+        scaleTemp++;
+        scaleTemp = constrain(scaleTemp,7,19);
+        rotationAngle = 0.0f;
+    }
+    public void zoomOut(){ //ZOOM OUT
+        loadingImage = true;
+        scaleTemp--;
+        scaleTemp = constrain(scaleTemp,7,19);
+        rotationAngle = 0.0f;
     }
 
 
