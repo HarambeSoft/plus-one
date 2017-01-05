@@ -6,7 +6,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Sketch extends PApplet {
-    public static int viewWidth = 0,viewHeight=0;
+    public static int viewWidth= 0,viewHeight=0;
 
 
     double longitude, latitude, altitude;
@@ -34,16 +34,16 @@ public class Sketch extends PApplet {
 
         if(loop){
             if (mapImage!=null) {
-                image(mapImage, 0, 0, width, height);
+                image(mapImage, 0, 0, viewWidth, viewHeight);
 
                 fill(255, 0, 0, 255);
                 strokeWeight(2);
                 stroke(255, 255, 0, 255);
                 ellipseMode(CENTER);
-                ellipse(width/2, height/2, 30, 30);
+                ellipse(viewWidth/2, viewHeight/2, 30, 30);
             } else {
                 fill(0);
-                text("No Signal!", width/2, height/2);
+                text("No Signal!", viewWidth/2, viewHeight/2);
 
             }
 
@@ -56,7 +56,7 @@ public class Sketch extends PApplet {
         }
         else{
             loadPixels();
-            for(int i=0;i<width*height;i++){
+            for(int i=0;i<viewWidth*viewHeight;i++){
                 pixels[i] = color(0,0,0);
             }
             updatePixels();
@@ -69,13 +69,7 @@ public class Sketch extends PApplet {
             time = millis();
         }
 
-        translate(width-50,50);
-        rectMode(CENTER);
-        fill(0);
-        noStroke();
-        rect(0,0,40,40);
-        fill(255);
-        rect(0,0,30,30);
+
 
     }
 
@@ -99,8 +93,8 @@ public class Sketch extends PApplet {
                 scaleX *= 1.1;
                 scaleY *=1.1;
                 x*=1.1;
-                positionX -= (mouseX - width/2);
-                positionY -= (mouseY - height/2);
+                positionX -= (mouseX - viewWidth/2);
+                positionY -= (mouseY - viewHeight/2);
             }
             a--;
         }
@@ -185,7 +179,7 @@ public class Sketch extends PApplet {
         public int waitTime = 1000; // MILLISECONDS
 
         private boolean axisX = false, axisY = false, axisZ = false; //ROTATING TO WHICH ANGLE
-        private int centerX = width/2, centerY = height/2, centerZ = 0; //CENTER POINTS
+        private int centerX = viewWidth/2, centerY = viewHeight/2, centerZ = 0; //CENTER POINTS
         private float axisSpeedX = 0.0f, axisSpeedY = 0.0f, axisSpeedZ = 0.0f; //AXIS'S SPEED RATES
         private int edgeLenght = 50;  //CUBES ONE EDGE LENGHT VARIES ON EVERY PHONE SO MAKE RESIZEBLE WITH SCREEN WIDTG AND HEIGHT
         private boolean opaque = false;
@@ -228,7 +222,7 @@ public class Sketch extends PApplet {
         public void rotateCube() {
             pushMatrix();
 
-            translate(centerX, centerY, centerZ+width/40);
+            translate(centerX, centerY, centerZ+viewWidth/40);
             if (axisX) {
                 axisSpeedX += axisSpeed;
                 rotateX(axisSpeedX);
@@ -244,7 +238,7 @@ public class Sketch extends PApplet {
 
             stroke(0);
             fill(cubeColor);
-            box(width/20);
+            box(viewWidth/20);
 
 
 
@@ -277,8 +271,8 @@ public class Sketch extends PApplet {
         if(key == 'r'){
             scaleX = mapImage.width;
             scaleY = mapImage.height;
-            positionX =  (width/2) - mapImage.width/2 ;
-            positionY = (height/2) - mapImage.height/2;
+            positionX =  (viewWidth/2) - mapImage.width/2 ;
+            positionY = (viewHeight/2) - mapImage.height/2;
         }
 
     }
