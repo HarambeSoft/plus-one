@@ -12,6 +12,30 @@ public class Sketch extends PApplet {
     PShape backgroundImg;
     PImage image ;
     float rotationAngle = 0.0f;
+    float meScale=0.0f;         //VALUES FOR INDICATOR
+    float meScale1 = 0.0f;      //VALUES FOR INDICATOR
+    float meScale2 = 0.0f;      //VALUES FOR INDICATOR
+    double[] scaleArray = { 591657550.500000f,
+                            295828775.300000f,
+                            147914387.600000f,
+                            73957193.820000f,
+                            36978596.910000f,
+                            18489298.450000f,
+                            9244649.227000f,
+                            4622324.614000f,
+                            2311162.307000f,
+                            1155581.153000f,
+                            577790.576700f,
+                            288895.288400f,
+                            144447.644200f,
+                            72223.822090f,
+                            36111.911040f,
+                            18055.955520f,
+                            9027.977761f,
+                            4513.988880f,
+                            2256.994440f,
+                            1128.497220f
+    };
 
     //URL BASED VARIABLES
     public int scaleTemp = 8;
@@ -58,7 +82,6 @@ public class Sketch extends PApplet {
         println(viewWidth+" width" +viewHeight);
         image = loadImage(url);
         println(url);
-
     }
 
     public void draw() {
@@ -97,7 +120,6 @@ public class Sketch extends PApplet {
         if(mousePressed){
             if(mouseX-pmouseX < viewWidth/5 && pmouseX-mouseX < viewWidth/5 &&pmouseX != mouseX)rotationAngle += mouseX - pmouseX;
             if(mouseY-pmouseY < viewHeight/5 && pmouseY-mouseY < viewWidth/5 &&pmouseY != mouseY)rotationAngle -= -mouseY + pmouseY;
-            println(rotationAngle);
         }
 
         //PUT THE IMAGE
@@ -125,9 +147,40 @@ public class Sketch extends PApplet {
         text("-",viewWidth-(viewWidth/20) - (textWidth("+")/2),textWidth("-") + 3*viewHeight/20 );
 
         //MAYBE THE GPS VALUES ARE INVALID
-        if(viewWidth==0) {
+        if(viewWidth==0 && viewHeight==0) {
             fill(0);
             text("No Signal!", viewWidth / 2, viewHeight / 2);
+        }else{ // IF GPS VALUES ARE VALID THEN DRAW SOME COOL! INDICATOR AT THE CENTER
+            if(image != null){
+                noStroke();
+                pushMatrix();
+                translate(0,0,viewWidth/25);
+                pushMatrix();
+                fill(0, 255,0,255);
+                translate(viewWidth/2,viewHeight/2);
+                rotateZ(meScale);rotateY(meScale1);rotateX(meScale2);
+                translate(noise(meScale)*3, noise(meScale1)*3);
+                ellipse(0,0,  noise(meScale)*viewWidth/50,noise(meScale)*viewWidth/50);
+                popMatrix();
+                pushMatrix();
+                fill(0,0,255,255);
+                translate(viewWidth/2,viewHeight/2);
+                rotateZ(meScale2);rotateY(meScale);rotateX(meScale1);
+                translate(noise(meScale1)*3, noise(meScale2)*3);
+                ellipse(0,0, noise(meScale2)*viewWidth/50, noise(meScale2)*viewWidth/50);
+                popMatrix();
+                pushMatrix();
+                fill(255,0,0,255);
+                translate(viewWidth/2,viewHeight/2);
+                rotateZ(meScale1);rotateY(meScale2);rotateX(meScale);
+                translate(noise(meScale2)*3, noise(meScale)*3);
+                ellipse(0,0, noise(meScale1)*viewWidth/50,noise(meScale1)*viewWidth/50);
+                popMatrix();
+                popMatrix();
+                meScale1+=0.015;
+                meScale2+=0.01;
+                meScale+=0.02;
+            }
         }
 
 
@@ -157,6 +210,33 @@ public class Sketch extends PApplet {
         rotationAngle = 0.0f;
     }
 
+    public Double distance(double x1, double y1, double x2, double y2) {
+        //CALCULATE DISTANCE BETWEEN 2 COORDINATES
+        //IF WANTED SEND THE USER COORDINATES
+
+        Double R = 6371000.0d;
+        Double v1 = Math.toRadians(x1);
+
+        Double v2 = Math.toRadians(x2);
+        Double v3 = Math.toRadians(x2 -x1);
+        Double v4 = Math.toRadians(y2-y1);
+
+        Double a = Math.sin(v3/2) * Math.sin(v3/2) +
+                Math.cos(v1) * Math.cos(v2) *
+                        Math.sin(v4/2) * Math.sin(v4/2);
+        Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        Double distance = R * c;
+        return distance;
+    }
+
+    public void toMap(double x2, double y2) {
+
+        //FROM COORDINATES CAlCULATE THE DISTANCE THEN GET THE APPROXIMATE PIXEL LENGHT
+        //AT LAST STEP FROM THE COORDINATES AND THE PIXEL LENGHT GET THE REAL PIXEL COORDINATES
+
+        Double meter_distance = distance(userLatitude, userLongtitude, x2, y2);
+        Double pixel_distance = scaleArray[scaleArray.length -1 - scaleTemp] * meter_distance /(1000*(137912.554668f)) ;
+    }
 
     public class BillBoard{
 
