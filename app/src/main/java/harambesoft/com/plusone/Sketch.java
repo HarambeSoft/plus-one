@@ -6,7 +6,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Sketch extends PApplet {
-
+    public static int viewWidth = 0,viewHeight=0;
 
 
     double longitude, latitude, altitude;
