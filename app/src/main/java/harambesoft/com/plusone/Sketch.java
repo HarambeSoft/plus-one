@@ -245,9 +245,9 @@ public class Sketch extends PApplet {
             popMatrix();
         }
     }
-    public void settings() {
-        fullScreen(OPENGL,1);
-
+    public void settings() {while(viewWidth == 0 && viewHeight == 0);
+        println("First vidth and height " + viewWidth + " -  - " + viewHeight);
+        size(viewWidth,viewHeight,OPENGL);
     }
 
 
