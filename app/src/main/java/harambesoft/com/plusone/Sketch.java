@@ -113,25 +113,25 @@ public class Sketch extends PApplet {
 
 
         int time=0;
-            if(a==0){
-                a++;
-                time = millis();
-                if(loop) {
+        if(a==0){
+            a++;
+            time = millis();
+            if(loop) {
 
-                    RotatingCube cube = new RotatingCube(mouseX,mouseY,0,false,false,true);
-                    woods.add(cube);
-                }
-            }else if(a==1){
-                if(millis() - time <= 800){
-                    scaleX *= 1.1;
-                    scaleY *=1.1;
-                    x*=1.1;
-                    positionX -= (mouseX - width/2);
-                    positionY -= (mouseY - height/2);
-                }
-                a--;
+                RotatingCube cube = new RotatingCube(mouseX,mouseY,0,false,false,true);
+                woods.add(cube);
             }
-            println(a);
+        }else if(a==1){
+            if(millis() - time <= 800){
+                scaleX *= 1.1;
+                scaleY *=1.1;
+                x*=1.1;
+                positionX -= (mouseX - width/2);
+                positionY -= (mouseY - height/2);
+            }
+            a--;
+        }
+        println(a);
 
 
 
@@ -150,7 +150,6 @@ public class Sketch extends PApplet {
     }
 
 /*if( loop){
-
   loadPixels();
   for(int i=0;x<width*height;x++){
   pixels[i] = color(0,0,0);
@@ -316,6 +315,5 @@ public class Sketch extends PApplet {
         }
 
     }
-
 
 }

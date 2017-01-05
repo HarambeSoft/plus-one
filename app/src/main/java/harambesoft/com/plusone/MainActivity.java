@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import processing.core.PApplet;
 import processing.android.PFragment;
@@ -221,6 +222,9 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.container, fragment)
                     .commit();
+            FrameLayout frameLayout = (FrameLayout) findViewById(R.id.container);
+            Sketch.viewHeight= frameLayout.getHeight();
+            Sketch.viewWidth = frameLayout.getWidth();
         } else if (id == R.id.nav_me) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, new MeFragment())
