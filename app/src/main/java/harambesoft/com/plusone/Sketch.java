@@ -23,10 +23,6 @@ public class Sketch extends PApplet {
     int time=0;
     public void setup() {
         frameRate(60);
-        //positionX =  (width/2) - mapImage.width/2 ;
-        //positionY = (height/2) - mapImage.height/2;
-        //scaleX =  mapImage.width ;
-        //scaleY = mapImage.height;
         textAlign(CENTER, CENTER);
         textSize(36);
     }
@@ -81,31 +77,8 @@ public class Sketch extends PApplet {
         fill(255);
         rect(0,0,30,30);
 
-
-  /* text("Latitude: " + latitude + "\n" +
-   "Longitude: " + longitude + "\n" +
-   "Altitude: " + altitude + "\n" +
-   "Provider: " + location.getProvider(),  0, 0, width, height);
-   // getProvider() returns "gps" if GPS is available
-   // otherwise "network" (cell network) or "passive" (WiFi MACID)*/
     }
 
-    public void onLocationEvent(double _latitude, double _longitude, double _altitude)
-    {
-        longitude = _longitude;
-        latitude = _latitude;
-        altitude = _altitude;
-        if (_latitude!=0.0d && _longitude!=0.0d && _altitude!=0.0d)
-            mapImage = loadImage(url);
-        else {
-            unloadedTimeStart = millis();
-            mapImage = null;
-        }
-
-  /*println("\n\n"+url+"\n---------------------------------------\n");
-   println("lat/lon/alt: " + latitude + "/" + longitude + "/" + altitude);
-   println(width+" - "+height+"\n"+mapImage.width+" - "+mapImage.height);*/
-    }
     boolean loop = true;
     int a=0;
     float x=1.0f;
@@ -149,12 +122,6 @@ public class Sketch extends PApplet {
 
     }
 
-/*if( loop){
-  loadPixels();
-  for(int i=0;x<width*height;x++){
-  pixels[i] = color(0,0,0);
-  }
-  updatePixels();*/
 
     public class BillBoard{
 
