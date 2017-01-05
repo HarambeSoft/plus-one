@@ -4,115 +4,55 @@ import java.util.ArrayList;
 
 import processing.core.PApplet;
 import processing.core.PImage;
+import processing.core.PShape;
 
 public class Sketch extends PApplet {
     public static int viewWidth= 0,viewHeight=0;
 
-
-    double longitude, latitude, altitude;
-    boolean loaded = false;
-    PImage mapImage;
     String url = "";
     ArrayList<RotatingCube> woods = new ArrayList<RotatingCube>();
     ArrayList<BillBoard> billboards = new ArrayList<BillBoard>();
 
-    public int unloadedTimeStart=0;
-    boolean value = false;
-    int positionX , positionY;
-    float scaleX, scaleY;
-    int time=0;
+
+    PShape backgroundImg;
     public void setup() {
         frameRate(60);
-        textAlign(CENTER, CENTER);
-        textSize(36);
+        textAlign(CENTER);
+        textSize(viewWidth/10);
+
+        //CREATE BACKGROUND SHAPE DISPLAY
+        backgroundImg = createShape();
+        backgroundImg.noFill();
+        backgroundImg.strokeWeight(20);
+        for (int i=0;i<viewWidth;i+=viewWidth/5){
+            backgroundImg.beginShape();
+            for (int j=0;j<viewHeight;j+=viewHeight /5){
+                backgroundImg.vertex(i,j);
+                backgroundImg.vertex(i+viewWidth/5,j);
+                backgroundImg.vertex(i+viewWidth/5,j+viewHeight/5);
+            }
+            backgroundImg.endShape(CLOSE);
+        }
     }
 
     public void draw() {
-        background(255);
+        background(52);
+
+        //DRAW BACKGROUND IMAGE
+        shape(backgroundImg,0,0,viewWidth,viewHeight);
 
 
 
-        if(loop){
-            if (mapImage!=null) {
-                image(mapImage, 0, 0, viewWidth, viewHeight);
 
-                fill(255, 0, 0, 255);
-                strokeWeight(2);
-                stroke(255, 255, 0, 255);
-                ellipseMode(CENTER);
-                ellipse(viewWidth/2, viewHeight/2, 30, 30);
-            } else {
-                fill(0);
-                text("No Signal!", viewWidth/2, viewHeight/2);
 
-            }
 
-            for(int i=0;i<woods.size();i++){
-                woods.get(i).rotateCube();
-            }
-            for(int i=0;i<billboards.size();i++){
-                billboards.get(i).drawBillBoard();
-            }
-        }
-        else{
-            loadPixels();
-            for(int i=0;i<viewWidth*viewHeight;i++){
-                pixels[i] = color(0,0,0);
-            }
-            updatePixels();
+
+
+        if(viewWidth==0) {
+            fill(0);
+            text("No Signal!", viewWidth / 2, viewHeight / 2);
         }
 
-
-
-        if(time==0) time = millis();
-        else if(millis()-time >=10000){
-            time = millis();
-        }
-
-
-
-    }
-
-    boolean loop = true;
-    int a=0;
-    float x=1.0f;
-    public void mousePressed(){
-
-
-        int time=0;
-        if(a==0){
-            a++;
-            time = millis();
-            if(loop) {
-
-                RotatingCube cube = new RotatingCube(mouseX,mouseY,0,false,false,true);
-                woods.add(cube);
-            }
-        }else if(a==1){
-            if(millis() - time <= 800){
-                scaleX *= 1.1;
-                scaleY *=1.1;
-                x*=1.1;
-                positionX -= (mouseX - viewWidth/2);
-                positionY -= (mouseY - viewHeight/2);
-            }
-            a--;
-        }
-        println(a);
-
-
-
-
-    }
-    public void mouseMoved(){
-
-        if(loop) {
-
-            pushMatrix();
-            fill(52);
-            ellipse(mouseX,mouseY,200,200);
-            popMatrix();
-        }
 
     }
 
@@ -245,9 +185,9 @@ public class Sketch extends PApplet {
             popMatrix();
         }
     }
-    public void settings() {while(viewWidth == 0 && viewHeight == 0);
-        println("First vidth and height " + viewWidth + " -  - " + viewHeight);
-        size(viewWidth,viewHeight,OPENGL);
+    public void settings() {
+        while(viewWidth == 0 && viewHeight == 0);
+        size(viewWidth,viewHeight,P3D);
     }
 
 
@@ -261,20 +201,5 @@ public class Sketch extends PApplet {
     }
 
 
-
-    public void mouseDragged(){
-        positionX += (mouseX - pmouseX);
-        positionY += (mouseY - pmouseY);
-    }
-
-    public void keyPressed(){
-        if(key == 'r'){
-            scaleX = mapImage.width;
-            scaleY = mapImage.height;
-            positionX =  (viewWidth/2) - mapImage.width/2 ;
-            positionY = (viewHeight/2) - mapImage.height/2;
-        }
-
-    }
 
 }
