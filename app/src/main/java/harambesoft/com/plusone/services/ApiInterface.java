@@ -65,4 +65,10 @@ public interface ApiInterface {
     @POST("poll/{id}/options")
     Call<SimpleResponseModel> createOption(@Path("id") String id,
                                            @Body List<RequestOptionModel> optionModelList);
+
+    @POST("poll/near")
+    Call<List<PollModel>> getNearPolls(@Query("latitude") String latitude,
+                                       @Query("longitude") String longitude,
+                                       @Query("diameter") String diameter,
+                                       @Query("api_token") String api_token);
 }
