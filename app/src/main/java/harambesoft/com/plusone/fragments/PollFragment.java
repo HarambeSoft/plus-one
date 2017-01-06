@@ -47,6 +47,7 @@ public class PollFragment extends Fragment {
     @BindView(R.id.buttonShowComments)
     TextView buttonShowComments;
 
+    int pollID;
     ArrayList<TextView> optionTextViews = new ArrayList<>();
 
     public static PollFragment newInstance(int pollID) {
@@ -56,6 +57,14 @@ public class PollFragment extends Fragment {
         PollFragment fragment = new PollFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public int getPollID() {
+        return pollID;
+    }
+
+    public void setPollID(int pollID) {
+        this.pollID = pollID;
     }
 
     /* TODO:
@@ -90,6 +99,7 @@ public class PollFragment extends Fragment {
         Bundle args = getArguments();
         int pollID = args.getInt("id", -1);
         if (pollID != -1) {
+            setPollID(pollID);
             loadPoll(pollID);
         }
     }
@@ -120,7 +130,9 @@ public class PollFragment extends Fragment {
     }
 
     @OnClick(R.id.buttonShowComments)
-    private void showComments() {
-
+    public void showComments() {
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container, CommentsFragment.newInstance(getPollID()))
+                .commit();
     }
 }

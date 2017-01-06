@@ -54,6 +54,10 @@ public class ActivityStreamFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
+        if (ActivityStream.get().isEmpty()) {
+            Toast.makeText(getContext(), "Looks like you don't have any recent activity.", Toast.LENGTH_SHORT).show();
+        }
+
         activityModelList.addAll(ActivityStream.get());
         loadAdapterAndRecyclerView();
     }
