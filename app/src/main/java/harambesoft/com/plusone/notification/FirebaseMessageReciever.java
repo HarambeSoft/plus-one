@@ -12,28 +12,23 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import harambesoft.com.plusone.Constants.*;
 import harambesoft.com.plusone.MainActivity;
 import harambesoft.com.plusone.R;
+import harambesoft.com.plusone.helpers.ActivityStream;
 
 /**
  * Created by isa on 10.12.2016.
  */
 
 public class FirebaseMessageReciever extends FirebaseMessagingService {
-
     private static final String TAG = "FirebaseMessageReciever";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        // Check if message contains a data payload.
-        if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-
-            //TODO: Process extra data here.
-            // remoteMessage.getData()
-        }
-
-
         String title = "PlusOne Notification";
         String body = "No info about this notification.";
         if (remoteMessage.getNotification() != null) {
@@ -41,19 +36,34 @@ public class FirebaseMessageReciever extends FirebaseMessagingService {
             body = remoteMessage.getNotification().getBody();
         }
 
-        sendNotification(title, body);
+        sendNotification(title, body, remoteMessage.getData());
     }
 
     // This method is only generating push notification
-    private void sendNotification(String title, String body) {
+    private void sendNotification(String title, String body, Map<String, String> data) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+
+        //FIXME: cant save notification if app is not running on foreground
+        // maybe service and activity does not use same preferences
+
+        if (data.containsKey(NotificationData.POLL_ID)) {
+            int pollID = Integer.valueOf(data.get(NotificationData.POLL_ID));
+
+            intent.putExtra(NotificationData.POLL_ID, pollID);
+            ActivityStream.add(title, body, pollID);
+        } else {
+            ActivityStream.add(title, body);
+        }
+
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher) //FIXME: find icon for notificaton
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
                 .setContentText(body)
                 .setAutoCancel(true)

@@ -1,127 +1,242 @@
 package harambesoft.com.plusone;
 
-import processing.core.*;
-
 import java.util.ArrayList;
 
+import processing.core.PApplet;
+import processing.core.PImage;
+import processing.core.PShape;
+
 public class Sketch extends PApplet {
+    //SKETCH VARIABLES
+    public static int viewWidth= 0,viewHeight=0;
+    PShape backgroundImg;
+    PImage image ;
+    float rotationAngle = 0.0f;
+    float meScale=0.0f;         //VALUES FOR INDICATOR
+    float meScale1 = 0.0f;      //VALUES FOR INDICATOR
+    float meScale2 = 0.0f;      //VALUES FOR INDICATOR
+    double[] scaleArray = { 591657550.500000f,
+                            295828775.300000f,
+                            147914387.600000f,
+                            73957193.820000f,
+                            36978596.910000f,
+                            18489298.450000f,
+                            9244649.227000f,
+                            4622324.614000f,
+                            2311162.307000f,
+                            1155581.153000f,
+                            577790.576700f,
+                            288895.288400f,
+                            144447.644200f,
+                            72223.822090f,
+                            36111.911040f,
+                            18055.955520f,
+                            9027.977761f,
+                            4513.988880f,
+                            2256.994440f,
+                            1128.497220f
+    };
 
+    //URL BASED VARIABLES
+    public int scaleTemp = 8;
+    boolean loadingImage = false;
+    String zoom = "&zoom="+scaleTemp;
+    String size = "&size=";
+    String scale = "&scale=1";
+    String keyf = "&key=AIzaSyBL98hzfjEja36P5xTwzUnCjwEs6e23WYs";
+    String urlbase = "https://maps.googleapis.com/maps/api/staticmap?";
+    String url = "https://maps.googleapis.com/maps/api/staticmap?";
+    String center = "center=";
 
-
-    double longitude, latitude, altitude;
-    String tmp  = "https://maps.googleapis.com/maps/api/staticmap?&center=39.78492138772224,30.509143963437293&zoom=16&size=480x800&key=AIzaSyAc356Rv5G_qfLWokpLdTt5apP8ToSiiV8";
-    boolean loaded = false;
-    PImage mapImage;
-    String base_url = "https://maps.googleapis.com/maps/api/staticmap?&center=";
-    String url = "";
+    //USER VARIABLES
     ArrayList<RotatingCube> woods = new ArrayList<RotatingCube>();
     ArrayList<BillBoard> billboards = new ArrayList<BillBoard>();
+    double userLatitude,userLongtitude;
 
-    public int unloadedTimeStart=0;
-    boolean value = false;
 
-    int time=0;
     public void setup() {
+        frameRate(60);
+        textAlign(CENTER);
+        textSize(viewWidth/10);
 
-        textAlign(CENTER, CENTER);
-        textSize(36);
+        //CREATE BACKGROUND SHAPE DISPLAY
+        backgroundImg = createShape();
+        backgroundImg.noFill();
+        backgroundImg.strokeWeight(20);
+        for (int i=0;i<viewWidth;i+=viewWidth/5){
+            backgroundImg.beginShape();
+            for (int j=0;j<viewHeight;j+=viewHeight /5){
+                backgroundImg.vertex(i,j);
+                backgroundImg.vertex(i+viewWidth/5,j);
+                backgroundImg.vertex(i+viewWidth/5,j+viewHeight/5);
+            }
+            backgroundImg.endShape(CLOSE);
+        }
+
+        size += viewWidth+"x"+viewHeight;
+
+        //GET THE USER COORDINATES FROM CURRENTUSER CLASS
+        userLatitude = Double.parseDouble(CurrentUser.latitude());
+        userLongtitude = Double.parseDouble(CurrentUser.longitude());
+        url = urlbase + center +CurrentUser.latitude()+","+CurrentUser.longitude()+ zoom + size + scale+ keyf;
+        println(viewWidth+" width" +viewHeight);
+        image = loadImage(url);
+        println(url);
     }
 
     public void draw() {
-        background(255);
+        background(52);
 
-
-
-        if(loop){
-            if (mapImage!=null) {
-                image(mapImage, 0, 0, width, height);
-
-                fill(255, 0, 0, 255);
-                strokeWeight(2);
-                stroke(255, 255, 0, 255);
-                ellipseMode(CENTER);
-                ellipse(width/2, height/2, 30, 30);
-            } else {
-                fill(0);
-                text("No Signal!", width/2, height/2);
-
+        //CHECK THE CHANGED GPS COORDINATES IF CHANGED LOAD IMAGE
+        if(frameCount%(60*5) == 0){
+            if(userLongtitude != Double.parseDouble(CurrentUser.longitude()) || userLatitude != Double.parseDouble(CurrentUser.latitude())) {
+                userLatitude = Double.parseDouble(CurrentUser.latitude());
+                userLongtitude = Double.parseDouble(CurrentUser.longitude());
+                url = urlbase + center +CurrentUser.latitude()+","+CurrentUser.longitude()+ zoom + size + scale+ keyf;
+                println("loading url ->" + url);
+                image = loadImage(url);
             }
 
-            for(int i=0;i<woods.size();i++){
-                woods.get(i).rotateCube();
-            }
-            for(int i=0;i<billboards.size();i++){
-                billboards.get(i).drawBillBoard();
-            }
-        }
-        else{
-            loadPixels();
-            for(int i=0;i<width*height;i++){
-                pixels[i] = color(0,0,0);
-            }
-            updatePixels();
         }
 
+        //DRAW BACKGROUND IMAGE
+        pushMatrix();
+        translate(0,0,-10);
+        shape(backgroundImg,0,0,viewWidth,viewHeight);
+        popMatrix();
 
-
-        if(time==0) time = millis();
-        else if(millis()-time >=10000){
-            time = millis();
+        //DOWNLOAD FOR NEW IMAGE
+        if (loadingImage) {
+            image = null;
+            zoom = "&zoom=" + scaleTemp;
+            println(zoom + " zoom scale");
+            url = urlbase + center + zoom + size + scale+ keyf;
+            println(url);
+            image = loadImage(urlbase + center +CurrentUser.latitude()+","+CurrentUser.longitude()+ zoom + size + scale+ keyf);
+            loadingImage = false;
         }
 
-        translate(width-50,50);
-        rectMode(CENTER);
-        fill(0);
+        //ROTATE IMAGE
+        if(mousePressed){
+            if(mouseX-pmouseX < viewWidth/5 && pmouseX-mouseX < viewWidth/5 &&pmouseX != mouseX)rotationAngle += mouseX - pmouseX;
+            if(mouseY-pmouseY < viewHeight/5 && pmouseY-mouseY < viewWidth/5 &&pmouseY != mouseY)rotationAngle -= -mouseY + pmouseY;
+        }
+
+        //PUT THE IMAGE
+        if(image!=null){
+            pushMatrix();
+            translate(viewWidth/2,viewHeight/2);
+            rotateZ(radians(rotationAngle/10));
+            image(image, -image.width/2, -image.height/2);
+
+            popMatrix();
+        }
+
+        //DRAW THE BUTTONS
         noStroke();
-        rect(0,0,40,40);
+        fill(240,200);
+        rectMode(CENTER);
+        rect(viewWidth-(viewWidth/20), viewHeight/20,viewHeight/10,viewHeight/10);
+        textSize(viewHeight/20);
+        textAlign(CENTER);
+        fill(0);
+        text("+",viewWidth-(viewWidth/20) - (textWidth("+")/2), viewHeight/20 + (textWidth("+")/2 ));
+        fill(40,200);
+        rect(viewWidth-(viewWidth/20), viewHeight/20 + viewHeight/10,viewHeight/10,viewHeight/10);
         fill(255);
-        rect(0,0,30,30);
+        text("-",viewWidth-(viewWidth/20) - (textWidth("+")/2),textWidth("-") + 3*viewHeight/20 );
 
-
-  /* text("Latitude: " + latitude + "\n" +
-   "Longitude: " + longitude + "\n" +
-   "Altitude: " + altitude + "\n" +
-   "Provider: " + location.getProvider(),  0, 0, width, height);
-   // getProvider() returns "gps" if GPS is available
-   // otherwise "network" (cell network) or "passive" (WiFi MACID)*/
-    }
-
-    public void onLocationEvent(double _latitude, double _longitude, double _altitude)
-    {
-        longitude = _longitude;
-        latitude = _latitude;
-        altitude = _altitude;
-        url = base_url +_latitude+","+_longitude+"&zoom=17"+"&size="+width+"x"+height+"&key=AIzaSyAc356Rv5G_qfLWokpLdTt5apP8ToSiiV8";
-        if (_latitude!=0.0d && _longitude!=0.0d && _altitude!=0.0d)
-            mapImage = loadImage(url);
-        else {
-            unloadedTimeStart = millis();
-            mapImage = null;
+        //MAYBE THE GPS VALUES ARE INVALID
+        if(viewWidth==0 && viewHeight==0) {
+            fill(0);
+            text("No Signal!", viewWidth / 2, viewHeight / 2);
+        }else{ // IF GPS VALUES ARE VALID THEN DRAW SOME COOL! INDICATOR AT THE CENTER
+            if(image != null){
+                noStroke();
+                pushMatrix();
+                translate(0,0,viewWidth/25);
+                pushMatrix();
+                fill(0, 255,0,255);
+                translate(viewWidth/2,viewHeight/2);
+                rotateZ(meScale);rotateY(meScale1);rotateX(meScale2);
+                translate(noise(meScale)*3, noise(meScale1)*3);
+                ellipse(0,0,  noise(meScale)*viewWidth/50,noise(meScale)*viewWidth/50);
+                popMatrix();
+                pushMatrix();
+                fill(0,0,255,255);
+                translate(viewWidth/2,viewHeight/2);
+                rotateZ(meScale2);rotateY(meScale);rotateX(meScale1);
+                translate(noise(meScale1)*3, noise(meScale2)*3);
+                ellipse(0,0, noise(meScale2)*viewWidth/50, noise(meScale2)*viewWidth/50);
+                popMatrix();
+                pushMatrix();
+                fill(255,0,0,255);
+                translate(viewWidth/2,viewHeight/2);
+                rotateZ(meScale1);rotateY(meScale2);rotateX(meScale);
+                translate(noise(meScale2)*3, noise(meScale)*3);
+                ellipse(0,0, noise(meScale1)*viewWidth/50,noise(meScale1)*viewWidth/50);
+                popMatrix();
+                popMatrix();
+                meScale1+=0.015;
+                meScale2+=0.01;
+                meScale+=0.02;
+            }
         }
 
-  /*println("\n\n"+url+"\n---------------------------------------\n");
-   println("lat/lon/alt: " + latitude + "/" + longitude + "/" + altitude);
-   println(width+" - "+height+"\n"+mapImage.width+" - "+mapImage.height);*/
-    }
-    boolean loop = true;
-    public void mousePressed(){
-
-            if(loop) {
-
-                RotatingCube cube = new RotatingCube(mouseX,mouseY,0,false,false,true);
-                woods.add(cube);
-            }
 
     }
 
+    public void mousePressed() {
+        if (mouseX >= viewWidth - (viewWidth / 10) && mouseY <= viewHeight / 10) {
+            keyPressed();
+            return;
+        }
+        if (mouseX >= viewWidth - (viewWidth / 10) && mouseY <= viewHeight / 5) {
+            zoomOut();
+            return;
+        }
+    }
 
-/*if( loop){
+    public void keyPressed(){ // ZOOM IN
+        loadingImage = true;
+        scaleTemp++;
+        scaleTemp = constrain(scaleTemp,7,19);
+        rotationAngle = 0.0f;
+    }
+    public void zoomOut(){ //ZOOM OUT
+        loadingImage = true;
+        scaleTemp--;
+        scaleTemp = constrain(scaleTemp,7,19);
+        rotationAngle = 0.0f;
+    }
 
-  loadPixels();
-  for(int i=0;x<width*height;x++){
-  pixels[i] = color(0,0,0);
-  }
-  updatePixels();*/
+    public Double distance(double x1, double y1, double x2, double y2) {
+        //CALCULATE DISTANCE BETWEEN 2 COORDINATES
+        //IF WANTED SEND THE USER COORDINATES
+
+        Double R = 6371000.0d;
+        Double v1 = Math.toRadians(x1);
+
+        Double v2 = Math.toRadians(x2);
+        Double v3 = Math.toRadians(x2 -x1);
+        Double v4 = Math.toRadians(y2-y1);
+
+        Double a = Math.sin(v3/2) * Math.sin(v3/2) +
+                Math.cos(v1) * Math.cos(v2) *
+                        Math.sin(v4/2) * Math.sin(v4/2);
+        Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        Double distance = R * c;
+        return distance;
+    }
+
+    public void toMap(double x2, double y2) {
+
+        //FROM COORDINATES CAlCULATE THE DISTANCE THEN GET THE APPROXIMATE PIXEL LENGHT
+        //AT LAST STEP FROM THE COORDINATES AND THE PIXEL LENGHT GET THE REAL PIXEL COORDINATES
+
+        Double meter_distance = distance(userLatitude, userLongtitude, x2, y2);
+        Double pixel_distance = scaleArray[scaleArray.length -1 - scaleTemp] * meter_distance /(1000*(137912.554668f)) ;
+    }
 
     public class BillBoard{
 
@@ -185,7 +300,7 @@ public class Sketch extends PApplet {
         public int waitTime = 1000; // MILLISECONDS
 
         private boolean axisX = false, axisY = false, axisZ = false; //ROTATING TO WHICH ANGLE
-        private int centerX = width/2, centerY = height/2, centerZ = 0; //CENTER POINTS
+        private int centerX = viewWidth/2, centerY = viewHeight/2, centerZ = 0; //CENTER POINTS
         private float axisSpeedX = 0.0f, axisSpeedY = 0.0f, axisSpeedZ = 0.0f; //AXIS'S SPEED RATES
         private int edgeLenght = 50;  //CUBES ONE EDGE LENGHT VARIES ON EVERY PHONE SO MAKE RESIZEBLE WITH SCREEN WIDTG AND HEIGHT
         private boolean opaque = false;
@@ -228,7 +343,7 @@ public class Sketch extends PApplet {
         public void rotateCube() {
             pushMatrix();
 
-            translate(centerX, centerY, centerZ+width/40);
+            translate(centerX, centerY, centerZ+viewWidth/40);
             if (axisX) {
                 axisSpeedX += axisSpeed;
                 rotateX(axisSpeedX);
@@ -244,14 +359,19 @@ public class Sketch extends PApplet {
 
             stroke(0);
             fill(cubeColor);
-            box(width/20);
+            box(viewWidth/20);
 
 
 
             popMatrix();
         }
     }
-    public void settings() {  fullScreen(P3D,1); }
+    public void settings() {
+        while(viewWidth == 0 && viewHeight == 0);
+        size(viewWidth,viewHeight,P3D);
+    }
+
+
     static public void main(String[] passedArgs) {
         String[] appletArgs = new String[] { "Sketch" };
         if (passedArgs != null) {
@@ -260,4 +380,7 @@ public class Sketch extends PApplet {
             PApplet.main(appletArgs);
         }
     }
+
+
+
 }

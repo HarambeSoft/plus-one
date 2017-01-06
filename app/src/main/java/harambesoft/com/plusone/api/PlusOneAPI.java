@@ -1,7 +1,6 @@
 package harambesoft.com.plusone.api;
 
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -12,8 +11,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import harambesoft.com.plusone.App;
 import harambesoft.com.plusone.CurrentUser;
-import harambesoft.com.plusone.PlusOne;
 
 /**
  * Created by isa on 11.12.2016.
@@ -23,6 +22,7 @@ public class PlusOneAPI {
 
     private static final String URL = "http://plusone.isamert.net/public/api/v1/";
     //FIXME: change at production
+    //FIXME: DELET THIS
 
     public interface LoginFinishedHandler {
         public void onLoginFinished(boolean success, String message);
@@ -71,7 +71,7 @@ public class PlusOneAPI {
                         JSONObject userJson = resultJson.getJSONObject("user");
 
                         // Add token to SharedPreferences for later use
-                        SharedPreferences.Editor editor = PlusOne.settings().edit();
+                        SharedPreferences.Editor editor = App.settings().edit();
                         editor.putString("api_token", resultJson.getString("api_token"));
                         editor.putString("name", name);
                         editor.putString("email", userJson.getString("email"));
@@ -119,35 +119,5 @@ public class PlusOneAPI {
             }
         });
         return true;
-    }
-
-    public static void user(int id) throws IOException {
-        PlusOneAPI.sendGETRequest("user/%s", new String[] {Integer.toString(id)}, new Request.RequestFinishedHandler() {
-            @Override
-            public void onRequestFinished(String result) {
-                try {
-                    JSONObject jsonUser = new JSONObject(result);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public static void user() throws IOException {
-        PlusOneAPI.sendGETRequest("user", new String[] {}, new Request.RequestFinishedHandler() {
-            @Override
-            public void onRequestFinished(String result) {
-                try {
-                    JSONArray jsonUsers = new JSONArray(result);
-                    for (int i = 0; i < jsonUsers.length(); i++) {
-                        JSONObject jsonUser = jsonUsers.getJSONObject(i);
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 }

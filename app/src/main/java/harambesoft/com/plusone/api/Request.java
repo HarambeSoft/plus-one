@@ -13,7 +13,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
-import harambesoft.com.plusone.PlusOne;
+import harambesoft.com.plusone.App;
 
 /**
  * Created by isa on 11.12.2016.
@@ -64,7 +64,7 @@ public class Request {
                 HttpURLConnection con = connection(url, requestType == RequestType.POST ? "POST":"GET");
 
                 // Add api token to header
-                String apiToken = PlusOne.settings().getString("api_token", "");
+                String apiToken = App.settings().getString("api_token", "");
                 if (!apiToken.isEmpty())
                     con.setRequestProperty("Authorization",  "Bearer " + apiToken);
 

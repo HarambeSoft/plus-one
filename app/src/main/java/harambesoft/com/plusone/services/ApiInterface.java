@@ -3,12 +3,13 @@ package harambesoft.com.plusone.services;
 
 import java.util.List;
 
-import harambesoft.com.plusone.model.CategoryModel;
-import harambesoft.com.plusone.model.RequestOptionModel;
-import harambesoft.com.plusone.model.PollModel;
-import harambesoft.com.plusone.model.ResponseModel;
-import harambesoft.com.plusone.model.TokenModel;
-import harambesoft.com.plusone.model.User;
+import harambesoft.com.plusone.models.CategoryModel;
+import harambesoft.com.plusone.models.PollModel;
+import harambesoft.com.plusone.models.RequestOptionModel;
+import harambesoft.com.plusone.models.ResponseModel;
+import harambesoft.com.plusone.models.SimpleResponseModel;
+import harambesoft.com.plusone.models.TokenModel;
+import harambesoft.com.plusone.models.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -56,8 +57,18 @@ public interface ApiInterface {
                                               @Query("category_id") String categoryId,
                                               @Query("api_token") String api_token);
 
+    @GET("poll/{id}")
+    Call<PollModel> getPoll(@Path("id") int id,
+                            @Query("api_token") String api_token);
+
     @Headers("Content-Type: application/json")
     @POST("poll/{id}/options")
-    Call<List<RequestOptionModel>> createOption(@Path("id") String id,
-                                                @Body List<RequestOptionModel> optionModelList);
+    Call<SimpleResponseModel> createOption(@Path("id") String id,
+                                           @Body List<RequestOptionModel> optionModelList);
+
+    @POST("poll/near")
+    Call<List<PollModel>> getNearPolls(@Query("latitude") String latitude,
+                                       @Query("longitude") String longitude,
+                                       @Query("diameter") String diameter,
+                                       @Query("api_token") String api_token);
 }

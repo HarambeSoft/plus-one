@@ -1,67 +1,106 @@
 package harambesoft.com.plusone;
 
-import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
+import processing.core.PApplet;
+import processing.android.PFragment;
 
 import harambesoft.com.plusone.fragments.ActivityStreamFragment;
 import harambesoft.com.plusone.fragments.CategoriesFragment;
-import harambesoft.com.plusone.fragments.DiscoverFragment;
 import harambesoft.com.plusone.fragments.MeFragment;
 import harambesoft.com.plusone.fragments.NewPollFragment;
-import harambesoft.com.plusone.fragments.PollsFragment;
 import harambesoft.com.plusone.fragments.SettingsFragment;
 import harambesoft.com.plusone.fragments.SignInFragment;
 import harambesoft.com.plusone.services.LocationTrackerService;
+import harambesoft.com.plusone.Constants.*;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static Context appContext;
+    private static final int LOCATION_PERMISSION_REQUEST = 1;
 
     private NavigationView navigationView = null;
     private TextView textViewUserNameNavHeader = null;
     private TextView textViewEmailNavHeader = null;
 
-    private static final String TAG = MainActivity.class.getSimpleName();
-
-    // TODO - insert your themoviedb.org API KEY here
-
-    public static Context getAppContext() {
-        return appContext;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Set appContext
-        appContext = this.getApplicationContext();
-
         setContentView(R.layout.activity_main);
+        // Update main activity
+        App.setMainActivity(this);
 
         loadDrawer();
         loadActionButton();
-
         assignWidgets();
         checkUserLogin();
+        kindlyAskForLocationPermissions();
 
-        // Start location tracker
+        // Check intent data
+        Intent intent = getIntent();
+        if (intent.hasExtra(NotificationData.POLL_ID)) {
+            // We have a poll to show
+            int pollID = intent.getIntExtra(Constants.NotificationData.POLL_ID, 0);
+            App.showPoll(pollID);
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == LOCATION_PERMISSION_REQUEST) {
+            for (int i = 0; i < permissions.length; i++) {
+                // String permission = permissions[i];
+                // No need to check what are the permissions, because we only have one request for now
+
+                int grantResult = grantResults[i];
+                if (grantResult == PackageManager.PERMISSION_GRANTED) {
+                    // We have permission now, so we can start service
+                    startLocationTrackerService();
+                }
+            }
+        }
+    }
+
+    private void startLocationTrackerService() {
         startService(new Intent(this, LocationTrackerService.class));
+        Log.d("PLUSONE/SERVICE", "LocationTrackerService started.");
+    }
+
+    private void kindlyAskForLocationPermissions() {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[] {
+                            android.Manifest.permission.ACCESS_FINE_LOCATION,
+                            android.Manifest.permission.ACCESS_COARSE_LOCATION
+                    },
+                    LOCATION_PERMISSION_REQUEST);
+        } else {
+            // We already have our permissions, so just start the service
+            startLocationTrackerService();
+        }
 
     }
 
@@ -100,6 +139,7 @@ public class MainActivity extends AppCompatActivity
         View header = LayoutInflater.from(this).inflate(R.layout.nav_header_main, null);
         navigationView.addHeaderView(header);
 
+        // TODO: replace with Butterknife calls
         textViewEmailNavHeader = (TextView) header.findViewById(R.id.textViewEmailNavHeader);
         textViewUserNameNavHeader = (TextView) header.findViewById(R.id.textViewUsernameNavHeader);
     }
@@ -156,37 +196,35 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
 
         //TODO: Add maps view
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        /* PApplet sketch = new Sketch();
-        PFragment fragment = new PFragment();
-        fragment.setSketch(sketch); */
-
         //TODO: Fix fragments
 
         int id = item.getItemId();
 
         if (id == R.id.nav_activity_stream) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, ActivityStreamFragment.newInstance())
-                    .commit();
-        } else if (id == R.id.nav_polls) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, new PollsFragment())
+                    .replace(R.id.container, new ActivityStreamFragment())
                     .commit();
         } else if (id == R.id.nav_categories) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, new CategoriesFragment())
                     .commit();
         } else if (id == R.id.nav_discover) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, new DiscoverFragment())
+            android.app.FragmentManager fragmentManager = getFragmentManager();
+            PApplet sketch = new Sketch();
+            PFragment fragment = new PFragment();
+            fragment.setSketch(sketch);
+
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, fragment)
                     .commit();
+            FrameLayout frameLayout = (FrameLayout) findViewById(R.id.container);
+            Sketch.viewHeight= frameLayout.getHeight();
+            Sketch.viewWidth = frameLayout.getWidth();
         } else if (id == R.id.nav_me) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, new MeFragment())
@@ -206,4 +244,3 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 }
-

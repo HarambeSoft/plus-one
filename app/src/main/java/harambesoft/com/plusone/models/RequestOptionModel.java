@@ -1,4 +1,4 @@
-package harambesoft.com.plusone.model;
+package harambesoft.com.plusone.models;
 
 /**
  * Created by yucel on 19.12.2016.
