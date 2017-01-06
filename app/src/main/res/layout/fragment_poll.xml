@@ -166,7 +166,7 @@
         android:text="Comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button8"
+        android:id="@+id/buttonShowComments"
         android:textAllCaps="false"
         android:textColor="@android:color/black"
         android:layout_marginRight="25dp"

@@ -14,6 +14,7 @@ import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import harambesoft.com.plusone.CurrentUser;
 import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.models.OptionModel;
@@ -42,6 +43,9 @@ public class PollFragment extends Fragment {
 
     @BindView(R.id.textViewChoice4)
     TextView textViewChoice4;
+
+    @BindView(R.id.buttonShowComments)
+    TextView buttonShowComments;
 
     ArrayList<TextView> optionTextViews = new ArrayList<>();
 
@@ -113,5 +117,10 @@ public class PollFragment extends Fragment {
             if (i < optionTextViews.size()) // FIXME: make options dynamically increase
                 optionTextViews.get(i).setText(options.get(i).getContent());
         }
+    }
+
+    @OnClick(R.id.buttonShowComments)
+    private void showComments() {
+
     }
 }
