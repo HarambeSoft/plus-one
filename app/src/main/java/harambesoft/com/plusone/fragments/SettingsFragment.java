@@ -2,9 +2,7 @@ package harambesoft.com.plusone.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +22,11 @@ import harambesoft.com.plusone.R;
 
 public class SettingsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
 
-    @BindView(R.id.swtichnot)
-    SwitchCompat swtichnot;
+    @BindView(R.id.switchNotifications)
+    SwitchCompat switchNotifications;
 
-    @BindView(R.id.swtichVibrate)
-    SwitchCompat swtichVibrate;
+    @BindView(R.id.switchVibrate)
+    SwitchCompat switchVibrate;
 
 
     @Override
@@ -36,7 +34,7 @@ public class SettingsFragment extends Fragment implements CompoundButton.OnCheck
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         ButterKnife.bind(this,view);
-        swtichnot.setOnCheckedChangeListener(this);
+        switchNotifications.setOnCheckedChangeListener(this);
         return view;
     }
 
@@ -45,14 +43,12 @@ public class SettingsFragment extends Fragment implements CompoundButton.OnCheck
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         App.settings().edit().putBoolean("showNotifications", b).apply();
-        if (swtichnot.isChecked())
-        {
+        if (switchNotifications.isChecked()) {
             FirebaseMessaging.getInstance().subscribeToTopic(CurrentUser.notificationTopic());
         }
         else {
             FirebaseMessaging.getInstance().unsubscribeFromTopic(CurrentUser.notificationTopic());
         }
-
     }
 }
 
