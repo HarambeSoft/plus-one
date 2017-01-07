@@ -6,6 +6,8 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import harambesoft.com.plusone.App;
+import harambesoft.com.plusone.ChoiceItem;
 import harambesoft.com.plusone.CurrentUser;
 import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.models.OptionModel;
@@ -32,23 +35,13 @@ public class PollFragment extends Fragment {
     @BindView(R.id.textViewPollQuestion)
     TextView textViewPollQuestion;
 
-    @BindView(R.id.textViewChoice1)
-    TextView textViewChoice1;
-
-    @BindView(R.id.textViewChoice2)
-    TextView textViewChoice2;
-
-    @BindView(R.id.textViewChoice3)
-    TextView textViewChoice3;
-
-    @BindView(R.id.textViewChoice4)
-    TextView textViewChoice4;
+    @BindView(R.id.layoutChoices)
+    LinearLayout layoutChoices;
 
     @BindView(R.id.buttonShowComments)
     TextView buttonShowComments;
 
     int pollID;
-    ArrayList<TextView> optionTextViews = new ArrayList<>();
 
     public static PollFragment newInstance(int pollID) {
         Bundle args = new Bundle();
@@ -90,12 +83,6 @@ public class PollFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        // FIXME: make options dynamically increase
-        optionTextViews.add(textViewChoice1);
-        optionTextViews.add(textViewChoice2);
-        optionTextViews.add(textViewChoice3);
-        optionTextViews.add(textViewChoice4);
-
         Bundle args = getArguments();
         int pollID = args.getInt("id", -1);
         if (pollID != -1) {
@@ -120,12 +107,14 @@ public class PollFragment extends Fragment {
     }
 
     public void loadPoll(PollModel poll) {
+        layoutChoices.removeAllViews();
+        
         textViewPollQuestion.setText(poll.getQuestion());
 
         List<OptionModel> options = poll.getOptionModels();
         for (int i = 0; i < options.size(); i++) {
-            if (i < optionTextViews.size()) // FIXME: make options dynamically increase
-                optionTextViews.get(i).setText(options.get(i).getContent());
+            ChoiceItem choiceItem = new ChoiceItem(getActivity(), options.get(i));
+            layoutChoices.addView(choiceItem);
         }
     }
 
