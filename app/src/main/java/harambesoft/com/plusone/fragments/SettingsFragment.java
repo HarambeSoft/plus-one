@@ -37,8 +37,8 @@ public class SettingsFragment extends Fragment implements CompoundButton.OnCheck
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         ButterKnife.bind(this,view);
         swtichnot.setOnCheckedChangeListener(this);
-        boolean den=App.settings().getBoolean("showNotifications",false);
-        swtichnot.setChecked(den);
+        boolean notificationsvalue=App.settings().getBoolean("showNotifications",false);
+        swtichnot.setChecked(notificationsvalue);
         return view;
     }
 
