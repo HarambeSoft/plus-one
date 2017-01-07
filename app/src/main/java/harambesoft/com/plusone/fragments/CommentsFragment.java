@@ -10,17 +10,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import harambesoft.com.plusone.App;
 import harambesoft.com.plusone.CurrentUser;
 import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.adapters.CommentsAdapter;
 import harambesoft.com.plusone.helpers.RecyclerTouchListener;
 import harambesoft.com.plusone.models.CommentModel;
+import harambesoft.com.plusone.models.SimpleResponseModel;
 import harambesoft.com.plusone.services.ApiClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,8 +39,16 @@ public class CommentsFragment extends Fragment {
     @BindView(R.id.recyclerViewComments)
     RecyclerView recyclerViewComments;
 
+    @BindView(R.id.editTextComment)
+    EditText editTextComment;
+
+    @BindView(R.id.buttonComment)
+    Button buttonComment;
+
     private CommentsAdapter commentsAdapter;
     private List<CommentModel> commentModelList = new ArrayList<>();
+
+    int pollID;
 
     public static Fragment newInstance(int pollID) {
         Bundle args = new Bundle();
@@ -61,6 +74,7 @@ public class CommentsFragment extends Fragment {
         Bundle args = getArguments();
         int pollID = args.getInt("pollID", -1);
         if (pollID != -1) {
+            setPollID(pollID);
             loadComments(pollID);
         }
 
@@ -100,5 +114,31 @@ public class CommentsFragment extends Fragment {
 
             }
         }));
+    }
+
+    public int getPollID() {
+        return pollID;
+    }
+
+    public void setPollID(int pollID) {
+        this.pollID = pollID;
+    }
+
+    @OnClick(R.id.buttonComment)
+    public void makeComment() {
+        ApiClient.apiService().makeComment(String.valueOf(getPollID()), editTextComment.getText().toString(), CurrentUser.apiToken()).enqueue(new Callback<SimpleResponseModel>() {
+            @Override
+            public void onResponse(Call<SimpleResponseModel> call, Response<SimpleResponseModel> response) {
+                if (!response.body().getError()) {
+                    // Success
+                    App.showComments(pollID);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SimpleResponseModel> call, Throwable t) {
+
+            }
+        });
     }
 }

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import harambesoft.com.plusone.fragments.CommentsFragment;
 import harambesoft.com.plusone.fragments.PollFragment;
 
 /**
@@ -41,6 +42,12 @@ public class App extends Application {
     public static void showPoll(int pollID) {
         getFragmentManager().beginTransaction()
                 .replace(R.id.container, PollFragment.newInstance(pollID))
+                .commit();
+    }
+
+    public static void showComments(int pollID) {
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container, CommentsFragment.newInstance(pollID))
                 .commit();
     }
 }
