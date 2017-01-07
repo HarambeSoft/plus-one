@@ -15,6 +15,7 @@ import java.util.TreeMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import harambesoft.com.plusone.App;
 import harambesoft.com.plusone.CurrentUser;
 import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.models.OptionModel;
@@ -131,8 +132,6 @@ public class PollFragment extends Fragment {
 
     @OnClick(R.id.buttonShowComments)
     public void showComments() {
-        getFragmentManager().beginTransaction()
-                .replace(R.id.container, CommentsFragment.newInstance(getPollID()))
-                .commit();
+        App.showComment(getPollID());
     }
 }
