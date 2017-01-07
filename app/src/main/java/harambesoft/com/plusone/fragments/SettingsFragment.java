@@ -24,11 +24,11 @@ import harambesoft.com.plusone.R;
 
 public class SettingsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
 
-    @BindView(R.id.swtichnot)
-    SwitchCompat swtichnot;
+    @BindView(R.id.switchNotifications)
+    SwitchCompat switchNotifications;
 
-    @BindView(R.id.swtichVibrate)
-    SwitchCompat swtichVibrate;
+    @BindView(R.id.switchVibrate)
+    SwitchCompat switchVibrate;
 
 
     @Override
@@ -36,9 +36,9 @@ public class SettingsFragment extends Fragment implements CompoundButton.OnCheck
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         ButterKnife.bind(this,view);
-        swtichnot.setOnCheckedChangeListener(this);
+        switchNotifications.setOnCheckedChangeListener(this);
         boolean notificationsvalue=App.settings().getBoolean("showNotifications",false);
-        swtichnot.setChecked(notificationsvalue);
+        switchNotifications.setChecked(notificationsvalue);
         return view;
     }
 
@@ -47,7 +47,7 @@ public class SettingsFragment extends Fragment implements CompoundButton.OnCheck
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         App.settings().edit().putBoolean("showNotifications", b).apply();
-        if (swtichnot.isChecked())
+        if (switchNotifications.isChecked())
         {
             FirebaseMessaging.getInstance().subscribeToTopic(CurrentUser.notificationTopic());
         }
