@@ -81,4 +81,12 @@ public interface ApiInterface {
     Call<SimpleResponseModel> makeComment(@Path("id") String pollID,
                                           @Query("content") String content,
                                           @Query("api_token") String api_token);
+
+    @GET("comment/{id}/upvote")
+    Call<SimpleResponseModel> upVoteComment(@Path("id") String commentID,
+                                            @Query("api_token") String api_token);
+
+    @GET("comment/{id}/downvote")
+    Call<SimpleResponseModel> downVoteComment(@Path("id") String commentID,
+                                              @Query("api_token") String api_token);
 }

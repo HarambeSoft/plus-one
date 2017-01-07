@@ -40,13 +40,13 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/buttonUpVote"
             android:layout_width="38dp"
             android:layout_height="wrap_content"
             android:background="@drawable/like" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/textViewUpVoteCount"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
 
@@ -62,14 +62,14 @@
             android:textStyle="normal|bold" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/buttonDownVote"
             android:layout_width="38dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:background="@drawable/dislike" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/textViewDownVoteCount"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
 
