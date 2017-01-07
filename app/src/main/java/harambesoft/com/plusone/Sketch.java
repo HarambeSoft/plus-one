@@ -142,7 +142,7 @@ public class Sketch extends PApplet {
                 pushMatrix();
                 translate(viewWidth/2,viewHeight/2);
                 rotateZ(radians(rotationAngle/10));
-                image(image, -viewWidth/2, -viewHeight/2,viewWidth,viewHeight);
+                image(image, -viewWidth, -viewHeight,viewWidth*2,viewHeight*2);
                 drawRects();
                 popMatrix();
             }
@@ -261,8 +261,8 @@ public class Sketch extends PApplet {
         Double meter_distanceY = distance(userLatitude, userLongtitude, x2, userLongtitude);
         Double meter_distanceX = distance(userLatitude, userLongtitude, userLatitude, y2);
         Double pixel_distance = scaleArray[scaleArray.length -1 - scaleTemp] * meter_distance /(1000*(137912.554668)) ;
-        double pixel_distanceX = (640/viewWidth) *Math.signum(-userLongtitude+y2)*scaleArray[scaleArray.length -1 - scaleTemp] * meter_distanceX /(1000*(137912.554668));
-        double pixel_distanceY = (640/viewHeight)*Math.signum(-x2+userLatitude)*scaleArray[scaleArray.length -1 - scaleTemp] * meter_distanceY /(1000*(137912.554668)) ;
+        double pixel_distanceX = (640/viewWidth*2) *Math.signum(-userLongtitude+y2)*scaleArray[scaleArray.length -1 - scaleTemp] * meter_distanceX /(1000*(137912.554668));
+        double pixel_distanceY = (640/viewHeight*2)*Math.signum(-x2+userLatitude)*scaleArray[scaleArray.length -1 - scaleTemp] * meter_distanceY /(1000*(137912.554668)) ;
 
         Double[] tmp = {pixel_distanceX,pixel_distanceY};
         return tmp;
