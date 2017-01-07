@@ -1,8 +1,18 @@
 package harambesoft.com.plusone;
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.List;
+
+import harambesoft.com.plusone.models.PollModel;
+import harambesoft.com.plusone.services.ApiClient;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PShape;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class Sketch extends PApplet {
     //SKETCH VARIABLES
     public static int viewWidth= 0,viewHeight=0;
@@ -13,42 +23,43 @@ public class Sketch extends PApplet {
     float meScale1 = 0.0f;      //VALUES FOR INDICATOR
     float meScale2 = 0.0f;      //VALUES FOR INDICATOR
     double[] scaleArray = { 591657550.500000f,
-            295828775.300000f,
-            147914387.600000f,
-            73957193.820000f,
-            36978596.910000f,
-            18489298.450000f,
-            9244649.227000f,
-            4622324.614000f,
-            2311162.307000f,
-            1155581.153000f,
-            577790.576700f,
-            288895.288400f,
-            144447.644200f,
-            72223.822090f,
-            36111.911040f,
-            18055.955520f,
-            9027.977761f,
-            4513.988880f,
-            2256.994440f,
-            1128.497220f
+            295828775.300000,
+            147914387.600000,
+            73957193.820000,
+            36978596.910000,
+            18489298.450000,
+            9244649.227000,
+            4622324.614000,
+            2311162.307000,
+            1155581.153000,
+            577790.576700,
+            288895.288400,
+            144447.644200,
+            72223.822090,
+            36111.911040,
+            18055.955520,
+            9027.977761,
+            4513.988880,
+            2256.994440,
+            1128.497220
     };
+    List<Double[]> pools = new ArrayList<Double[]>();
     //URL BASED VARIABLES
-    public int scaleTemp = 8;
+    public int scaleTemp = 15;
     boolean loadingImage = false;
     String zoom = "&zoom="+scaleTemp;
     String size = "&size=";
-    String scale = "&scale=2";
+    int scaleVal = 2;
+    String scale = "&scale="+scaleVal;
     String keyf = "&key=AIzaSyBL98hzfjEja36P5xTwzUnCjwEs6e23WYs";
-    String urlbase = "https://maps.googleapis.com/maps/api/staticmap?";
-    String url = "https://maps.googleapis.com/maps/api/staticmap?";
+    String urlbase = "http://maps.googleapis.com/maps/api/staticmap?";
+    String url = "http://maps.googleapis.com/maps/api/staticmap?";
     String center = "center=";
     //USER VARIABLES
-    ArrayList<RotatingCube> woods = new ArrayList<RotatingCube>();
-    ArrayList<BillBoard> billboards = new ArrayList<BillBoard>();
     double userLatitude,userLongtitude;
     public void setup() {
         frameRate(60);
+        smooth();
         textAlign(CENTER);
         textSize(viewWidth/10);
         //CREATE BACKGROUND SHAPE DISPLAY
@@ -61,7 +72,8 @@ public class Sketch extends PApplet {
             }
             backgroundImg.endShape(CLOSE);
         }
-        size += viewWidth*2+"x"+viewHeight*2;
+        size += viewWidth+"x"+viewHeight;
+        addPolls();
         //GET THE USER COORDINATES FROM CURRENTUSER CLASS
         if(CurrentUser.latitude().length()!=0) {
             userLatitude = Double.parseDouble(CurrentUser.latitude());
@@ -73,13 +85,16 @@ public class Sketch extends PApplet {
         }else{
             userLatitude = 0;userLongtitude=0;
         }
+
     }
     public void draw() {
         background(52);
         //DRAW BACKGROUND IMAGE
         pushMatrix();
         translate(0,0,-10);
+        backgroundImg.beginShape();
         backgroundImg.tint((255 / (frameCount+1)),(255 / (frameCount+1)),(255 / (frameCount+1)));
+        backgroundImg.endShape();
         shape(backgroundImg,0,0,viewWidth,viewHeight);
         popMatrix();
         if(userLongtitude==0 && userLatitude==0) {
@@ -90,9 +105,11 @@ public class Sketch extends PApplet {
                 userLongtitude = Double.parseDouble(CurrentUser.longitude());
                 loadingImage = true;
             }
-        }else{ // IF GPS VALUES ARE VALID THEN DRAW SOME COOL! INDICATOR AT THE CENTER
+        }else{
+
+            // IF GPS VALUES ARE VALID THEN DRAW SOME COOL! INDICATOR AT THE CENTER
             //CHECK THE CHANGED GPS COORDINATES IF CHANGED LOAD IMAGE
-            if(frameCount%(60*5) == 0){
+            if(frameCount%(60*5) == 0 || userLatitude != Double.parseDouble(CurrentUser.latitude()) || userLongtitude != Double.parseDouble(CurrentUser.longitude())){
                 if(CurrentUser.latitude().length()!=0)
                     if(userLongtitude != Double.parseDouble(CurrentUser.longitude()) || userLatitude != Double.parseDouble(CurrentUser.latitude())) {
                         userLatitude = Double.parseDouble(CurrentUser.latitude());
@@ -100,6 +117,8 @@ public class Sketch extends PApplet {
                         url = urlbase + center +CurrentUser.latitude()+","+CurrentUser.longitude()+ zoom + size + scale+ keyf;
                         println("loading url ->" + url);
                         image = loadImage(url);
+                        reorganizePixels();
+                        loadingImage = false;
                     }
             }
             //DOWNLOAD FOR NEW IMAGE
@@ -112,6 +131,7 @@ public class Sketch extends PApplet {
                 if(CurrentUser.latitude().length()!=0)
                     image = loadImage(urlbase + center +userLatitude+","+userLongtitude+ zoom + size + scale+ keyf);
                 loadingImage = false;
+                reorganizePixels();
             }
             //ROTATE IMAGE
             if(mousePressed){
@@ -124,6 +144,7 @@ public class Sketch extends PApplet {
                 translate(viewWidth/2,viewHeight/2);
                 rotateZ(radians(rotationAngle/10));
                 image(image, -image.width/2, -image.height/2);
+                drawRects();
                 popMatrix();
             }
             //DRAW THE BUTTONS
@@ -140,6 +161,8 @@ public class Sketch extends PApplet {
             fill(255);
             text("-",viewWidth-(viewWidth/20) - (textWidth("+")/2),textWidth("-") + 3*viewHeight/20 );
             if(image != null){
+                translate(0,0,20);
+
                 noStroke();
                 pushMatrix();
                 translate(0,0,viewWidth/25);
@@ -170,13 +193,14 @@ public class Sketch extends PApplet {
                 meScale+=0.02;
             }
         }
+
     }
     public void mousePressed() {
         if (mouseX >= viewWidth - (viewWidth / 10) && mouseY <= viewHeight / 10) {
             keyPressed();
             return;
         }
-        if (mouseX >= viewWidth - (viewWidth / 10) && mouseY <= viewHeight / 5) {
+        else if (mouseX >= viewWidth - (viewWidth / 10) && mouseY <= viewHeight / 5) {
             zoomOut();
             return;
         }
@@ -193,6 +217,29 @@ public class Sketch extends PApplet {
         scaleTemp = constrain(scaleTemp,7,19);
         rotationAngle = 0.0f;
     }
+
+    public void reorganizePixels(){
+        System.out.println("Reorganizing!!");
+        pixelCoords.clear();
+        Double[] tmp;
+        for (int i = 0; i< pools.size();i++){
+            tmp = toMap(pools.get(i)[0],pools.get(i)[1]);
+            pixelCoords.add(tmp);
+        }
+    }
+
+    public void drawRects(){
+        stroke(0);
+        fill(52);
+        rectMode(CENTER);
+        for (int i=0;i<pools.size();i++){
+            pushMatrix();
+            translate((pixelCoords.get(i)[0].floatValue()),(pixelCoords.get(i)[1].floatValue()),16);
+            box(15);
+            popMatrix();
+        }
+    }
+
     public Double distance(double x1, double y1, double x2, double y2) {
         //CALCULATE DISTANCE BETWEEN 2 COORDINATES
         //IF WANTED SEND THE USER COORDINATES
@@ -208,12 +255,53 @@ public class Sketch extends PApplet {
         Double distance = R * c;
         return distance;
     }
-    public void toMap(double x2, double y2) {
+    public Double[] toMap(double x2, double y2) {
         //FROM COORDINATES CAlCULATE THE DISTANCE THEN GET THE APPROXIMATE PIXEL LENGHT
         //AT LAST STEP FROM THE COORDINATES AND THE PIXEL LENGHT GET THE REAL PIXEL COORDINATES
         Double meter_distance = distance(userLatitude, userLongtitude, x2, y2);
-        Double pixel_distance = scaleArray[scaleArray.length -1 - scaleTemp] * meter_distance /(1000*(137912.554668f)) ;
+        Double meter_distanceY = distance(userLatitude, userLongtitude, x2, userLongtitude);
+        Double meter_distanceX = distance(userLatitude, userLongtitude, userLatitude, y2);
+        Double pixel_distance = scaleArray[scaleArray.length -1 - scaleTemp] * meter_distance /(1000*(137912.554668)) ;
+        double pixel_distanceX = Math.signum(-userLongtitude+y2)*scaleArray[scaleArray.length -1 - scaleTemp] * meter_distanceX /(1000*(137912.554668))*scaleVal ;
+        double pixel_distanceY = Math.signum(-x2+userLatitude)*scaleArray[scaleArray.length -1 - scaleTemp] * meter_distanceY /(1000*(137912.554668))*scaleVal ;
+
+        Double[] tmp = {pixel_distanceX,pixel_distanceY};
+        return tmp;
     }
+    ArrayList<Double[]> pixelCoords = new ArrayList<Double[]>();
+    public void addPolls(){
+
+        ApiClient.apiService().getNearPolls(CurrentUser.latitude(), CurrentUser.longitude(), "1000", CurrentUser.apiToken()).enqueue(new Callback<List<PollModel>>() {
+            @Override
+            public void onResponse(Call<List<PollModel>> call, Response<List<PollModel>> response) {
+                if(response.body()!=null)
+                if(!response.body().isEmpty()){
+                    Double[] tmp ;
+                    pools.clear();
+                    pixelCoords.clear();
+                    for (PollModel pollModel: response.body()) {
+                        Log.d("near polls: ", pollModel.getQuestion());
+                        tmp = new Double[2];
+                        tmp[0] = Double.parseDouble(pollModel.getLatitude());
+                        tmp[1] = Double.parseDouble(pollModel.getLongitude());
+                        pools.add(tmp);
+                        Double[] pixel = toMap(tmp[0],tmp[1]);
+                        pixelCoords.add(pixel);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<PollModel>> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+
+
     public class BillBoard{
         int centerX=0,centerY=0,centerZ=0;
         public int x = color(200,200,200,255);
@@ -299,7 +387,7 @@ public class Sketch extends PApplet {
         }
         public void rotateCube() {
             pushMatrix();
-            translate(centerX, centerY, centerZ+viewWidth/40);
+            translate((float)(centerX -(viewWidth/2)*Math.pow(2,scaleTemp-15)), (float)((centerY -(viewHeight/2)*Math.pow(2,scaleTemp-15))), centerZ);
             if (axisX) {
                 axisSpeedX += axisSpeed;
                 rotateX(axisSpeedX);
@@ -314,13 +402,13 @@ public class Sketch extends PApplet {
             }
             stroke(0);
             fill(cubeColor);
-            box(viewWidth/20);
+            box(25);
             popMatrix();
         }
     }
     public void settings() {
         while(viewWidth == 0 && viewHeight == 0);
-        size(viewWidth,viewHeight,P3D);
+        size(viewWidth,viewHeight,OPENGL);
     }
     static public void main(String[] passedArgs) {
         String[] appletArgs = new String[] { "Sketch" };
@@ -330,5 +418,6 @@ public class Sketch extends PApplet {
             PApplet.main(appletArgs);
         }
     }
-}
 
+
+}
