@@ -2,7 +2,7 @@ package harambesoft.com.plusone.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -55,7 +55,7 @@ public class ActivityStreamFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         if (ActivityStream.get().isEmpty()) {
-            Toast.makeText(getContext(), "Looks like you don't have any recent activity.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Looks like you don't have any recent activity.", Toast.LENGTH_SHORT).show();
         }
 
         activityModelList.addAll(ActivityStream.get());
@@ -65,12 +65,12 @@ public class ActivityStreamFragment extends Fragment {
     @SuppressWarnings("StatementWithEmptyBody")
     private void loadAdapterAndRecyclerView() {
         activitiesAdapter = new ActivitiesAdapter(activityModelList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerViewActivityStream.setLayoutManager(mLayoutManager);
         recyclerViewActivityStream.setItemAnimator(new DefaultItemAnimator());
         recyclerViewActivityStream.setAdapter(activitiesAdapter);
 
-        recyclerViewActivityStream.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerViewActivityStream, new RecyclerTouchListener.ClickListener() {
+        recyclerViewActivityStream.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerViewActivityStream, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 ActivityModel activity = activityModelList.get(position);
@@ -79,7 +79,7 @@ public class ActivityStreamFragment extends Fragment {
                     App.showPoll(activity.getPollID());
                 else if (activity.hasComment()) { /*FIXME: show comment*/}
 
-                Toast.makeText(getContext(), activity.getTitle(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), activity.getTitle(), Toast.LENGTH_SHORT).show();
             }
 
             @Override

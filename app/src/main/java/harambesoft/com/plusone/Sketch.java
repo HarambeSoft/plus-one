@@ -38,7 +38,7 @@ public class Sketch extends PApplet {
     boolean loadingImage = false;
     String zoom = "&zoom="+scaleTemp;
     String size = "&size=";
-    String scale = "&scale=1";
+    String scale = "&scale=2";
     String keyf = "&key=AIzaSyBL98hzfjEja36P5xTwzUnCjwEs6e23WYs";
     String urlbase = "https://maps.googleapis.com/maps/api/staticmap?";
     String url = "https://maps.googleapis.com/maps/api/staticmap?";

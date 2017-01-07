@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction()
+                getFragmentManager().beginTransaction()
                         .replace(R.id.container, new NewPollFragment())
                         .commit();
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -150,14 +150,14 @@ public class MainActivity extends AppCompatActivity
             textViewEmailNavHeader.setText(CurrentUser.email());
 
             // User is logged in, redirect to ActivityStream
-            getSupportFragmentManager().beginTransaction()
+            getFragmentManager().beginTransaction()
                     .replace(R.id.container, new ActivityStreamFragment())
                     .commit();
 
             return true;
         } else {
             // Redirect to login screen
-            getSupportFragmentManager().beginTransaction()
+            getFragmentManager().beginTransaction()
                     .replace(R.id.container, new SignInFragment())
                     .commit();
             return false;
@@ -206,11 +206,11 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_activity_stream) {
-            getSupportFragmentManager().beginTransaction()
+            getFragmentManager().beginTransaction()
                     .replace(R.id.container, new ActivityStreamFragment())
                     .commit();
         } else if (id == R.id.nav_categories) {
-            getSupportFragmentManager().beginTransaction()
+            getFragmentManager().beginTransaction()
                     .replace(R.id.container, new CategoriesFragment())
                     .commit();
         } else if (id == R.id.nav_discover) {
@@ -226,11 +226,11 @@ public class MainActivity extends AppCompatActivity
             Sketch.viewHeight= frameLayout.getHeight();
             Sketch.viewWidth = frameLayout.getWidth();
         } else if (id == R.id.nav_me) {
-            getSupportFragmentManager().beginTransaction()
+            getFragmentManager().beginTransaction()
                     .replace(R.id.container, new MeFragment())
                     .commit();
         } else if (id == R.id.nav_settings) {
-            getSupportFragmentManager().beginTransaction()
+            getFragmentManager().beginTransaction()
                     .replace(R.id.container, new SettingsFragment())
                     .commit();
         } else if (id == R.id.nav_logout) {

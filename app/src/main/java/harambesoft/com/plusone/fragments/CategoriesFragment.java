@@ -2,7 +2,7 @@ package harambesoft.com.plusone.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -55,16 +55,16 @@ public class CategoriesFragment extends Fragment {
 
     private void loadAdapterAndRecyclerView() {
         categoriesAdapter = new CategoriesAdapter(categoryModelList);
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerViewCategories.setLayoutManager(mLayoutManager);
         recyclerViewCategories.setItemAnimator(new DefaultItemAnimator());
         recyclerViewCategories.setAdapter(categoriesAdapter);
 
-        recyclerViewCategories.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerViewCategories, new RecyclerTouchListener.ClickListener() {
+        recyclerViewCategories.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerViewCategories, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 CategoryModel category = categoryModelList.get(position);
-                Toast.makeText(getContext(), category.getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), category.getName(), Toast.LENGTH_SHORT).show();
             }
 
             @Override

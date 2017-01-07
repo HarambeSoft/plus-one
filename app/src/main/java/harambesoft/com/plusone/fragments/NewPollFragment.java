@@ -1,7 +1,7 @@
 package harambesoft.com.plusone.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,11 +76,11 @@ public class NewPollFragment extends Fragment {
 
     private void loadSpinners() {
         String arrayOptionType[] = {"multi", "single"};
-        ArrayAdapter<String> adapterOptionType = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, arrayOptionType);
+        ArrayAdapter<String> adapterOptionType = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, arrayOptionType);
         spinnerOptionType.setAdapter(adapterOptionType);
 
         String arrayPollType[] = {"global", "local"};
-        ArrayAdapter<String> adapterPollType = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, arrayPollType);
+        ArrayAdapter<String> adapterPollType = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, arrayPollType);
         spinnerPollType.setAdapter(adapterPollType);
     }
 
@@ -95,7 +95,7 @@ public class NewPollFragment extends Fragment {
                     hashMapCategories.put(categoryName, response.body().get(i).getId());
                     arrayCategories[i] = categoryName;
                 }
-                ArrayAdapter<String> adapterCategories = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, arrayCategories);
+                ArrayAdapter<String> adapterCategories = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, arrayCategories);
                 spinnerCategory.setAdapter(adapterCategories);
 
             }

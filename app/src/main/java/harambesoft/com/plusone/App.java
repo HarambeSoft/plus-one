@@ -1,7 +1,7 @@
 package harambesoft.com.plusone;
 
 import android.app.Application;
-import android.support.v4.app.FragmentManager;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -35,7 +35,7 @@ public class App extends Application {
     }
 
     public static FragmentManager getFragmentManager() {
-        return mainActivity.getSupportFragmentManager();
+        return mainActivity.getFragmentManager();
     }
 
     public static void showPoll(int pollID) {

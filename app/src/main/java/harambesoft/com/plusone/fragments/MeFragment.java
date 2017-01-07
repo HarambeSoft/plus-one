@@ -2,7 +2,7 @@ package harambesoft.com.plusone.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,10 +28,6 @@ import retrofit2.Response;
  */
 
 public class MeFragment extends Fragment {
-
-    private static String name = "YucelT";
-    private static String password = "14593683762";
-
     private static final String TAG = MeFragment.class.getSimpleName();
 
     @BindView(R.id.editTextProfession)

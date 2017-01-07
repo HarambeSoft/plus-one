@@ -1,8 +1,9 @@
 package harambesoft.com.plusone.fragments;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -83,12 +84,12 @@ public class CommentsFragment extends Fragment {
 
     private void loadAdapterAndRecyclerView() {
         commentsAdapter = new CommentsAdapter(commentModelList);
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 1);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerViewComments.setLayoutManager(mLayoutManager);
         recyclerViewComments.setItemAnimator(new DefaultItemAnimator());
         recyclerViewComments.setAdapter(commentsAdapter);
 
-        recyclerViewComments.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerViewComments, new RecyclerTouchListener.ClickListener() {
+        recyclerViewComments.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerViewComments, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 // TODO: what happens when item_comment gets clicked?
