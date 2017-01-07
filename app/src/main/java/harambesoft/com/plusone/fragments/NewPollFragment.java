@@ -202,5 +202,4 @@ public class NewPollFragment extends Fragment {
                 .replace(R.id.container, new ActivityStreamFragment(), "ActivityStreamTag")
                 .commit();
     }
-
 }

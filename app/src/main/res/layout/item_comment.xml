@@ -1,89 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    card_view:cardCornerRadius="4dp"
+    android:layout_marginBottom="10dp"
+    card_view:cardBackgroundColor="@color/side_nav_bar">
 
     <LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageViewUserImageComment"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@android:drawable/sym_def_app_icon" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textViewUserNameComment"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="99"
-            android:textColor="@color/textColor" />
+            <ImageView
+                android:id="@+id/imageViewUserImageComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@android:drawable/sym_def_app_icon" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="99"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/textViewUserNameComment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textStyle="normal|bold"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/textViewContentComment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="TextView"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/buttonUpVote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="▲"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/buttonDownVote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="▼"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textViewUpVoteCount"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textStyle="normal|bold"
+                    android:layout_weight="1"/>
+
+
+
+                <TextView
+                    android:id="@+id/textViewDownVoteCount"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+
+                    android:text="0"
+                    android:textStyle="normal|bold"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textViewContentComment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textColor="@color/textColor" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/buttonUpVote"
-            android:layout_width="38dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/like" />
-
-        <TextView
-            android:id="@+id/textViewUpVoteCount"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/textview_border"
-            android:paddingBottom="5dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="5dp"
-            android:text="0"
-            android:textColor="@color/textColor"
-            android:textStyle="normal|bold" />
-
-        <Button
-            android:id="@+id/buttonDownVote"
-            android:layout_width="38dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:background="@drawable/dislike" />
-
-        <TextView
-            android:id="@+id/textViewDownVoteCount"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-
-            android:layout_marginLeft="5dp"
-            android:background="@drawable/textview_border"
-            android:paddingBottom="5dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="5dp"
-            android:text="0"
-            android:textColor="@color/textColor"
-            android:textStyle="normal|bold" />
-
-    </LinearLayout>
-
-
-</LinearLayout>
+</android.support.v7.widget.CardView>
