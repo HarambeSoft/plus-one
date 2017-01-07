@@ -75,11 +75,11 @@ public class NewPollFragment extends Fragment {
     }
 
     private void loadSpinners() {
-        String arrayOptionType[] = {"multi", "single"};
+        String arrayOptionType[] = {"Multi", "Single"};
         ArrayAdapter<String> adapterOptionType = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, arrayOptionType);
         spinnerOptionType.setAdapter(adapterOptionType);
 
-        String arrayPollType[] = {"global", "local"};
+        String arrayPollType[] = {"Global", "Local"};
         ArrayAdapter<String> adapterPollType = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, arrayPollType);
         spinnerPollType.setAdapter(adapterPollType);
     }
@@ -109,8 +109,8 @@ public class NewPollFragment extends Fragment {
 
     public void createPoll() {
         ApiClient.apiService().createPoll(editTextQuestion.getText().toString(),
-                spinnerPollType.getSelectedItem().toString(),
-                spinnerOptionType.getSelectedItem().toString(),
+                spinnerPollType.getSelectedItem().toString().toLowerCase(),
+                spinnerOptionType.getSelectedItem().toString().toLowerCase(),
                 editTextDuration.getText().toString(),
                 CurrentUser.latitude(),
                 CurrentUser.longitude(),
@@ -166,11 +166,13 @@ public class NewPollFragment extends Fragment {
 
 
     private void addNewChoice() {
+        //TODO: add remove button
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         EditText editTextChoice = new EditText(getActivity());
         editTextChoice.setLayoutParams(params);
+        editTextChoice.setHint("Option");
 
         // EVENTS
         editTextChoice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
