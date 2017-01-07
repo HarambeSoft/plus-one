@@ -23,7 +23,6 @@
                 android:id="@+id/editTextPollTitle"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
-                android:background="@drawable/textview_border"
                 android:ems="10"
                 android:hint="Poll Title"
                 android:inputType="textPersonName"
@@ -34,45 +33,43 @@
                 android:id="@+id/editTextQuestion"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
-                android:background="@drawable/textview_border"
                 android:ems="10"
                 android:hint="Question"
                 android:inputType="textPersonName"
                 android:paddingLeft="5dp"
                 android:textColor="@color/textColor" />
 
-            <Spinner
+            <fr.ganfra.materialspinner.MaterialSpinner
                 android:id="@+id/spinnerCategory"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:background="@drawable/textview_border"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
                 android:ems="10"
                 android:paddingLeft="5dp"
-                android:textColor="@color/textColor" />
+                android:textColor="@color/textColor"
+                />
 
-            <Spinner
+            <fr.ganfra.materialspinner.MaterialSpinner
                 android:id="@+id/spinnerOptionType"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:background="@drawable/textview_border"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
                 android:ems="10"
                 android:paddingLeft="5dp"
-                android:textColor="@color/textColor" />
+                android:textColor="@color/textColor"
+                />
 
-            <Spinner
+            <fr.ganfra.materialspinner.MaterialSpinner
                 android:id="@+id/spinnerPollType"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:background="@drawable/textview_border"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
                 android:ems="10"
                 android:paddingLeft="5dp"
-                android:textColor="@color/textColor" />
+                android:textColor="@color/textColor"
+                />
 
             <EditText
                 android:id="@+id/editTextDuration"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
-                android:background="@drawable/textview_border"
                 android:ems="10"
                 android:hint="Duration"
                 android:inputType="textPersonName"
@@ -83,7 +80,6 @@
                 android:id="@+id/editTextDiameter"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
-                android:background="@drawable/textview_border"
                 android:ems="10"
                 android:hint="Diameter"
                 android:inputType="textPersonName"
@@ -94,7 +90,6 @@
                 android:id="@+id/editTextChoice1"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
-                android:background="@drawable/textview_border"
                 android:ems="10"
                 android:hint="Choice 1"
                 android:inputType="textPersonName"
@@ -105,7 +100,6 @@
                 android:id="@+id/editTextChoice2"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
-                android:background="@drawable/textview_border"
                 android:ems="10"
                 android:hint="Choice 2"
                 android:inputType="textPersonName"
@@ -116,7 +110,6 @@
                 android:id="@+id/editTextChoice3"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
-                android:background="@drawable/textview_border"
                 android:ems="10"
                 android:hint="Choice 3"
                 android:inputType="textPersonName"
@@ -127,7 +120,6 @@
                 android:id="@+id/editTextChoice4"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
-                android:background="@drawable/textview_border"
                 android:ems="10"
                 android:hint="Choice 4"
                 android:inputType="textPersonName"

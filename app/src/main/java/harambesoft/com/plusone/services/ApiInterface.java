@@ -4,6 +4,7 @@ package harambesoft.com.plusone.services;
 import java.util.List;
 
 import harambesoft.com.plusone.models.CategoryModel;
+import harambesoft.com.plusone.models.CommentModel;
 import harambesoft.com.plusone.models.PollModel;
 import harambesoft.com.plusone.models.RequestOptionModel;
 import harambesoft.com.plusone.models.ResponseModel;
@@ -71,4 +72,8 @@ public interface ApiInterface {
                                        @Query("longitude") String longitude,
                                        @Query("diameter") String diameter,
                                        @Query("api_token") String api_token);
+
+    @GET("poll/{id}/comments")
+    Call<List<CommentModel>> getComments(@Path("id") String pollID,
+                                         @Query("api_token") String api_token);
 }

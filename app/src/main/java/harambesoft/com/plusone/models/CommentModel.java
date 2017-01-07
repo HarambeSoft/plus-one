@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by yucel on 16.12.2016.
  */
 
-public class CommentsModel {
+public class CommentModel {
 
     @SerializedName("user_id")
     @Expose

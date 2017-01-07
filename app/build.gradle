@@ -45,6 +45,9 @@ dependencies {
     //Butterknife
     compile 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+
+    //Material Spinner
+    compile 'com.github.ganfra:material-spinner:1.1.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
