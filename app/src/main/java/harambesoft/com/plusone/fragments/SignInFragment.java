@@ -64,7 +64,7 @@ public class SignInFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.container, new SignUpFragment())
+                        .replace(R.id.container, new SignUpFragment(), "SignUpTag")
                         .commit();
             }
         });
