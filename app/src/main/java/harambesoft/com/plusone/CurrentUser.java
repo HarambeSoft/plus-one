@@ -82,7 +82,6 @@ public class CurrentUser {
     public static String notificationTopic() {
         // if user is not logged in, we choose NotLoggedIn as topic
         // so we can send notifications to users that are not logged in
-        return "user_" + App.settings().getString("name", "NotLoggedIn");
+        return "user_" + App.settings().getString("id", "NotLoggedIn");
     }
-
 }
