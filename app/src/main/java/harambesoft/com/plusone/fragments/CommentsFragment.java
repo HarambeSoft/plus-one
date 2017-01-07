@@ -19,6 +19,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import harambesoft.com.plusone.App;
 import harambesoft.com.plusone.CurrentUser;
 import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.adapters.CommentsAdapter;
@@ -130,7 +131,7 @@ public class CommentsFragment extends Fragment {
             public void onResponse(Call<SimpleResponseModel> call, Response<SimpleResponseModel> response) {
                 if (!response.body().getError()) {
                     // Success
-
+                    App.showComments(pollID);
                 }
             }
 

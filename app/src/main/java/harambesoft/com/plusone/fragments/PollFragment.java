@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -132,6 +131,6 @@ public class PollFragment extends Fragment {
 
     @OnClick(R.id.buttonShowComments)
     public void showComments() {
-        App.showComment(getPollID());
+        App.showComments(getPollID());
     }
 }
