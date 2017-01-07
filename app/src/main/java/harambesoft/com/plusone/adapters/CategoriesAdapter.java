@@ -4,12 +4,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import harambesoft.com.plusone.App;
 import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.models.CategoryModel;
 
@@ -23,6 +25,9 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     public class CategoryViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.textViewCategoryName)
         public TextView textViewCategoryName;
+
+        @BindView(R.id.imageViewCategory)
+        public ImageView imageViewCategory;
 
         public CategoryViewHolder(View view) {
             super(view);
@@ -46,6 +51,10 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     public void onBindViewHolder(CategoryViewHolder holder, int position) {
         CategoryModel category = categoryList.get(position);
         holder.textViewCategoryName.setText(category.getName());
+
+        String resName = "cat_" + category.getName().toLowerCase().replace(" ", "_");
+        int resourceId = App.context.getResources().getIdentifier(resName, "drawable", App.context.getPackageName());
+        holder.imageViewCategory.setImageResource(resourceId);
     }
 
     @Override
