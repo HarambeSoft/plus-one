@@ -61,7 +61,7 @@ public class Sketch extends PApplet {
             }
             backgroundImg.endShape(CLOSE);
         }
-        size += viewWidth+"x"+viewHeight;
+        size += viewWidth*2+"x"+viewHeight*2;
         //GET THE USER COORDINATES FROM CURRENTUSER CLASS
         if(CurrentUser.latitude().length()!=0) {
             userLatitude = Double.parseDouble(CurrentUser.latitude());
@@ -331,3 +331,4 @@ public class Sketch extends PApplet {
         }
     }
 }
+
