@@ -86,45 +86,23 @@
                 android:paddingLeft="5dp"
                 android:textColor="@color/textColor" />
 
-            <EditText
-                android:id="@+id/editTextChoice1"
+            <LinearLayout
+                android:id="@+id/layoutChoicesNewPoll"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:ems="10"
-                android:hint="Choice 1"
-                android:inputType="textPersonName"
-                android:paddingLeft="5dp"
-                android:textColor="@color/textColor" />
-
-            <EditText
-                android:id="@+id/editTextChoice2"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:ems="10"
-                android:hint="Choice 2"
-                android:inputType="textPersonName"
-                android:paddingLeft="5dp"
-                android:textColor="@color/textColor" />
-
-            <EditText
-                android:id="@+id/editTextChoice3"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:ems="10"
-                android:hint="Choice 3"
-                android:inputType="textPersonName"
-                android:paddingLeft="5dp"
-                android:textColor="@color/textColor" />
-
-            <EditText
-                android:id="@+id/editTextChoice4"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:ems="10"
-                android:hint="Choice 4"
-                android:inputType="textPersonName"
-                android:paddingLeft="5dp"
-                android:textColor="@color/textColor" />
+                android:layout_height="wrap_content">
+                <!--
+                <EditText
+                    android:id="@+id/editTextChoice1"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:ems="10"
+                    android:hint="Choice 1"
+                    android:inputType="textPersonName"
+                    android:paddingLeft="5dp"
+                    android:textColor="@color/textColor" />
+                -->
+            </LinearLayout>
 
         </LinearLayout>
 

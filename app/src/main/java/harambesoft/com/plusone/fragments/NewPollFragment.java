@@ -2,12 +2,16 @@ package harambesoft.com.plusone.fragments;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.Editable;
+import android.text.Layout;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -43,23 +47,18 @@ public class NewPollFragment extends Fragment {
     EditText editTextDuration;
     @BindView(R.id.editTextDiameter)
     EditText editTextDiameter;
-    @BindView(R.id.editTextChoice1)
-    EditText editTextChoice1;
-    @BindView(R.id.editTextChoice2)
-    EditText editTextChoice2;
-    @BindView(R.id.editTextChoice3)
-    EditText editTextChoice3;
-    @BindView(R.id.editTextChoice4)
-    EditText editTextChoice4;
     @BindView(R.id.spinnerCategory)
     Spinner spinnerCategory;
     @BindView(R.id.spinnerOptionType)
     MaterialSpinner spinnerOptionType;
     @BindView(R.id.spinnerPollType)
     Spinner spinnerPollType;
+    @BindView(R.id.layoutChoicesNewPoll)
+    LinearLayout layoutChoicesNewPoll;
 
     private static final String TAG = "NewPollFragment";
     private HashMap<String, Integer> hashMapCategories;
+    private ArrayList<EditText> choicesList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,6 +69,7 @@ public class NewPollFragment extends Fragment {
 
         loadSpinners();
         loadCategories();
+        addNewChoice();
 
         return view;
     }
@@ -137,21 +137,15 @@ public class NewPollFragment extends Fragment {
     }
 
     private void addOptionsToPoll(final String pollID) {
-        RequestOptionModel requestOptionModel = new RequestOptionModel();
-        requestOptionModel.setContent(editTextChoice1.getText().toString());
-        RequestOptionModel requestOptionModel2 = new RequestOptionModel();
-        requestOptionModel2.setContent(editTextChoice2.getText().toString());
-        RequestOptionModel requestOptionModel3 = new RequestOptionModel();
-        requestOptionModel3.setContent(editTextChoice3.getText().toString());
-        RequestOptionModel requestOptionModel4 = new RequestOptionModel();
-        requestOptionModel4.setContent(editTextChoice4.getText().toString());
-
         List<RequestOptionModel> requestOptionModels = new ArrayList<>();
-        requestOptionModels.add(requestOptionModel);
-        requestOptionModels.add(requestOptionModel2);
-        requestOptionModels.add(requestOptionModel3);
-        requestOptionModels.add(requestOptionModel4);
-
+        for (EditText editText: choicesList) {
+            String content = editText.getText().toString();
+            if (!content.isEmpty()) {
+                RequestOptionModel requestOptionModel = new RequestOptionModel();
+                requestOptionModel.setContent(content);
+                requestOptionModels.add(requestOptionModel);
+            }
+        }
 
         ApiClient.apiService().createOption(pollID,
                 requestOptionModels).enqueue(new Callback<SimpleResponseModel>() {
@@ -168,6 +162,31 @@ public class NewPollFragment extends Fragment {
                 Log.e(TAG, "Failed " + t.getLocalizedMessage() + " " + call.request());
             }
         });
+    }
+
+
+    private void addNewChoice() {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        EditText editTextChoice = new EditText(getActivity());
+        editTextChoice.setLayoutParams(params);
+
+        // EVENTS
+        editTextChoice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    int n = choicesList.indexOf(v);
+                    if (n + 1 == choicesList.size()) { // is this the last element
+                        addNewChoice();
+                    }
+                }
+            }
+        });
+
+        choicesList.add(editTextChoice);
+        layoutChoicesNewPoll.addView(editTextChoice);
     }
 
     @OnClick(R.id.buttonCreate)
