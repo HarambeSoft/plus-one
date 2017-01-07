@@ -1,19 +1,14 @@
-package harambesoft.com.plusone;
+package harambesoft.com.plusone.views;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.models.OptionModel;
 
 /**
@@ -21,13 +16,13 @@ import harambesoft.com.plusone.models.OptionModel;
  */
 
 
-public class ChoiceItem extends LinearLayout {
+public class ChoiceItemView extends LinearLayout {
     OptionModel option;
 
     @BindView(R.id.textViewChoice)
     TextView textViewChoice;
 
-    public ChoiceItem(Context context, OptionModel option) {
+    public ChoiceItemView(Context context, OptionModel option) {
         super(context);
         View view = View.inflate(context, R.layout.item_choice, this);
         ButterKnife.bind(this, view);

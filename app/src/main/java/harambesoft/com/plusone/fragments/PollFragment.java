@@ -6,18 +6,16 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import harambesoft.com.plusone.App;
-import harambesoft.com.plusone.ChoiceItem;
+import harambesoft.com.plusone.views.ChoiceItemView;
 import harambesoft.com.plusone.CurrentUser;
 import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.models.OptionModel;
@@ -108,13 +106,13 @@ public class PollFragment extends Fragment {
 
     public void loadPoll(PollModel poll) {
         layoutChoices.removeAllViews();
-        
+
         textViewPollQuestion.setText(poll.getQuestion());
 
         List<OptionModel> options = poll.getOptionModels();
         for (int i = 0; i < options.size(); i++) {
-            ChoiceItem choiceItem = new ChoiceItem(getActivity(), options.get(i));
-            layoutChoices.addView(choiceItem);
+            ChoiceItemView choiceItemView = new ChoiceItemView(getActivity(), options.get(i));
+            layoutChoices.addView(choiceItemView);
         }
     }
 
