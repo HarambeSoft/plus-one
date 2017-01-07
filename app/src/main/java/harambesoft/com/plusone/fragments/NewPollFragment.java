@@ -17,6 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import fr.ganfra.materialspinner.MaterialSpinner;
 import harambesoft.com.plusone.App;
 import harambesoft.com.plusone.CurrentUser;
 import harambesoft.com.plusone.R;
@@ -53,7 +54,7 @@ public class NewPollFragment extends Fragment {
     @BindView(R.id.spinnerCategory)
     Spinner spinnerCategory;
     @BindView(R.id.spinnerOptionType)
-    Spinner spinnerOptionType;
+    MaterialSpinner spinnerOptionType;
     @BindView(R.id.spinnerPollType)
     Spinner spinnerPollType;
 
