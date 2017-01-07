@@ -45,7 +45,7 @@ public class App extends Application {
                 .commit();
     }
 
-    public static void showComment(int pollID) {
+    public static void showComments(int pollID) {
         getFragmentManager().beginTransaction()
                 .replace(R.id.container, CommentsFragment.newInstance(pollID))
                 .commit();
