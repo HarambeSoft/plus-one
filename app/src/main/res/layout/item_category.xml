@@ -15,7 +15,6 @@
         android:layout_margin="5dp">
 
         <ImageView
-            android:src="@drawable/cat_fashion"
             android:id="@+id/imageViewCategory"
             android:layout_width="match_parent"
             android:layout_height="50dp" />
