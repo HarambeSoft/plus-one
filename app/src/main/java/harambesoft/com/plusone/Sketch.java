@@ -203,6 +203,17 @@ public class Sketch extends PApplet {
             zoomOut();
             return;
         }
+        else{
+
+            for (int i=0;i<pixelCoords.size();i++){
+                if(mouseX +8>=pixelCoords.get(i)[0] && mouseX -8<=pixelCoords.get(i)[1])
+                    if (mouseY+8>=pixelCoords.get(i)[0] && mouseY-8<=pixelCoords.get(i)[1]){
+                        App.showPoll(pools.get(i)[2].intValue());
+                    }
+
+            }
+
+        }
     }
     public void keyPressed(){ // ZOOM IN
         loadingImage = true;
@@ -280,9 +291,10 @@ public class Sketch extends PApplet {
                     pixelCoords.clear();
                     for (PollModel pollModel: response.body()) {
                         Log.d("near polls: ", pollModel.getQuestion());
-                        tmp = new Double[2];
+                        tmp = new Double[3];
                         tmp[0] = Double.parseDouble(pollModel.getLatitude());
                         tmp[1] = Double.parseDouble(pollModel.getLongitude());
+                        tmp[2] = pollModel.getId().doubleValue();
                         pools.add(tmp);
                         Double[] pixel = toMap(tmp[0],tmp[1]);
                         pixelCoords.add(pixel);
