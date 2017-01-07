@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:layout_alignRight="@id/textNot"
-            android:id="@+id/swtichnot"
+            android:id="@+id/switchNotifications"
             android:theme="@style/MySwitch"/>
 
         <TextView
@@ -31,7 +31,7 @@
             android:textSize="9pt"
             android:layout_height="wrap_content"
             android:text="@string/allow_the_vibrate"
-            android:layout_alignTop="@+id/swtichnot"
+            android:layout_alignTop="@+id/switchNotifications"
             android:layout_marginTop="50dp"
             android:layout_marginLeft="2dp"
             android:id="@+id/textvibrate"
@@ -44,7 +44,7 @@
             android:textColor="@color/textColor"
             android:layout_alignRight="@id/textvibrate"
             android:layout_alignTop="@+id/textvibrate"
-            android:id="@+id/swtichVibrate"
+            android:id="@+id/switchVibrate"
             android:theme="@style/MySwitch"/>
 
 
