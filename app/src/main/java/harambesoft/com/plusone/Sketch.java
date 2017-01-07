@@ -108,6 +108,7 @@ public class Sketch extends PApplet {
 
             // IF GPS VALUES ARE VALID THEN DRAW SOME COOL! INDICATOR AT THE CENTER
             //CHECK THE CHANGED GPS COORDINATES IF CHANGED LOAD IMAGE
+            if(CurrentUser.latitude() != null)
             if(frameCount%(60*5) == 0 || userLatitude != Double.parseDouble(CurrentUser.latitude()) || userLongtitude != Double.parseDouble(CurrentUser.longitude())){
                 if(CurrentUser.latitude().length()!=0)
                     if(userLongtitude != Double.parseDouble(CurrentUser.longitude()) || userLatitude != Double.parseDouble(CurrentUser.latitude())) {
@@ -204,13 +205,15 @@ public class Sketch extends PApplet {
             return;
         }
         else{
-
-            for (int i=0;i<pixelCoords.size();i++){
-                if(mouseX +8>=pixelCoords.get(i)[0] && mouseX -8<=pixelCoords.get(i)[1])
-                    if (mouseY+8>=pixelCoords.get(i)[0] && mouseY-8<=pixelCoords.get(i)[1]){
+            for (int i=0;i<pixelCoords.size();i++) {
+                if ((mouseX-viewWidth/2)-30 <= pixelCoords.get(i)[0]&&(mouseX-viewWidth/2)+30>=pixelCoords.get(i)[0]){
+                    System.out.println("true?");
+                    if ((mouseY-viewHeight/2)-30 <= pixelCoords.get(i)[1]&&(mouseY-viewHeight/2)+30>=pixelCoords.get(i)[1]) {
                         App.showPoll(pools.get(i)[2].intValue());
+                        println("Touch me!");
+                        break;
                     }
-
+                }
             }
 
         }
@@ -296,8 +299,7 @@ public class Sketch extends PApplet {
                         tmp[1] = Double.parseDouble(pollModel.getLongitude());
                         tmp[2] = pollModel.getId().doubleValue();
                         pools.add(tmp);
-                        Double[] pixel = toMap(tmp[0],tmp[1]);
-                        pixelCoords.add(pixel);
+                        pixelCoords.add(toMap(tmp[0],tmp[1]));
                     }
                 }
             }
