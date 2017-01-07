@@ -44,6 +44,8 @@ public class CommentsFragment extends Fragment {
     private CommentsAdapter commentsAdapter;
     private List<CommentModel> commentModelList = new ArrayList<>();
 
+    int pollID;
+
     public static Fragment newInstance(int pollID) {
         Bundle args = new Bundle();
         args.putInt("pollID", pollID);
@@ -111,6 +113,6 @@ public class CommentsFragment extends Fragment {
 
     @OnClick(R.id.buttonComment)
     public void makeComment() {
-
+        //ApiClient.apiService().makeComment()
     }
 }
