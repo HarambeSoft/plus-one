@@ -76,4 +76,9 @@ public interface ApiInterface {
     @GET("poll/{id}/comments")
     Call<List<CommentModel>> getComments(@Path("id") String pollID,
                                          @Query("api_token") String api_token);
+
+    @POST("poll/{id}/comment")
+    Call<SimpleResponseModel> makeComment(@Path("id") String pollID,
+                                          @Query("content") String content,
+                                          @Query("api_token") String api_token);
 }

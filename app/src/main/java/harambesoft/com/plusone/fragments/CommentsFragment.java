@@ -16,6 +16,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import harambesoft.com.plusone.CurrentUser;
 import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.adapters.CommentsAdapter;
@@ -33,6 +34,12 @@ import retrofit2.Response;
 public class CommentsFragment extends Fragment {
     @BindView(R.id.recyclerViewComments)
     RecyclerView recyclerViewComments;
+
+    @BindView(R.id.editTextComment)
+    RecyclerView editTextComment;
+
+    @BindView(R.id.buttonComment)
+    RecyclerView buttonComment;
 
     private CommentsAdapter commentsAdapter;
     private List<CommentModel> commentModelList = new ArrayList<>();
@@ -100,5 +107,10 @@ public class CommentsFragment extends Fragment {
 
             }
         }));
+    }
+
+    @OnClick(R.id.buttonComment)
+    public void makeComment() {
+
     }
 }
