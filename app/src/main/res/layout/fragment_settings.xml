@@ -2,5 +2,45 @@
 <ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- TODO: program settings will be here -->
+    <RelativeLayout
+        android:paddingTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/allow_the_notification"
+            android:id="@+id/textNot"
+            />
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:layout_alignRight="@id/textNot"
+            android:id="@+id/swtichnot"
+            android:theme="@style/MySwitch"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/allow_the_vibrate"
+            android:layout_alignTop="@+id/swtichnot"
+            android:layout_marginTop="50dp"
+            android:id="@+id/textvibrate"
+            />
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:layout_alignRight="@id/textvibrate"
+            android:layout_alignTop="@+id/textvibrate"
+            android:id="@+id/swtichVibrate"
+            android:theme="@style/MySwitch"/>
+
+
+    </RelativeLayout>
+
+
+
 </ScrollView>
