@@ -175,5 +175,11 @@ public class NewPollFragment extends Fragment {
         createPoll();
     }
 
+    @OnClick(R.id.buttonCancel)
+    public void onClickCancelPoll() {
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container, new ActivityStreamFragment(), "ActivityStreamTag")
+                .commit();
+    }
 
 }
