@@ -5,6 +5,8 @@ package harambesoft.com.plusone;
  */
 
 public class Constants {
+    public static final int MAX_IMG_SIZE = 1024 * 512;
+
     public class NotificationData {
         public static final String POLL_ID = "poll_id";
     }

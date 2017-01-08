@@ -39,6 +39,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.ganfra.materialspinner.MaterialSpinner;
 import harambesoft.com.plusone.App;
+import harambesoft.com.plusone.Constants;
 import harambesoft.com.plusone.CurrentUser;
 import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.helpers.ActivityStream;
@@ -267,7 +268,7 @@ public class NewPollFragment extends Fragment implements BackPressedListener {
 
 
             int nRead;
-            byte[] imageData = new byte[16384];
+            byte[] imageData = new byte[Constants.MAX_IMG_SIZE];
             while ((nRead = inputStream.read(imageData, 0, imageData.length)) != -1)
                 buffer.write(imageData, 0, nRead);
             byte[] resultData = buffer.toByteArray();

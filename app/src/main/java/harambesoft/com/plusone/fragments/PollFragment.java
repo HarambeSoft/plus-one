@@ -26,6 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import harambesoft.com.plusone.App;
+import harambesoft.com.plusone.Constants;
 import harambesoft.com.plusone.models.ResponseModel;
 import harambesoft.com.plusone.models.SimpleResponseModel;
 import harambesoft.com.plusone.views.BackPressedListener;
@@ -169,11 +170,10 @@ public class PollFragment extends Fragment implements BackPressedListener {
             StorageReference islandRef = App.getFirebaseStorageRef().child("poll_images/" + option.getId() + ".jpg");
 
             final int choice = i;
-            final long ONE_MEGABYTE = 1024 * 1024;
-            islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            islandRef.getBytes(Constants.MAX_IMG_SIZE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                 @Override
                 public void onSuccess(byte[] bytes) {
-                    Log.d("FIREBASE", "IMAGE FOUND FOR" + option.getId());
+                    Log.d("FIREBASE", "IMAGE FOUND FOR " + option.getId());
 
                     Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                     choiceItemViews.get(choice).setImageBitmap(bitmap);
@@ -182,7 +182,7 @@ public class PollFragment extends Fragment implements BackPressedListener {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
                     // Handle any errors
-                    Log.d("FIREBASE", "IMAGE not FOUND FOR" + option.getId());
+                    Log.d("FIREBASE", "IMAGE not FOUND FOR " + option.getId());
                 }
             });
 
