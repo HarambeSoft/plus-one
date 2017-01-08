@@ -21,6 +21,8 @@ import harambesoft.com.plusone.api.PlusOneAPI;
 import harambesoft.com.plusone.views.BackPressedListener;
 
 public class SignInFragment extends Fragment implements BackPressedListener {
+    public static final String TAG = SignInFragment.class.getName();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,7 +67,7 @@ public class SignInFragment extends Fragment implements BackPressedListener {
             @Override
             public void onClick(View view) {
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.container, new SignUpFragment(), "SignUpFragmentTag")
+                        .replace(R.id.container, new SignUpFragment(), SignUpFragment.TAG)
                         .commit();
             }
         });

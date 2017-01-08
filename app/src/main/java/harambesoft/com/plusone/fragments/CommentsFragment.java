@@ -36,6 +36,8 @@ import retrofit2.Response;
  */
 
 public class CommentsFragment extends Fragment implements BackPressedListener {
+    public static final String TAG = CommentsFragment.class.getName();
+
     @BindView(R.id.recyclerViewComments)
     RecyclerView recyclerViewComments;
 
@@ -145,7 +147,7 @@ public class CommentsFragment extends Fragment implements BackPressedListener {
     @Override
     public void onBackPressed() {
         getFragmentManager().beginTransaction()
-                .replace(R.id.container, new PollFragment(), "PollFragmentTag")
+                .replace(R.id.container, new PollFragment(), PollFragment.TAG)
                 .commit();
     }
 

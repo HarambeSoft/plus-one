@@ -31,6 +31,8 @@ import retrofit2.Response;
  */
 
 public class CategoriesFragment extends Fragment {
+    public static final String TAG = CategoriesFragment.class.getName();
+
     @BindView(R.id.recyclerViewCategories)
     RecyclerView recyclerViewCategories;
 

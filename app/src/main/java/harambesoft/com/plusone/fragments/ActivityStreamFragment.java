@@ -32,6 +32,8 @@ import harambesoft.com.plusone.models.CategoryModel;
  */
 
 public class ActivityStreamFragment extends Fragment {
+    public static final String TAG = ActivityStreamFragment.class.getName();
+
     @BindView(R.id.recyclerViewActivityStream)
     RecyclerView recyclerViewActivityStream;
 

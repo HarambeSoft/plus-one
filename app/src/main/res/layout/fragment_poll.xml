@@ -20,15 +20,24 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" />
 
-    <android.support.v4.widget.Space
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
     <Button
         android:text="Comments"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/buttonShowComments"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/white"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:textStyle="normal|bold" />
+
+    <Button
+        android:text="Show Results"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonShowResults"
         android:textColor="@android:color/black"
         android:layout_marginTop="16dp"
         android:background="@android:color/white"

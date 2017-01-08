@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,6 +37,8 @@ import retrofit2.Response;
  */
 
 public class PollFragment extends Fragment implements BackPressedListener {
+    public static final String TAG = PollFragment.class.getName();
+
     @BindView(R.id.textViewPollQuestion)
     TextView textViewPollQuestion;
 
@@ -43,7 +46,10 @@ public class PollFragment extends Fragment implements BackPressedListener {
     LinearLayout layoutChoices;
 
     @BindView(R.id.buttonShowComments)
-    TextView buttonShowComments;
+    Button buttonShowComments;
+
+    @BindView(R.id.buttonShowResults)
+    Button buttonShowResults;
 
     int pollID;
     PollModel poll;
@@ -230,10 +236,17 @@ public class PollFragment extends Fragment implements BackPressedListener {
         App.showComments(getPollID());
     }
 
+    @OnClick(R.id.buttonShowResults)
+    public void showResults() {
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container, ChartFragment.newInstance(getPoll()), ChartFragment.TAG)
+                .commit();
+    }
+
     @Override
     public void onBackPressed() {
         getFragmentManager().beginTransaction()
-                .replace(R.id.container, new ActivityStreamFragment(), "ActivityStreamFragmentTag")
+                .replace(R.id.container, new ActivityStreamFragment(), ActivityStreamFragment.TAG)
                 .commit();
     }
 }

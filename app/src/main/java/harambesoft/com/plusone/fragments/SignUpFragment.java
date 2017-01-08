@@ -22,7 +22,9 @@ import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.api.PlusOneAPI;
 import harambesoft.com.plusone.views.BackPressedListener;
 
-public class SignUpFragment extends Fragment implements BackPressedListener{
+public class SignUpFragment extends Fragment implements BackPressedListener {
+    public static final String TAG = SignUpFragment.class.getName();
+
     @BindView(R.id.buttonSignUp)Button buttonSignUp;
     @BindView(R.id.textviewUsernameSignUp)TextView textviewUsernameSignUp;
     @BindView(R.id.textviewEmailSignUp)TextView textViewEmail;
@@ -70,7 +72,7 @@ public class SignUpFragment extends Fragment implements BackPressedListener{
     @Override
     public void onBackPressed() {
         getFragmentManager().beginTransaction()
-                .replace(R.id.container, new SignInFragment(), "SignInFragmentTag")
+                .replace(R.id.container, new SignInFragment(), SignInFragment.TAG)
                 .commit();
     }
 }

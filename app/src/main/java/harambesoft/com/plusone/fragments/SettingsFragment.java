@@ -23,6 +23,7 @@ import harambesoft.com.plusone.R;
  */
 
 public class SettingsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
+    public static final String TAG = SettingsFragment.class.getName();
 
     @BindView(R.id.switchNotifications)
     SwitchCompat switchNotifications;

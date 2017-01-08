@@ -27,11 +27,14 @@ import android.widget.TextView;
 import harambesoft.com.plusone.Constants.NotificationData;
 import harambesoft.com.plusone.fragments.ActivityStreamFragment;
 import harambesoft.com.plusone.fragments.CategoriesFragment;
+import harambesoft.com.plusone.fragments.CommentsFragment;
 import harambesoft.com.plusone.fragments.MeFragment;
 import harambesoft.com.plusone.fragments.NewPollFragment;
 import harambesoft.com.plusone.fragments.PollFragment;
 import harambesoft.com.plusone.fragments.SettingsFragment;
 import harambesoft.com.plusone.fragments.SignInFragment;
+import harambesoft.com.plusone.fragments.SignUpFragment;
+import harambesoft.com.plusone.helpers.ActivityStream;
 import harambesoft.com.plusone.services.LocationTrackerService;
 import processing.android.PFragment;
 import processing.core.PApplet;
@@ -182,7 +185,7 @@ public class MainActivity extends AppCompatActivity
             FragmentManager fragmentManager = getFragmentManager();
             Fragment currentFragment = fragmentManager.findFragmentById(R.id.container);
 
-            if (currentFragment.getTag().equals("ActivityStreamFragmentTag"))
+            if (currentFragment.getTag().equals(ActivityStreamFragment.TAG))
             {
                 if (doubleBackToExitPressedOnce) {
                     super.onBackPressed();
@@ -197,23 +200,23 @@ public class MainActivity extends AppCompatActivity
                     }
                 }, 500);
             }
-            else if(currentFragment.getTag().equals("CommentsFragmentTag")) {
+            else if(currentFragment.getTag().equals(CommentsFragment.TAG)) {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.container, new PollFragment(), "PollFragmentTag");
+                fragmentTransaction.replace(R.id.container, new PollFragment(), PollFragment.TAG);
                 fragmentTransaction.commit();
             }
-            else if(currentFragment.getTag().equals("SignUpFragmentTag")) {
+            else if(currentFragment.getTag().equals(SignUpFragment.TAG)) {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.container, new SignInFragment(), "SignInFragmentTag");
+                fragmentTransaction.replace(R.id.container, new SignInFragment(), SignInFragment.TAG);
                 fragmentTransaction.commit();
             }
-            else if(currentFragment.getTag().equals("SignInFragmentTag")) {
+            else if(currentFragment.getTag().equals(SignInFragment.TAG)) {
                 super.onBackPressed();
             }
             else
             {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.container, new ActivityStreamFragment(), "ActivityStreamFragmentTag");
+                fragmentTransaction.replace(R.id.container, new ActivityStreamFragment(), ActivityStreamFragment.TAG);
                 fragmentTransaction.commit();
             }
 

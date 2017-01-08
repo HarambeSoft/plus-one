@@ -25,6 +25,7 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 import harambesoft.com.plusone.App;
 import harambesoft.com.plusone.CurrentUser;
 import harambesoft.com.plusone.R;
+import harambesoft.com.plusone.helpers.ActivityStream;
 import harambesoft.com.plusone.models.CategoryModel;
 import harambesoft.com.plusone.models.PollModel;
 import harambesoft.com.plusone.models.RequestOptionModel;
@@ -40,6 +41,8 @@ import retrofit2.Response;
  * Created by isa on 18.12.2016.
  */
 public class NewPollFragment extends Fragment implements BackPressedListener {
+    public static final String TAG = NewPollFragment.class.getName();
+
     @BindView(R.id.editTextPollTitle)
     EditText editTextPollTitle;
     @BindView(R.id.editTextQuestion)
@@ -57,7 +60,6 @@ public class NewPollFragment extends Fragment implements BackPressedListener {
     @BindView(R.id.layoutChoicesNewPoll)
     LinearLayout layoutChoicesNewPoll;
 
-    private static final String TAG = "NewPollFragment";
     private HashMap<String, Integer> hashMapCategories;
     private ArrayList<EditText> choicesList = new ArrayList<>();
 
@@ -200,14 +202,14 @@ public class NewPollFragment extends Fragment implements BackPressedListener {
     @OnClick(R.id.buttonCancel)
     public void onClickCancelPoll() {
         getFragmentManager().beginTransaction()
-                .replace(R.id.container, new ActivityStreamFragment(), "ActivityStreamFragmentTag")
+                .replace(R.id.container, new ActivityStreamFragment(), ActivityStreamFragment.TAG)
                 .commit();
     }
 
     @Override
     public void onBackPressed() {
         getFragmentManager().beginTransaction()
-                .replace(R.id.container, new ActivityStreamFragment(), "ActivityStreamFragmentTag")
+                .replace(R.id.container, new ActivityStreamFragment(), ActivityStreamFragment.TAG)
                 .commit();
     }
 }
