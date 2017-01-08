@@ -255,7 +255,7 @@ boolean safe = true;
         thread("load");
     }
 
-    public void reorganizePixels(){
+    public synchronized void reorganizePixels(){
         safe = false;
         System.out.println("Reorganizing!!");
         pixelCoords.clear();
