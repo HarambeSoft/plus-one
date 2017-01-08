@@ -188,8 +188,9 @@ public class PollFragment extends Fragment {
                         choiceItemView.setChecked(false);
                     }
                     choiceItemViews.get(choice).setChecked(true);
-                    updateVote(choice, 1);
                 }
+
+                updateVote(choice, 1);
             }
 
             @Override
