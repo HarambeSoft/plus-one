@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.text.Editable;
 import android.text.Layout;
 import android.text.TextWatcher;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -64,9 +66,8 @@ public class NewPollFragment extends Fragment implements BackPressedListener {
 
     private HashMap<Integer, Uri> futureUploadUris = new HashMap<>();
     private int lastImageRequestOfChoice = -1;
+    private Snackbar snackbar;
 
-    @BindView(R.id.editTextPollTitle)
-    EditText editTextPollTitle;
     @BindView(R.id.editTextQuestion)
     EditText editTextQuestion;
     @BindView(R.id.editTextDuration)
@@ -81,6 +82,8 @@ public class NewPollFragment extends Fragment implements BackPressedListener {
     Spinner spinnerPollType;
     @BindView(R.id.layoutChoicesNewPoll)
     LinearLayout layoutChoicesNewPoll;
+    @BindView(R.id.buttonCreate)
+    Button buttonCreate;
 
     private HashMap<String, Integer> hashMapCategories;
     private ArrayList<NewChoiceItemView> choicesList = new ArrayList<>();
@@ -132,78 +135,6 @@ public class NewPollFragment extends Fragment implements BackPressedListener {
         });
     }
 
-    public void createPoll() {
-        ApiClient.apiService().createPoll(editTextQuestion.getText().toString(),
-                spinnerPollType.getSelectedItem().toString().toLowerCase(),
-                spinnerOptionType.getSelectedItem().toString().toLowerCase(),
-                editTextDuration.getText().toString(),
-                CurrentUser.latitude(),
-                CurrentUser.longitude(),
-                editTextDiameter.getText().toString(),
-                hashMapCategories.get(spinnerCategory.getSelectedItem().toString()).toString(),
-                CurrentUser.apiToken()).
-                enqueue(new Callback<ResponseModel<PollModel>>() {
-            @Override
-            public void onResponse(Call<ResponseModel<PollModel>> call, Response<ResponseModel<PollModel>> response) {
-                Log.d(TAG, "Poll added.");
-                Log.d(TAG, response.body().getMessage());
-
-                if (!response.body().getError()) {
-                    addOptionsToPoll(response.body().getResponse().getId().toString());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseModel<PollModel>> call, Throwable t) {
-                Log.d(TAG, "Can't create poll.");
-                Log.e(TAG, "Failed" + t.getLocalizedMessage() + " " + call.request());
-            }
-        });
-    }
-
-    private void addOptionsToPoll(final String pollID) {
-        List<RequestOptionModel> requestOptionModels = new ArrayList<>();
-        for (NewChoiceItemView newChoiceItemView: choicesList) {
-            String content = newChoiceItemView.getText();
-            if (!content.isEmpty()) {
-                RequestOptionModel requestOptionModel = new RequestOptionModel();
-                requestOptionModel.setContent(content);
-                requestOptionModels.add(requestOptionModel);
-            }
-        }
-
-        ApiClient.apiService().createOption(pollID,
-                requestOptionModels).enqueue(new Callback<ResponseModel<List<Integer>>>() {
-            @Override
-            public void onResponse(Call<ResponseModel<List<Integer>>> call, Response<ResponseModel<List<Integer>>> response) {
-                Log.d(TAG, "Options added to poll.");
-                if (!response.body().getError()) {
-                    // Upload images according their option_id's
-                    List<Integer> optionIDList = response.body().getResponse();
-                    int i = 0;
-                    for (int optionID: optionIDList) {
-                        if (futureUploadUris.containsKey(i)) {
-                            uploadImages(futureUploadUris.get(i),optionID);
-                        }
-                        i++;
-                    }
-
-                    //TODO: wait for images to upload
-                    // It's now safe to show poll.
-                    App.showPoll(Integer.valueOf(pollID));
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseModel<List<Integer>>> call, Throwable t) {
-                Log.d(TAG, "Can't add options to poll.");
-                Log.e(TAG, "Failed " + t.getLocalizedMessage() + " " + call.request());
-            }
-        });
-    }
-
-
     private void addNewChoice() {
         //TODO: add remove button
         final NewChoiceItemView newChoiceItemView = new NewChoiceItemView(getActivity());
@@ -247,21 +178,90 @@ public class NewPollFragment extends Fragment implements BackPressedListener {
         layoutChoicesNewPoll.addView(newChoiceItemView);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == FILE_SELECT_CODE_FOR_CHOICE) {
-            // Upload image to Firebase
-            if (resultCode == Activity.RESULT_OK) {
-                Uri uri = data.getData();
-                futureUploadUris.put(lastImageRequestOfChoice, uri);
-            } else {
-                lastImageRequestOfChoice = -1;
+    private void prepareForCreatingPoll() {
+        buttonCreate.setEnabled(false);
+        snackbar = Snackbar.make(buttonCreate, "Please wait...", Snackbar.LENGTH_INDEFINITE);
+        snackbar.show();
+    }
+
+    private void pollAdded(int pollID) {
+        //TODO: wait for images to upload, if any
+        App.showPoll(pollID);
+        snackbar.dismiss();
+    }
+
+    public void createPoll() {
+        prepareForCreatingPoll();
+
+        ApiClient.apiService().createPoll(editTextQuestion.getText().toString(),
+                spinnerPollType.getSelectedItem().toString().toLowerCase(),
+                spinnerOptionType.getSelectedItem().toString().toLowerCase(),
+                editTextDuration.getText().toString(),
+                CurrentUser.latitude(),
+                CurrentUser.longitude(),
+                editTextDiameter.getText().toString(),
+                hashMapCategories.get(spinnerCategory.getSelectedItem().toString()).toString(),
+                CurrentUser.apiToken()).
+                enqueue(new Callback<ResponseModel<PollModel>>() {
+                    @Override
+                    public void onResponse(Call<ResponseModel<PollModel>> call, Response<ResponseModel<PollModel>> response) {
+                        Log.d(TAG, "Poll added.");
+                        Log.d(TAG, response.body().getMessage());
+
+                        if (!response.body().getError()) {
+                            addOptionsToPoll(response.body().getResponse().getId().toString());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseModel<PollModel>> call, Throwable t) {
+                        Log.d(TAG, "Can't create poll.");
+                        Log.e(TAG, "Failed" + t.getLocalizedMessage() + " " + call.request());
+                    }
+                });
+    }
+
+    private void addOptionsToPoll(final String pollID) {
+        List<RequestOptionModel> requestOptionModels = new ArrayList<>();
+        for (NewChoiceItemView newChoiceItemView: choicesList) {
+            String content = newChoiceItemView.getText();
+            if (!content.isEmpty()) {
+                RequestOptionModel requestOptionModel = new RequestOptionModel();
+                requestOptionModel.setContent(content);
+                requestOptionModels.add(requestOptionModel);
             }
         }
-        super.onActivityResult(requestCode, resultCode, data);
+
+        ApiClient.apiService().createOption(pollID,
+                requestOptionModels).enqueue(new Callback<ResponseModel<List<Integer>>>() {
+            @Override
+            public void onResponse(Call<ResponseModel<List<Integer>>> call, Response<ResponseModel<List<Integer>>> response) {
+                Log.d(TAG, "Options added to poll.");
+                if (!response.body().getError()) {
+                    // Upload images according their option_id's
+                    List<Integer> optionIDList = response.body().getResponse();
+                    int i = 0;
+                    for (int optionID: optionIDList) {
+                        if (futureUploadUris.containsKey(i)) {
+                            uploadImages(futureUploadUris.get(i),optionID);
+                        }
+                        i++;
+                    }
+                    pollAdded(Integer.valueOf(pollID));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel<List<Integer>>> call, Throwable t) {
+                Log.d(TAG, "Can't add options to poll.");
+                Log.e(TAG, "Failed " + t.getLocalizedMessage() + " " + call.request());
+            }
+        });
     }
 
     public void uploadImages(Uri uri, int id) {
+        snackbar = Snackbar.make(buttonCreate, "Uploading images...", Snackbar.LENGTH_INDEFINITE);
+        snackbar.show();
         try {
             InputStream inputStream = getActivity().getContentResolver().openInputStream(uri);
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -289,6 +289,7 @@ public class NewPollFragment extends Fragment implements BackPressedListener {
                     // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
                     Log.d("FIREBASE", "UPLOADED");
+                    snackbar.dismiss();
                 }
             });
 
@@ -297,6 +298,20 @@ public class NewPollFragment extends Fragment implements BackPressedListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == FILE_SELECT_CODE_FOR_CHOICE) {
+            // Upload image to Firebase
+            if (resultCode == Activity.RESULT_OK) {
+                Uri uri = data.getData();
+                futureUploadUris.put(lastImageRequestOfChoice, uri);
+            } else {
+                lastImageRequestOfChoice = -1;
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @OnClick(R.id.buttonCreate)

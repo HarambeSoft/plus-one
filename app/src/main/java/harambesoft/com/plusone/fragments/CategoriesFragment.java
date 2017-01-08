@@ -16,6 +16,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import harambesoft.com.plusone.App;
 import harambesoft.com.plusone.CurrentUser;
 import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.adapters.CategoriesAdapter;
@@ -66,7 +67,7 @@ public class CategoriesFragment extends Fragment {
             @Override
             public void onClick(View view, int position) {
                 CategoryModel category = categoryModelList.get(position);
-                Toast.makeText(getActivity(), category.getName(), Toast.LENGTH_SHORT).show();
+                App.showPolls(category.getId());
             }
 
             @Override

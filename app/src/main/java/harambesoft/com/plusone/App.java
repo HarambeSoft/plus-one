@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import harambesoft.com.plusone.fragments.CategoryPollsFragment;
 import harambesoft.com.plusone.fragments.CommentsFragment;
 import harambesoft.com.plusone.fragments.PollFragment;
 
@@ -45,6 +46,12 @@ public class App extends Application {
     public static void showPoll(int pollID) {
         getFragmentManager().beginTransaction()
                 .replace(R.id.container, PollFragment.newInstance(pollID), PollFragment.TAG)
+                .commit();
+    }
+
+    public static void showPolls(int categoryID) {
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container, new CategoryPollsFragment(), CategoryPollsFragment.TAG)
                 .commit();
     }
 

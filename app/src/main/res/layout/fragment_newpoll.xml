@@ -20,16 +20,6 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/editTextPollTitle"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:ems="10"
-                android:hint="Poll Title"
-                android:inputType="textPersonName"
-                android:paddingLeft="5dp"
-                android:textColor="@color/textColor" />
-
-            <EditText
                 android:id="@+id/editTextQuestion"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
@@ -72,7 +62,7 @@
                 android:layout_height="54dp"
                 android:ems="10"
                 android:hint="Duration"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:paddingLeft="5dp"
                 android:textColor="@color/textColor" />
 
@@ -82,7 +72,7 @@
                 android:layout_height="54dp"
                 android:ems="10"
                 android:hint="Diameter"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:paddingLeft="5dp"
                 android:textColor="@color/textColor" />
 
@@ -91,17 +81,9 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <!--
-                <EditText
-                    android:id="@+id/editTextChoice1"
-                    android:layout_width="match_parent"
-                    android:layout_height="54dp"
-                    android:ems="10"
-                    android:hint="Choice 1"
-                    android:inputType="textPersonName"
-                    android:paddingLeft="5dp"
-                    android:textColor="@color/textColor" />
-                -->
+
+                <!-- CHOICES COMES HERE -->
+
             </LinearLayout>
 
         </LinearLayout>
