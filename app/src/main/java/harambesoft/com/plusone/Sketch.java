@@ -1,6 +1,7 @@
 package harambesoft.com.plusone;
 import android.util.Log;
 
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import processing.core.PShape;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import java.math.BigDecimal;
 
 public class Sketch extends PApplet {
     //SKETCH VARIABLES
@@ -49,7 +51,8 @@ public class Sketch extends PApplet {
     boolean loadingImage = false;
     String zoom = "&zoom="+scaleTemp;
     String size = "&size=";
-    String scale = "&scale=1";
+    int scaleFactor = 1;
+    String scale = "&scale"+scaleFactor;
     String keyf = "&key=AIzaSyBL98hzfjEja36P5xTwzUnCjwEs6e23WYs";
     String urlbase = "http://maps.googleapis.com/maps/api/staticmap?";
     String url = "http://maps.googleapis.com/maps/api/staticmap?";
@@ -57,6 +60,9 @@ public class Sketch extends PApplet {
     //USER VARIABLES
     double userLatitude,userLongtitude;
     public void setup() {
+        BigDecimal d = new BigDecimal("2.3567");
+        d.divide(new BigDecimal(2.2d),5,RoundingMode.HALF_EVEN);
+        System.out.println(d.toString()+" - bignummm");
         frameRate(60);
         smooth();
         textAlign(CENTER);
@@ -206,11 +212,9 @@ public class Sketch extends PApplet {
         }
         else{
             for (int i=0;i<pixelCoords.size();i++) {
-                if ((mouseX-viewWidth/2)-30 <= pixelCoords.get(i)[0]&&(mouseX-viewWidth/2)+30>=pixelCoords.get(i)[0]){
-                    System.out.println("true?");
-                    if ((mouseY-viewHeight/2)-30 <= pixelCoords.get(i)[1]&&(mouseY-viewHeight/2)+30>=pixelCoords.get(i)[1]) {
+                if ((mouseX-viewWidth/2)+(viewWidth/40) +(viewWidth/80)>= pixelCoords.get(i)[0] && (mouseX-viewWidth/2)-(viewWidth/40) +(viewWidth/80)<=pixelCoords.get(i)[0] ){
+                    if ((mouseY-viewHeight/2)+(viewWidth/40) +(viewWidth/80) >= pixelCoords.get(i)[1] &&(mouseY-viewHeight/2)-(viewWidth/40) +(viewWidth/80)<=pixelCoords.get(i)[1] ) {
                         App.showPoll(pools.get(i)[2].intValue());
-                        println("Touch me!");
                         break;
                     }
                 }
@@ -247,15 +251,14 @@ public class Sketch extends PApplet {
         rectMode(CENTER);
         for (int i=0;i<pools.size();i++){
             pushMatrix();
-            translate((pixelCoords.get(i)[0].floatValue()),(pixelCoords.get(i)[1].floatValue()),16);
-            box(15);
+            if(i<=pixelCoords.size()-1)
+            translate((pixelCoords.get(i)[0].floatValue()),(pixelCoords.get(i)[1].floatValue()),8);
+            box(viewWidth/40);
             popMatrix();
         }
     }
 
     public Double distance(double x1, double y1, double x2, double y2) {
-        //CALCULATE DISTANCE BETWEEN 2 COORDINATES
-        //IF WANTED SEND THE USER COORDINATES
         Double R = 6371000.0d;
         Double v1 = Math.toRadians(x1);
         Double v2 = Math.toRadians(x2);
@@ -267,6 +270,7 @@ public class Sketch extends PApplet {
         Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
         Double distance = R * c;
         return distance;
+
     }
     public Double[] toMap(double x2, double y2) {
         //FROM COORDINATES CAlCULATE THE DISTANCE THEN GET THE APPROXIMATE PIXEL LENGHT
@@ -275,8 +279,8 @@ public class Sketch extends PApplet {
         Double meter_distanceY = distance(userLatitude, userLongtitude, x2, userLongtitude);
         Double meter_distanceX = distance(userLatitude, userLongtitude, userLatitude, y2);
         Double pixel_distance = scaleArray[scaleArray.length -1 - scaleTemp] * meter_distance /(1000*(137912.554668)) ;
-        double pixel_distanceX = (640/viewWidth*2) *Math.signum(-userLongtitude+y2)*scaleArray[scaleArray.length -1 - scaleTemp] * meter_distanceX /(1000*(137912.554668));
-        double pixel_distanceY = (640/viewHeight*2)*Math.signum(-x2+userLatitude)*scaleArray[scaleArray.length -1 - scaleTemp] * meter_distanceY /(1000*(137912.554668)) ;
+        double pixel_distanceX = 2.0d*Math.signum(-userLongtitude+y2)*scaleArray[scaleArray.length -1 - scaleTemp] * meter_distanceX /(1000*(137912.554668));
+        double pixel_distanceY = 2.0d*Math.signum(-x2+userLatitude)*scaleArray[scaleArray.length -1 - scaleTemp] * meter_distanceY /(1000*(137912.554668)) ;
 
         Double[] tmp = {pixel_distanceX,pixel_distanceY};
         return tmp;
@@ -299,7 +303,9 @@ public class Sketch extends PApplet {
                         tmp[1] = Double.parseDouble(pollModel.getLongitude());
                         tmp[2] = pollModel.getId().doubleValue();
                         pools.add(tmp);
-                        pixelCoords.add(toMap(tmp[0],tmp[1]));
+                        Double[] val = toMap(tmp[0],tmp[1]);
+                        pixelCoords.add(val);
+                        println(val[0]+ "-"+val[1] +"*" +tmp[0]+ ","+tmp[1]);
                     }
                 }
             }
@@ -434,3 +440,19 @@ public class Sketch extends PApplet {
 
 
 }
+/*
+            Double x ,y;
+            x = (mouseX-viewWidth/2)*Math.cos(Math.toDegrees(radians(rotationAngle/10))) - (mouseY-viewHeight/2)*Math.sin(Math.toDegrees(radians(rotationAngle/10)));
+            y= (mouseX-viewWidth/2)*Math.sin(Math.toDegrees(radians(rotationAngle/10))) + (mouseY-viewHeight/2)*Math.cos(Math.toDegrees(radians(rotationAngle/10)));
+            for (int i=0;i<pixelCoords.size();i++) {
+                if ((x)-30 <= pixelCoords.get(i)[0]&&(x)+30>=pixelCoords.get(i)[0]){
+                    System.out.println("true?");
+                    if ((y)-30 <= pixelCoords.get(i)[1]&&(y)+30>=pixelCoords.get(i)[1]) {
+                        App.showPoll(pools.get(i)[2].intValue());
+                        println("Touch me!");
+                        break;
+                    }
+                }
+            }
+*/
+
