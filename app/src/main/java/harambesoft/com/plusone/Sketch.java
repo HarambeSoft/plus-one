@@ -1,7 +1,11 @@
 package harambesoft.com.plusone;
+
+/**
+ * Created by asus on 08.01.2017.
+ */
+
 import android.util.Log;
 
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +17,7 @@ import processing.core.PShape;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import java.math.BigDecimal;
+
 
 public class Sketch extends PApplet {
     //SKETCH VARIABLES
@@ -93,6 +97,13 @@ public class Sketch extends PApplet {
         }
 
     }
+
+    public void load(){
+        image = loadImage(urlbase + center +userLatitude+","+userLongtitude+ zoom + size + scale+ keyf);
+        System.out.println("downloading thread");
+        reorganizePixels();
+    }
+boolean safe = true;
     public void draw() {
         background(52);
         //DRAW BACKGROUND IMAGE
@@ -122,16 +133,15 @@ public class Sketch extends PApplet {
                 zoom = "&zoom=" + scaleTemp;
                 println(zoom + " zoom scale");
                 if(CurrentUser.latitude().length()!=0)
-                    image = loadImage(urlbase + center +userLatitude+","+userLongtitude+ zoom + size + scale+ keyf);
+                    thread("load");
 
                 println(urlbase + center +userLatitude+","+userLongtitude+ zoom + size + scale+ keyf);
                 loadingImage = false;
-                reorganizePixels();
             }
             //ROTATE IMAGE
             if(mousePressed){
-                movingPolls += mouseX - pmouseX;
-                movingPixels += mouseY - pmouseY;
+                //movingPolls += mouseX - pmouseX;
+                //movingPixels += mouseY - pmouseY;
             }
             //PUT THE IMAGE
             if(image!=null){
@@ -139,6 +149,7 @@ public class Sketch extends PApplet {
                 translate(viewWidth/2,viewHeight/2);
                 rotateZ(radians(rotationAngle/10));
                 image(image, -viewWidth + movingPolls, -viewHeight + movingPixels,viewWidth*2,viewHeight*2);
+                if(safe)
                 drawRects();
                 popMatrix();
             }
@@ -197,8 +208,10 @@ public class Sketch extends PApplet {
 
     }
     public void mousePressed() {
+
         if (mouseX >= viewWidth - (viewWidth / 10) && mouseY <= viewHeight / 10) {
             keyPressed();
+
             return;
         }
         else if (mouseX >= viewWidth - (viewWidth / 10) && mouseY <= viewHeight / 5) {
@@ -206,18 +219,6 @@ public class Sketch extends PApplet {
             return;
         }
         else{   // MOVE IN THE MAPS
-
-            if(!movingAnimation){
-                double distance = Math.sqrt(((mouseX-viewWidth/2d)*(mouseX-viewWidth/2d)) + ((mouseY-viewHeight/2)*(mouseY-viewHeight/2)));
-                pixelToCoordinate(mouseX-viewWidth/2,mouseY-viewHeight/2);
-                println((mouseX-viewWidth/2)+"x - y"+(mouseY-viewHeight/2) +" dist "+ distance);
-
-            }else{
-
-                movingPolls += mouseX -pmouseX;
-                movingPixels += mouseY - pmouseY;
-                movingAnimation = false;
-            }
 
             for (int i=0;i<pixelCoords.size();i++) {
                 if ((mouseX-viewWidth/2)+(viewWidth/40) +(viewWidth/80)>= pixelCoords.get(i)[0] && (mouseX-viewWidth/2)-(viewWidth/40) +(viewWidth/80)<=pixelCoords.get(i)[0] ){
@@ -228,24 +229,34 @@ public class Sketch extends PApplet {
                 }
                 userAtCenter = false;
             }
-
+            userAtCenter = false;
 
         }
     }
     public void keyPressed(){ // ZOOM IN
-        loadingImage = true;
+        if(scaleTemp ==19) {loadingImage = false;return;}
         scaleTemp++;
+        println("Zooming");
         scaleTemp = constrain(scaleTemp,7,19);
         rotationAngle = 0.0f;
+        loadingImage = true;
+        thread("load");
+
+
     }
     public void zoomOut(){ //ZOOM OUT
-        loadingImage = true;
+        if(scaleTemp ==7) {loadingImage = false;return;}
         scaleTemp--;
+        println("Outing");
         scaleTemp = constrain(scaleTemp,7,19);
         rotationAngle = 0.0f;
+        loadingImage = true;
+
+        thread("load");
     }
 
     public void reorganizePixels(){
+        safe = false;
         System.out.println("Reorganizing!!");
         pixelCoords.clear();
         Double[] tmp;
@@ -253,6 +264,7 @@ public class Sketch extends PApplet {
             tmp = toMap(pools.get(i)[0],pools.get(i)[1]);
             pixelCoords.add(tmp);
         }
+        safe = true;
     }
 
     public void drawRects(){
@@ -261,8 +273,9 @@ public class Sketch extends PApplet {
         rectMode(CENTER);
         for (int i=0;i<pools.size();i++){
             pushMatrix();
+            if (pixelCoords!=null)
             if(i<=pixelCoords.size()-1)
-            translate((pixelCoords.get(i)[0].floatValue())+movingPolls,(pixelCoords.get(i)[1].floatValue())+movingPixels,8);
+                translate((pixelCoords.get(i)[0].floatValue())+movingPolls,(pixelCoords.get(i)[1].floatValue())+movingPixels,8);
             box(viewWidth/40);
             popMatrix();
         }
@@ -291,10 +304,9 @@ public class Sketch extends PApplet {
         double y_km_distance = -y * (137912.554668d) / ( scaleArray[scaleArray.length -1 - scaleTemp] * 2.0d) ;
 
         double distance = Math.sqrt((x_km_distance*x_km_distance) + (y_km_distance*y_km_distance));
-
+        loadingImage= true;
         userLatitude += y_km_distance/lat;
         userLongtitude +=x_km_distance/lon;
-        loadingImage = true;
         movingAnimation = true;
         movingPolls = -x;
         movingPixels = -y;
@@ -318,21 +330,21 @@ public class Sketch extends PApplet {
             @Override
             public void onResponse(Call<List<PollModel>> call, Response<List<PollModel>> response) {
                 if(response.body()!=null)
-                if(!response.body().isEmpty()){
-                    Double[] tmp ;
-                    pools.clear();
-                    pixelCoords.clear();
-                    for (PollModel pollModel: response.body()) {
-                        Log.d("near polls: ", pollModel.getQuestion());
-                        tmp = new Double[3];
-                        tmp[0] = Double.parseDouble(pollModel.getLatitude());
-                        tmp[1] = Double.parseDouble(pollModel.getLongitude());
-                        tmp[2] = pollModel.getId().doubleValue();
-                        pools.add(tmp);
-                        Double[] val = toMap(tmp[0],tmp[1]);
-                        pixelCoords.add(val);
+                    if(!response.body().isEmpty()){
+                        Double[] tmp ;
+                        pools.clear();
+                        pixelCoords.clear();
+                        for (PollModel pollModel: response.body()) {
+                            Log.d("near polls: ", pollModel.getQuestion());
+                            tmp = new Double[3];
+                            tmp[0] = Double.parseDouble(pollModel.getLatitude());
+                            tmp[1] = Double.parseDouble(pollModel.getLongitude());
+                            tmp[2] = pollModel.getId().doubleValue();
+                            pools.add(tmp);
+                            Double[] val = toMap(tmp[0],tmp[1]);
+                            pixelCoords.add(val);
+                        }
                     }
-                }
             }
 
             @Override
@@ -465,3 +477,5 @@ public class Sketch extends PApplet {
 
 
 }
+
+
