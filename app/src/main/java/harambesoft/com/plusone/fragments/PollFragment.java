@@ -18,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import harambesoft.com.plusone.App;
+import harambesoft.com.plusone.models.ResponseModel;
 import harambesoft.com.plusone.models.SimpleResponseModel;
 import harambesoft.com.plusone.views.ChoiceItemView;
 import harambesoft.com.plusone.CurrentUser;
@@ -143,6 +144,36 @@ public class PollFragment extends Fragment {
         }
 
         choiceItemViews.get(choiceItemViews.size() - 1).showSeparator(false); // Hide last separator
+
+        setUserVotes();
+    }
+
+    private void setUserVotes() {
+        ApiClient.apiService().getVotesOfUserOnPoll(CurrentUser.id(), String.valueOf(pollID), CurrentUser.apiToken()).enqueue(new Callback<ResponseModel<List<Integer>>>() {
+            @Override
+            public void onResponse(Call<ResponseModel<List<Integer>>> call, Response<ResponseModel<List<Integer>>> response) {
+                boolean voteCasted = !response.body().getError();
+                if (voteCasted) {
+                    List<Integer> votedChoices = response.body().getResponse();
+                    if (votedChoices != null) {
+                        for(int votedID: votedChoices) {
+                            for (int j = 0; j < getPoll().getOptionModels().size(); j++) {
+                                if (getPoll().getOptionModels().get(j).getId() == votedID) {
+                                    choiceItemViews.get(j).setChecked(true);
+                                }
+                            }
+                        }
+                    } else {
+                        Log.d("PollFrag::setUserVotes", "NULL VOTECHOICES");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel<List<Integer>>> call, Throwable t) {
+
+            }
+        });
     }
 
     public void vote(final int choice) {
@@ -157,6 +188,7 @@ public class PollFragment extends Fragment {
                         choiceItemView.setChecked(false);
                     }
                     choiceItemViews.get(choice).setChecked(true);
+                    updateVote(choice, 1);
                 }
             }
 
@@ -174,6 +206,7 @@ public class PollFragment extends Fragment {
             @Override
             public void onResponse(Call<SimpleResponseModel> call, Response<SimpleResponseModel> response) {
                 choiceItemViews.get(choice).setChecked(false);
+                updateVote(choice, -1);
             }
 
             @Override
@@ -182,6 +215,12 @@ public class PollFragment extends Fragment {
             }
         });
         choiceItemViews.get(choice).setChecked(false);
+    }
+
+    private void updateVote(int choice, int vote) {
+        int currentVote = Integer.valueOf(getPoll().getOptionModels().get(choice).getVote());
+        getPoll().getOptionModels().get(choice).setVote(String.valueOf(currentVote + vote));
+        loadPoll(getPoll());
     }
 
     @OnClick(R.id.buttonShowComments)
