@@ -235,11 +235,11 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_activity_stream) {
             getFragmentManager().beginTransaction()
-                    .replace(R.id.container, new ActivityStreamFragment(), "ActivityStreamFragmentTag")
+                    .replace(R.id.container, new ActivityStreamFragment(), ActivityStreamFragment.TAG)
                     .commit();
         } else if (id == R.id.nav_categories) {
             getFragmentManager().beginTransaction()
-                    .replace(R.id.container, new CategoriesFragment(), "CategoriesFragmentTag")
+                    .replace(R.id.container, new CategoriesFragment(), CategoriesFragment.TAG)
                     .commit();
         } else if (id == R.id.nav_discover) {
             android.app.FragmentManager fragmentManager = getFragmentManager();
@@ -255,11 +255,11 @@ public class MainActivity extends AppCompatActivity
             Sketch.viewWidth = frameLayout.getWidth();
         } else if (id == R.id.nav_me) {
             getFragmentManager().beginTransaction()
-                    .replace(R.id.container, new MeFragment(), "MeFragmentTag")
+                    .replace(R.id.container, new MeFragment(), MeFragment.TAG)
                     .commit();
         } else if (id == R.id.nav_settings) {
             getFragmentManager().beginTransaction()
-                    .replace(R.id.container, new SettingsFragment(), "SettingsFragmentTag")
+                    .replace(R.id.container, new SettingsFragment(), SettingsFragment.TAG)
                     .commit();
         } else if (id == R.id.nav_logout) {
             // Logout

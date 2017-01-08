@@ -28,7 +28,7 @@ import retrofit2.Response;
  */
 
 public class MeFragment extends Fragment {
-    private static final String TAG = MeFragment.class.getName();
+    public static final String TAG = MeFragment.class.getName();
 
     @BindView(R.id.editTextProfession)
     EditText editTextProfession;
