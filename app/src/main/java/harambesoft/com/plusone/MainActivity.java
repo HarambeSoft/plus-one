@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -17,12 +18,25 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import com.github.mikephil.charting.utils.FileUtils;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import harambesoft.com.plusone.Constants.NotificationData;
 import harambesoft.com.plusone.fragments.ActivityStreamFragment;
@@ -36,12 +50,14 @@ import harambesoft.com.plusone.fragments.SignInFragment;
 import harambesoft.com.plusone.fragments.SignUpFragment;
 import harambesoft.com.plusone.helpers.ActivityStream;
 import harambesoft.com.plusone.services.LocationTrackerService;
+import harambesoft.com.plusone.views.NewChoiceItemView;
 import processing.android.PFragment;
 import processing.core.PApplet;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    public static final String TAG = MainActivity.class.getName();
 
     private static final int LOCATION_PERMISSION_REQUEST = 1;
 

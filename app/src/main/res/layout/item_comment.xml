@@ -32,6 +32,7 @@
                 android:orientation="vertical">
                 <TextView
                     android:id="@+id/textViewUserNameComment"
+                    android:textColor="@color/textColor"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textStyle="normal|bold"
@@ -42,6 +43,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="TextView"
+                    android:textColor="@color/textColor"
                     android:layout_weight="1"/>
 
             </LinearLayout>
@@ -53,6 +55,7 @@
 
                 <Button
                     android:id="@+id/buttonUpVote"
+                    android:textColor="@color/textColor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="▲"
@@ -60,6 +63,7 @@
                     android:layout_weight="1"/>
 
                 <Button
+                    android:textColor="@color/textColor"
                     android:id="@+id/buttonDownVote"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -79,6 +83,7 @@
                     android:layout_width="30dp"
                     android:layout_height="wrap_content"
                     android:text="0"
+                    android:textColor="@color/textColor"
                     android:textStyle="normal|bold"
                     android:layout_weight="1"/>
 
@@ -88,7 +93,7 @@
                     android:id="@+id/textViewDownVoteCount"
                     android:layout_width="30dp"
                     android:layout_height="wrap_content"
-
+                    android:textColor="@color/textColor"
                     android:text="0"
                     android:textStyle="normal|bold"
                     android:layout_weight="1"/>

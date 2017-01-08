@@ -64,7 +64,7 @@ public interface ApiInterface {
 
     @Headers("Content-Type: application/json")
     @POST("poll/{id}/options")
-    Call<SimpleResponseModel> createOption(@Path("id") String id,
+    Call<ResponseModel<List<Integer>>> createOption(@Path("id") String id,
                                            @Body List<RequestOptionModel> optionModelList);
 
     @POST("poll/near")

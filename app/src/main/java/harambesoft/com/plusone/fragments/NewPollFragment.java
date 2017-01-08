@@ -1,11 +1,16 @@
 package harambesoft.com.plusone.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.Layout;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +18,18 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +49,7 @@ import harambesoft.com.plusone.models.ResponseModel;
 import harambesoft.com.plusone.models.SimpleResponseModel;
 import harambesoft.com.plusone.services.ApiClient;
 import harambesoft.com.plusone.views.BackPressedListener;
+import harambesoft.com.plusone.views.NewChoiceItemView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,6 +59,10 @@ import retrofit2.Response;
  */
 public class NewPollFragment extends Fragment implements BackPressedListener {
     public static final String TAG = NewPollFragment.class.getName();
+    private static final int FILE_SELECT_CODE_FOR_CHOICE = 0;
+
+    private HashMap<Integer, Uri> futureUploadUris = new HashMap<>();
+    private int lastImageRequestOfChoice = -1;
 
     @BindView(R.id.editTextPollTitle)
     EditText editTextPollTitle;
@@ -61,7 +82,7 @@ public class NewPollFragment extends Fragment implements BackPressedListener {
     LinearLayout layoutChoicesNewPoll;
 
     private HashMap<String, Integer> hashMapCategories;
-    private ArrayList<EditText> choicesList = new ArrayList<>();
+    private ArrayList<NewChoiceItemView> choicesList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -141,8 +162,8 @@ public class NewPollFragment extends Fragment implements BackPressedListener {
 
     private void addOptionsToPoll(final String pollID) {
         List<RequestOptionModel> requestOptionModels = new ArrayList<>();
-        for (EditText editText: choicesList) {
-            String content = editText.getText().toString();
+        for (NewChoiceItemView newChoiceItemView: choicesList) {
+            String content = newChoiceItemView.getText();
             if (!content.isEmpty()) {
                 RequestOptionModel requestOptionModel = new RequestOptionModel();
                 requestOptionModel.setContent(content);
@@ -151,16 +172,30 @@ public class NewPollFragment extends Fragment implements BackPressedListener {
         }
 
         ApiClient.apiService().createOption(pollID,
-                requestOptionModels).enqueue(new Callback<SimpleResponseModel>() {
+                requestOptionModels).enqueue(new Callback<ResponseModel<List<Integer>>>() {
             @Override
-            public void onResponse(Call<SimpleResponseModel> call, Response<SimpleResponseModel> response) {
+            public void onResponse(Call<ResponseModel<List<Integer>>> call, Response<ResponseModel<List<Integer>>> response) {
                 Log.d(TAG, "Options added to poll.");
-                // It's now safe to show poll.
-                App.showPoll(Integer.valueOf(pollID));
+                if (!response.body().getError()) {
+                    // Upload images according their option_id's
+                    List<Integer> optionIDList = response.body().getResponse();
+                    int i = 0;
+                    for (int optionID: optionIDList) {
+                        if (futureUploadUris.containsKey(i)) {
+                            uploadImages(futureUploadUris.get(i),optionID);
+                        }
+                        i++;
+                    }
+
+                    //TODO: wait for images to upload
+                    // It's now safe to show poll.
+                    App.showPoll(Integer.valueOf(pollID));
+
+                }
             }
 
             @Override
-            public void onFailure(Call<SimpleResponseModel> call, Throwable t) {
+            public void onFailure(Call<ResponseModel<List<Integer>>> call, Throwable t) {
                 Log.d(TAG, "Can't add options to poll.");
                 Log.e(TAG, "Failed " + t.getLocalizedMessage() + " " + call.request());
             }
@@ -170,19 +205,14 @@ public class NewPollFragment extends Fragment implements BackPressedListener {
 
     private void addNewChoice() {
         //TODO: add remove button
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        EditText editTextChoice = new EditText(getActivity());
-        editTextChoice.setLayoutParams(params);
-        editTextChoice.setHint("Option");
+        final NewChoiceItemView newChoiceItemView = new NewChoiceItemView(getActivity());
 
         // EVENTS
-        editTextChoice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        newChoiceItemView.editTextContent.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    int n = choicesList.indexOf(v);
+                    int n = choicesList.indexOf(newChoiceItemView);
                     if (n + 1 == choicesList.size()) { // is this the last element
                         addNewChoice();
                     }
@@ -190,8 +220,82 @@ public class NewPollFragment extends Fragment implements BackPressedListener {
             }
         });
 
-        choicesList.add(editTextChoice);
-        layoutChoicesNewPoll.addView(editTextChoice);
+        // Show image select dialog
+        newChoiceItemView.buttonAddImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("*/*");
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+                try {
+                    startActivityForResult(
+                            Intent.createChooser(intent, "Select a File to Upload"),
+                            FILE_SELECT_CODE_FOR_CHOICE);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    // Potentially direct the user to the Market with a Dialog
+                    Toast.makeText(App.context, "Please install a File Manager.", Toast.LENGTH_SHORT).show();
+                }
+
+                int n = choicesList.indexOf(newChoiceItemView);
+                lastImageRequestOfChoice = n;
+            }
+        });
+
+        choicesList.add(newChoiceItemView);
+        layoutChoicesNewPoll.addView(newChoiceItemView);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == FILE_SELECT_CODE_FOR_CHOICE) {
+            // Upload image to Firebase
+            if (resultCode == Activity.RESULT_OK) {
+                Uri uri = data.getData();
+                futureUploadUris.put(lastImageRequestOfChoice, uri);
+            } else {
+                lastImageRequestOfChoice = -1;
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void uploadImages(Uri uri, int id) {
+        try {
+            InputStream inputStream = getActivity().getContentResolver().openInputStream(uri);
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+
+            int nRead;
+            byte[] imageData = new byte[16384];
+            while ((nRead = inputStream.read(imageData, 0, imageData.length)) != -1)
+                buffer.write(imageData, 0, nRead);
+            byte[] resultData = buffer.toByteArray();
+            buffer.flush();
+
+
+            StorageReference newImageRef = App.getFirebaseStorageRef().child("poll_images/" + id + ".jpg");
+
+            UploadTask uploadTask = newImageRef.putBytes(resultData);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    Log.d("FIREBASE", "UPLOADED");
+                }
+            });
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @OnClick(R.id.buttonCreate)

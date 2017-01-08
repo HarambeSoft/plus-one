@@ -1,9 +1,11 @@
 package harambesoft.com.plusone.views;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -26,6 +28,9 @@ public class ChoiceItemView extends LinearLayout {
 
     @BindView(R.id.radioButtonChoice)
     public CheckBox radioButtonChoice;
+
+    @BindView(R.id.imageViewOptionImage)
+    ImageView imageViewOptionImage;
 
     @BindView(R.id.separator)
     View separator;
@@ -64,5 +69,9 @@ public class ChoiceItemView extends LinearLayout {
 
     public boolean isChecked() {
         return radioButtonChoice.isChecked();
+    }
+
+    public void setImageBitmap(Bitmap bitmap) {
+        imageViewOptionImage.setImageBitmap(bitmap);
     }
 }

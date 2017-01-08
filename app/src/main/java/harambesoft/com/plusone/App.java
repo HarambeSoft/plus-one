@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import harambesoft.com.plusone.fragments.CommentsFragment;
 import harambesoft.com.plusone.fragments.PollFragment;
 
@@ -49,5 +52,10 @@ public class App extends Application {
         getFragmentManager().beginTransaction()
                 .replace(R.id.container, CommentsFragment.newInstance(pollID), CommentsFragment.TAG)
                 .commit();
+    }
+
+    public static StorageReference getFirebaseStorageRef() {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        return storage.getReferenceFromUrl("gs://plus-one-59ee5.appspot.com");
     }
 }

@@ -1,6 +1,9 @@
 package harambesoft.com.plusone.fragments;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
 import android.util.Log;
@@ -11,6 +14,10 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -152,7 +159,35 @@ public class PollFragment extends Fragment implements BackPressedListener {
 
         choiceItemViews.get(choiceItemViews.size() - 1).showSeparator(false); // Hide last separator
 
+        loadImagesIfAny();
         setUserVotes();
+    }
+
+    private void loadImagesIfAny() {
+        int i = 0;
+        for (final OptionModel option: getPoll().getOptionModels()) {
+            StorageReference islandRef = App.getFirebaseStorageRef().child("poll_images/" + option.getId() + ".jpg");
+
+            final int choice = i;
+            final long ONE_MEGABYTE = 1024 * 1024;
+            islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Log.d("FIREBASE", "IMAGE FOUND FOR" + option.getId());
+
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    choiceItemViews.get(choice).setImageBitmap(bitmap);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                    Log.d("FIREBASE", "IMAGE not FOUND FOR" + option.getId());
+                }
+            });
+
+            i++;
+        }
     }
 
     private void setUserVotes() {
