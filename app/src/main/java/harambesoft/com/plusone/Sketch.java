@@ -60,9 +60,6 @@ public class Sketch extends PApplet {
     //USER VARIABLES
     double userLatitude,userLongtitude;
     public void setup() {
-        BigDecimal d = new BigDecimal("2.3567");
-        d.divide(new BigDecimal(2.2d),5,RoundingMode.HALF_EVEN);
-        System.out.println(d.toString()+" - bignummm");
         frameRate(60);
         smooth();
         textAlign(CENTER);
@@ -114,28 +111,16 @@ public class Sketch extends PApplet {
 
             // IF GPS VALUES ARE VALID THEN DRAW SOME COOL! INDICATOR AT THE CENTER
             //CHECK THE CHANGED GPS COORDINATES IF CHANGED LOAD IMAGE
-            if(CurrentUser.latitude() != null)
-            if(frameCount%(60*5) == 0 || userLatitude != Double.parseDouble(CurrentUser.latitude()) || userLongtitude != Double.parseDouble(CurrentUser.longitude())){
-                if(CurrentUser.latitude().length()!=0)
-                    if(userLongtitude != Double.parseDouble(CurrentUser.longitude()) || userLatitude != Double.parseDouble(CurrentUser.latitude())) {
-                        userLatitude = Double.parseDouble(CurrentUser.latitude());
-                        userLongtitude = Double.parseDouble(CurrentUser.longitude());
-                        url = urlbase + center +CurrentUser.latitude()+","+CurrentUser.longitude()+ zoom + size + scale+ keyf;
-                        println("loading url ->" + url);
-                        image = loadImage(url);
-                        reorganizePixels();
-                        loadingImage = false;
-                    }
-            }
+
             //DOWNLOAD FOR NEW IMAGE
             if (loadingImage) {
                 image = null;
                 zoom = "&zoom=" + scaleTemp;
                 println(zoom + " zoom scale");
-                url = urlbase + center + zoom + size + scale+ keyf;
-                println(url);
                 if(CurrentUser.latitude().length()!=0)
                     image = loadImage(urlbase + center +userLatitude+","+userLongtitude+ zoom + size + scale+ keyf);
+
+                println(urlbase + center +userLatitude+","+userLongtitude+ zoom + size + scale+ keyf);
                 loadingImage = false;
                 reorganizePixels();
             }
@@ -210,7 +195,13 @@ public class Sketch extends PApplet {
             zoomOut();
             return;
         }
-        else{
+        else{   // MOVE IN THE MAPS
+
+            //calc the pixel distance
+            double distance = Math.sqrt(((mouseX-viewWidth/2d)*(mouseX-viewWidth/2d)) + ((mouseY-viewHeight/2)*(mouseY-viewHeight/2)));
+            pixelToCoordinate(mouseX-viewWidth/2,mouseY-viewHeight/2);
+            println((mouseX-viewWidth/2)+"x - y"+(mouseY-viewHeight/2) +" dist "+ distance);
+
             for (int i=0;i<pixelCoords.size();i++) {
                 if ((mouseX-viewWidth/2)+(viewWidth/40) +(viewWidth/80)>= pixelCoords.get(i)[0] && (mouseX-viewWidth/2)-(viewWidth/40) +(viewWidth/80)<=pixelCoords.get(i)[0] ){
                     if ((mouseY-viewHeight/2)+(viewWidth/40) +(viewWidth/80) >= pixelCoords.get(i)[1] &&(mouseY-viewHeight/2)-(viewWidth/40) +(viewWidth/80)<=pixelCoords.get(i)[1] ) {
@@ -272,15 +263,29 @@ public class Sketch extends PApplet {
         return distance;
 
     }
+    public void pixelToCoordinate(int x,int y){
+        double R = 6371000.0d;
+        double lat = 110.574d;
+        double lon =  111.320d * Math.cos(lat);
+
+        double x_km_distance = -x * (137912.554668d) / ( scaleArray[scaleArray.length -1 - scaleTemp] * 2.0d) ;
+        double y_km_distance = -y * (137912.554668d) / ( scaleArray[scaleArray.length -1 - scaleTemp] * 2.0d) ;
+
+        double distance = Math.sqrt((x_km_distance*x_km_distance) + (y_km_distance*y_km_distance));
+
+        userLatitude += y_km_distance/lat;
+        userLongtitude +=x_km_distance/lon;
+        loadingImage = true;
+
+    }
+
     public Double[] toMap(double x2, double y2) {
         //FROM COORDINATES CAlCULATE THE DISTANCE THEN GET THE APPROXIMATE PIXEL LENGHT
         //AT LAST STEP FROM THE COORDINATES AND THE PIXEL LENGHT GET THE REAL PIXEL COORDINATES
-        Double meter_distance = distance(userLatitude, userLongtitude, x2, y2);
         Double meter_distanceY = distance(userLatitude, userLongtitude, x2, userLongtitude);
         Double meter_distanceX = distance(userLatitude, userLongtitude, userLatitude, y2);
-        Double pixel_distance = scaleArray[scaleArray.length -1 - scaleTemp] * meter_distance /(1000*(137912.554668)) ;
-        double pixel_distanceX = 2.0d*Math.signum(-userLongtitude+y2)*scaleArray[scaleArray.length -1 - scaleTemp] * meter_distanceX /(1000*(137912.554668));
-        double pixel_distanceY = 2.0d*Math.signum(-x2+userLatitude)*scaleArray[scaleArray.length -1 - scaleTemp] * meter_distanceY /(1000*(137912.554668)) ;
+        double pixel_distanceX = 2.0d*Math.signum(-userLongtitude+y2)*scaleArray[scaleArray.length -1 - scaleTemp] * meter_distanceX /(1000d*(137912.554668d));
+        double pixel_distanceY = 2.0d*Math.signum(-x2+userLatitude)*scaleArray[scaleArray.length -1 - scaleTemp] * meter_distanceY /(1000d*(137912.554668d)) ;
 
         Double[] tmp = {pixel_distanceX,pixel_distanceY};
         return tmp;
@@ -305,7 +310,6 @@ public class Sketch extends PApplet {
                         pools.add(tmp);
                         Double[] val = toMap(tmp[0],tmp[1]);
                         pixelCoords.add(val);
-                        println(val[0]+ "-"+val[1] +"*" +tmp[0]+ ","+tmp[1]);
                     }
                 }
             }
