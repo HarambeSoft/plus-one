@@ -8,12 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import harambesoft.com.plusone.R;
+import harambesoft.com.plusone.views.BackPressedListener;
 
 /**
  * Created by gizemfitoz on 13/12/16.
  */
 
-public class DiscoverFragment extends Fragment {
+public class DiscoverFragment extends Fragment implements BackPressedListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -25,5 +26,12 @@ public class DiscoverFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container, new ActivityStreamFragment(), "ActivityStreamFragmentTag")
+                .commit();
     }
 }

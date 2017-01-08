@@ -29,6 +29,7 @@ import harambesoft.com.plusone.fragments.ActivityStreamFragment;
 import harambesoft.com.plusone.fragments.CategoriesFragment;
 import harambesoft.com.plusone.fragments.MeFragment;
 import harambesoft.com.plusone.fragments.NewPollFragment;
+import harambesoft.com.plusone.fragments.PollFragment;
 import harambesoft.com.plusone.fragments.SettingsFragment;
 import harambesoft.com.plusone.fragments.SignInFragment;
 import harambesoft.com.plusone.services.LocationTrackerService;
@@ -181,7 +182,7 @@ public class MainActivity extends AppCompatActivity
             FragmentManager fragmentManager = getFragmentManager();
             Fragment currentFragment = fragmentManager.findFragmentById(R.id.container);
 
-            if (currentFragment.getTag().equals("ActivityStreamTag"))
+            if (currentFragment.getTag().equals("ActivityStreamFragmentTag"))
             {
                 if (doubleBackToExitPressedOnce) {
                     super.onBackPressed();
@@ -195,6 +196,11 @@ public class MainActivity extends AppCompatActivity
                         doubleBackToExitPressedOnce=false;
                     }
                 }, 500);
+            }
+            else if(currentFragment.getTag().equals("CommentsFragmentTag")) {
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container, new PollFragment(), "PollFragmentTag");
+                fragmentTransaction.commit();
             }
             else if(currentFragment.getTag().equals("SignUpTag")) {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

@@ -18,8 +18,9 @@ import java.io.IOException;
 import harambesoft.com.plusone.MainActivity;
 import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.api.PlusOneAPI;
+import harambesoft.com.plusone.views.BackPressedListener;
 
-public class SignInFragment extends Fragment {
+public class SignInFragment extends Fragment implements BackPressedListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,9 +65,14 @@ public class SignInFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.container, new SignUpFragment(), "SignUpTag")
+                        .replace(R.id.container, new SignUpFragment(), "SignUpFragmentTag")
                         .commit();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

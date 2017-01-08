@@ -31,6 +31,7 @@ import harambesoft.com.plusone.models.RequestOptionModel;
 import harambesoft.com.plusone.models.ResponseModel;
 import harambesoft.com.plusone.models.SimpleResponseModel;
 import harambesoft.com.plusone.services.ApiClient;
+import harambesoft.com.plusone.views.BackPressedListener;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,7 +39,7 @@ import retrofit2.Response;
 /**
  * Created by isa on 18.12.2016.
  */
-public class NewPollFragment extends Fragment {
+public class NewPollFragment extends Fragment implements BackPressedListener {
     @BindView(R.id.editTextPollTitle)
     EditText editTextPollTitle;
     @BindView(R.id.editTextQuestion)
@@ -199,7 +200,14 @@ public class NewPollFragment extends Fragment {
     @OnClick(R.id.buttonCancel)
     public void onClickCancelPoll() {
         getFragmentManager().beginTransaction()
-                .replace(R.id.container, new ActivityStreamFragment(), "ActivityStreamTag")
+                .replace(R.id.container, new ActivityStreamFragment(), "ActivityStreamFragmentTag")
+                .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container, new ActivityStreamFragment(), "ActivityStreamFragmentTag")
                 .commit();
     }
 }

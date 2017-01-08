@@ -3,7 +3,6 @@ package harambesoft.com.plusone.fragments;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +26,7 @@ import harambesoft.com.plusone.helpers.RecyclerTouchListener;
 import harambesoft.com.plusone.models.CommentModel;
 import harambesoft.com.plusone.models.SimpleResponseModel;
 import harambesoft.com.plusone.services.ApiClient;
+import harambesoft.com.plusone.views.BackPressedListener;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,7 +35,7 @@ import retrofit2.Response;
  * Created by isa on 1/6/17.
  */
 
-public class CommentsFragment extends Fragment {
+public class CommentsFragment extends Fragment implements BackPressedListener {
     @BindView(R.id.recyclerViewComments)
     RecyclerView recyclerViewComments;
 
@@ -141,4 +141,12 @@ public class CommentsFragment extends Fragment {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container, new PollFragment(), "PollFragmentTag")
+                .commit();
+    }
+
 }

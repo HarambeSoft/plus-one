@@ -41,13 +41,13 @@ public class App extends Application {
 
     public static void showPoll(int pollID) {
         getFragmentManager().beginTransaction()
-                .replace(R.id.container, PollFragment.newInstance(pollID))
+                .replace(R.id.container, PollFragment.newInstance(pollID), "PollFragmentTag")
                 .commit();
     }
 
     public static void showComments(int pollID) {
         getFragmentManager().beginTransaction()
-                .replace(R.id.container, CommentsFragment.newInstance(pollID))
+                .replace(R.id.container, CommentsFragment.newInstance(pollID), "CommentsFragmentTag")
                 .commit();
     }
 }

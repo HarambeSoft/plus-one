@@ -20,8 +20,9 @@ import butterknife.ButterKnife;
 import harambesoft.com.plusone.MainActivity;
 import harambesoft.com.plusone.R;
 import harambesoft.com.plusone.api.PlusOneAPI;
+import harambesoft.com.plusone.views.BackPressedListener;
 
-public class SignUpFragment extends Fragment {
+public class SignUpFragment extends Fragment implements BackPressedListener{
     @BindView(R.id.buttonSignUp)Button buttonSignUp;
     @BindView(R.id.textviewUsernameSignUp)TextView textviewUsernameSignUp;
     @BindView(R.id.textviewEmailSignUp)TextView textViewEmail;
@@ -64,5 +65,12 @@ public class SignUpFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container, new SignInFragment(), "SignInFragmentTag")
+                .commit();
     }
 }

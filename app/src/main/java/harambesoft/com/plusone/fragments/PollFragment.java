@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import harambesoft.com.plusone.App;
 import harambesoft.com.plusone.models.SimpleResponseModel;
+import harambesoft.com.plusone.views.BackPressedListener;
 import harambesoft.com.plusone.views.ChoiceItemView;
 import harambesoft.com.plusone.CurrentUser;
 import harambesoft.com.plusone.R;
@@ -33,7 +34,7 @@ import retrofit2.Response;
  * Created by isa on 29.12.2016.
  */
 
-public class PollFragment extends Fragment {
+public class PollFragment extends Fragment implements BackPressedListener {
     @BindView(R.id.textViewPollQuestion)
     TextView textViewPollQuestion;
 
@@ -187,5 +188,12 @@ public class PollFragment extends Fragment {
     @OnClick(R.id.buttonShowComments)
     public void showComments() {
         App.showComments(getPollID());
+    }
+
+    @Override
+    public void onBackPressed() {
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container, new ActivityStreamFragment(), "ActivityStreamFragmentTag")
+                .commit();
     }
 }
