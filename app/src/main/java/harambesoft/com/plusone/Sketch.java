@@ -267,7 +267,7 @@ boolean safe = true;
         safe = true;
     }
 
-    public void drawRects(){
+    public synchronized void drawRects(){
         stroke(0);
         fill(52);
         rectMode(CENTER);
