@@ -440,19 +440,3 @@ public class Sketch extends PApplet {
 
 
 }
-/*
-            Double x ,y;
-            x = (mouseX-viewWidth/2)*Math.cos(Math.toDegrees(radians(rotationAngle/10))) - (mouseY-viewHeight/2)*Math.sin(Math.toDegrees(radians(rotationAngle/10)));
-            y= (mouseX-viewWidth/2)*Math.sin(Math.toDegrees(radians(rotationAngle/10))) + (mouseY-viewHeight/2)*Math.cos(Math.toDegrees(radians(rotationAngle/10)));
-            for (int i=0;i<pixelCoords.size();i++) {
-                if ((x)-30 <= pixelCoords.get(i)[0]&&(x)+30>=pixelCoords.get(i)[0]){
-                    System.out.println("true?");
-                    if ((y)-30 <= pixelCoords.get(i)[1]&&(y)+30>=pixelCoords.get(i)[1]) {
-                        App.showPoll(pools.get(i)[2].intValue());
-                        println("Touch me!");
-                        break;
-                    }
-                }
-            }
-*/
-
