@@ -42,12 +42,6 @@
                 android:layout_height="match_parent" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textColor"
-                android:text="Created at: "/>
-
-            <TextView
                 android:id="@+id/textViewCreatedAt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

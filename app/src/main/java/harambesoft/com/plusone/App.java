@@ -51,7 +51,7 @@ public class App extends Application {
 
     public static void showPolls(int categoryID) {
         getFragmentManager().beginTransaction()
-                .replace(R.id.container, new CategoryPollsFragment(), CategoryPollsFragment.TAG)
+                .replace(R.id.container, CategoryPollsFragment.newInstance(categoryID), CategoryPollsFragment.TAG)
                 .commit();
     }
 

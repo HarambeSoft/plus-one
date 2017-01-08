@@ -43,6 +43,15 @@ public class CategoryPollsFragment extends Fragment {
     private PollsAdapter pollsAdapter;
     private List<PollModel> pollModelList = new ArrayList<>();
 
+    public int categoryID;
+
+    public static Fragment newInstance(int categoryID) {
+        CategoryPollsFragment fragment = new CategoryPollsFragment();
+        fragment.categoryID = categoryID;
+
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -85,8 +94,12 @@ public class CategoryPollsFragment extends Fragment {
         ApiClient.apiService().getNearPolls(CurrentUser.latitude(), CurrentUser.longitude(), "100", CurrentUser.apiToken()).enqueue(new Callback<List<PollModel>>() {
             @Override
             public void onResponse(Call<List<PollModel>> call, Response<List<PollModel>> response) {
-                //TODO: check category
-                pollModelList.addAll(response.body());
+                for(PollModel poll: response.body()) {
+                    int pollCategory = Integer.valueOf(poll.getCategoryId());
+                    if (pollCategory == categoryID) {
+                        pollModelList.add(poll);
+                    }
+                }
                 pollsAdapter.notifyDataSetChanged();
             }
 
