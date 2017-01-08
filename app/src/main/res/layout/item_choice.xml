@@ -24,7 +24,6 @@
             android:layout_gravity="center">
 
             <ImageView
-                android:src="@drawable/cat_fashion"
                 android:id="@+id/imageViewOptionImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
