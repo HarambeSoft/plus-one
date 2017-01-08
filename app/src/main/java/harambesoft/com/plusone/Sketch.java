@@ -59,6 +59,10 @@ public class Sketch extends PApplet {
     String center = "center=";
     //USER VARIABLES
     double userLatitude,userLongtitude;
+    boolean userAtCenter = true;
+    boolean movingAnimation = false;
+    int movingPolls = 0;
+    int movingPixels = 0;
     public void setup() {
         frameRate(60);
         smooth();
@@ -126,15 +130,15 @@ public class Sketch extends PApplet {
             }
             //ROTATE IMAGE
             if(mousePressed){
-                if(mouseX-pmouseX < viewWidth/5 && pmouseX-mouseX < viewWidth/5 &&pmouseX != mouseX)rotationAngle += mouseX - pmouseX;
-                if(mouseY-pmouseY < viewHeight/5 && pmouseY-mouseY < viewWidth/5 &&pmouseY != mouseY)rotationAngle -= -mouseY + pmouseY;
+                movingPolls += mouseX - pmouseX;
+                movingPixels += mouseY - pmouseY;
             }
             //PUT THE IMAGE
             if(image!=null){
                 pushMatrix();
                 translate(viewWidth/2,viewHeight/2);
                 rotateZ(radians(rotationAngle/10));
-                image(image, -viewWidth, -viewHeight,viewWidth*2,viewHeight*2);
+                image(image, -viewWidth + movingPolls, -viewHeight + movingPixels,viewWidth*2,viewHeight*2);
                 drawRects();
                 popMatrix();
             }
@@ -154,34 +158,40 @@ public class Sketch extends PApplet {
             if(image != null){
                 translate(0,0,20);
 
-                noStroke();
-                pushMatrix();
-                translate(0,0,viewWidth/25);
-                pushMatrix();
-                fill(0, 255,0,255);
-                translate(viewWidth/2,viewHeight/2);
-                rotateZ(meScale);rotateY(meScale1);rotateX(meScale2);
-                translate(noise(meScale)*3, noise(meScale1)*3);
-                ellipse(0,0,  noise(meScale)*viewWidth/50,noise(meScale)*viewWidth/50);
-                popMatrix();
-                pushMatrix();
-                fill(0,0,255,255);
-                translate(viewWidth/2,viewHeight/2);
-                rotateZ(meScale2);rotateY(meScale);rotateX(meScale1);
-                translate(noise(meScale1)*3, noise(meScale2)*3);
-                ellipse(0,0, noise(meScale2)*viewWidth/50, noise(meScale2)*viewWidth/50);
-                popMatrix();
-                pushMatrix();
-                fill(255,0,0,255);
-                translate(viewWidth/2,viewHeight/2);
-                rotateZ(meScale1);rotateY(meScale2);rotateX(meScale);
-                translate(noise(meScale2)*3, noise(meScale)*3);
-                ellipse(0,0, noise(meScale1)*viewWidth/50,noise(meScale1)*viewWidth/50);
-                popMatrix();
-                popMatrix();
-                meScale1+=0.015;
-                meScale2+=0.01;
-                meScale+=0.02;
+
+                if(userAtCenter){
+
+                    noStroke();
+                    pushMatrix();
+                    translate(0,0,viewWidth/25);
+                    pushMatrix();
+                    fill(0, 255,0,255);
+                    translate(viewWidth/2,viewHeight/2);
+                    rotateZ(meScale);rotateY(meScale1);rotateX(meScale2);
+                    translate(noise(meScale)*3, noise(meScale1)*3);
+                    ellipse(0,0,  noise(meScale)*viewWidth/50,noise(meScale)*viewWidth/50);
+                    popMatrix();
+                    pushMatrix();
+                    fill(0,0,255,255);
+                    translate(viewWidth/2,viewHeight/2);
+                    rotateZ(meScale2);rotateY(meScale);rotateX(meScale1);
+                    translate(noise(meScale1)*3, noise(meScale2)*3);
+                    ellipse(0,0, noise(meScale2)*viewWidth/50, noise(meScale2)*viewWidth/50);
+                    popMatrix();
+                    pushMatrix();
+                    fill(255,0,0,255);
+                    translate(viewWidth/2,viewHeight/2);
+                    rotateZ(meScale1);rotateY(meScale2);rotateX(meScale);
+                    translate(noise(meScale2)*3, noise(meScale)*3);
+                    ellipse(0,0, noise(meScale1)*viewWidth/50,noise(meScale1)*viewWidth/50);
+                    popMatrix();
+                    popMatrix();
+                    meScale1+=0.015;
+                    meScale2+=0.01;
+                    meScale+=0.02;
+
+                }
+
             }
         }
 
@@ -197,10 +207,17 @@ public class Sketch extends PApplet {
         }
         else{   // MOVE IN THE MAPS
 
-            //calc the pixel distance
-            double distance = Math.sqrt(((mouseX-viewWidth/2d)*(mouseX-viewWidth/2d)) + ((mouseY-viewHeight/2)*(mouseY-viewHeight/2)));
-            pixelToCoordinate(mouseX-viewWidth/2,mouseY-viewHeight/2);
-            println((mouseX-viewWidth/2)+"x - y"+(mouseY-viewHeight/2) +" dist "+ distance);
+            if(!movingAnimation){
+                double distance = Math.sqrt(((mouseX-viewWidth/2d)*(mouseX-viewWidth/2d)) + ((mouseY-viewHeight/2)*(mouseY-viewHeight/2)));
+                pixelToCoordinate(mouseX-viewWidth/2,mouseY-viewHeight/2);
+                println((mouseX-viewWidth/2)+"x - y"+(mouseY-viewHeight/2) +" dist "+ distance);
+
+            }else{
+
+                movingPolls += mouseX -pmouseX;
+                movingPixels += mouseY - pmouseY;
+                movingAnimation = false;
+            }
 
             for (int i=0;i<pixelCoords.size();i++) {
                 if ((mouseX-viewWidth/2)+(viewWidth/40) +(viewWidth/80)>= pixelCoords.get(i)[0] && (mouseX-viewWidth/2)-(viewWidth/40) +(viewWidth/80)<=pixelCoords.get(i)[0] ){
@@ -209,7 +226,9 @@ public class Sketch extends PApplet {
                         break;
                     }
                 }
+                userAtCenter = false;
             }
+
 
         }
     }
@@ -243,7 +262,7 @@ public class Sketch extends PApplet {
         for (int i=0;i<pools.size();i++){
             pushMatrix();
             if(i<=pixelCoords.size()-1)
-            translate((pixelCoords.get(i)[0].floatValue()),(pixelCoords.get(i)[1].floatValue()),8);
+            translate((pixelCoords.get(i)[0].floatValue())+movingPolls,(pixelCoords.get(i)[1].floatValue())+movingPixels,8);
             box(viewWidth/40);
             popMatrix();
         }
@@ -276,7 +295,9 @@ public class Sketch extends PApplet {
         userLatitude += y_km_distance/lat;
         userLongtitude +=x_km_distance/lon;
         loadingImage = true;
-
+        movingAnimation = true;
+        movingPolls = -x;
+        movingPixels = -y;
     }
 
     public Double[] toMap(double x2, double y2) {
