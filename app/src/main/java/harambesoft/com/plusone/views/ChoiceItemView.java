@@ -3,7 +3,9 @@ package harambesoft.com.plusone.views;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -21,6 +23,9 @@ public class ChoiceItemView extends LinearLayout {
 
     @BindView(R.id.textViewChoice)
     TextView textViewChoice;
+
+    @BindView(R.id.radioButtonChoice)
+    public CheckBox radioButtonChoice;
 
     @BindView(R.id.separator)
     View separator;
@@ -43,7 +48,7 @@ public class ChoiceItemView extends LinearLayout {
         this.setGravity(Gravity.CENTER);
 
         this.option = option;
-        textViewChoice.setText(option.getContent());
+        textViewChoice.setText(option.getContent() + " - " + option.getVote());
     }
 
     public void showSeparator(boolean bool) {
@@ -51,5 +56,13 @@ public class ChoiceItemView extends LinearLayout {
             separator.setVisibility(INVISIBLE);
         else
             separator.setVisibility(VISIBLE);
+    }
+
+    public void setChecked(boolean bool) {
+        radioButtonChoice.setChecked(bool);
+    }
+
+    public boolean isChecked() {
+        return radioButtonChoice.isChecked();
     }
 }

@@ -3,18 +3,22 @@ package harambesoft.com.plusone.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import harambesoft.com.plusone.App;
+import harambesoft.com.plusone.models.SimpleResponseModel;
 import harambesoft.com.plusone.views.ChoiceItemView;
 import harambesoft.com.plusone.CurrentUser;
 import harambesoft.com.plusone.R;
@@ -40,6 +44,8 @@ public class PollFragment extends Fragment {
     TextView buttonShowComments;
 
     int pollID;
+    PollModel poll;
+    ArrayList<ChoiceItemView> choiceItemViews = new ArrayList<>();
 
     public static PollFragment newInstance(int pollID) {
         Bundle args = new Bundle();
@@ -56,6 +62,14 @@ public class PollFragment extends Fragment {
 
     public void setPollID(int pollID) {
         this.pollID = pollID;
+    }
+
+    public PollModel getPoll() {
+        return poll;
+    }
+
+    public void setPoll(PollModel poll) {
+        this.poll = poll;
     }
 
     /* TODO:
@@ -105,17 +119,69 @@ public class PollFragment extends Fragment {
     }
 
     public void loadPoll(PollModel poll) {
+        setPoll(poll);
         layoutChoices.removeAllViews();
+        choiceItemViews.clear();
 
         textViewPollQuestion.setText(poll.getQuestion());
 
         List<OptionModel> options = poll.getOptionModels();
         for (int i = 0; i < options.size(); i++) {
-            ChoiceItemView choiceItemView = new ChoiceItemView(getActivity(), options.get(i));
+            final int index = i;
+            final ChoiceItemView choiceItemView = new ChoiceItemView(getActivity(), options.get(i));
+            choiceItemView.radioButtonChoice.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (choiceItemView.isChecked())
+                        vote(index);
+                    else
+                        unvote(index);
+                }
+            });
             layoutChoices.addView(choiceItemView);
+            choiceItemViews.add(choiceItemView);
         }
 
-        ((ChoiceItemView) layoutChoices.getChildAt(options.size() - 1)).showSeparator(false); // Hide last separator
+        choiceItemViews.get(choiceItemViews.size() - 1).showSeparator(false); // Hide last separator
+    }
+
+    public void vote(final int choice) {
+        ApiClient.apiService().votePollOption(getPoll().getId().toString(),
+                                              getPoll().getOptionModels().get(choice).getId().toString(),
+                                              CurrentUser.apiToken()).enqueue(new Callback<SimpleResponseModel>() {
+            @Override
+            public void onResponse(Call<SimpleResponseModel> call, Response<SimpleResponseModel> response) {
+                // Vote success.
+                if (getPoll().getOptionType().equals("single")) {
+                    for (ChoiceItemView choiceItemView : choiceItemViews) {
+                        choiceItemView.setChecked(false);
+                    }
+                    choiceItemViews.get(choice).setChecked(true);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SimpleResponseModel> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void unvote(final int choice) {
+        ApiClient.apiService().unvotePollOption(getPoll().getId().toString(),
+                                                getPoll().getOptionModels().get(choice).getId().toString(),
+                                                CurrentUser.apiToken()).enqueue(new Callback<SimpleResponseModel>() {
+            @Override
+            public void onResponse(Call<SimpleResponseModel> call, Response<SimpleResponseModel> response) {
+                choiceItemViews.get(choice).setChecked(false);
+            }
+
+            @Override
+            public void onFailure(Call<SimpleResponseModel> call, Throwable t) {
+
+            }
+        });
+        choiceItemViews.get(choice).setChecked(false);
     }
 
     @OnClick(R.id.buttonShowComments)
