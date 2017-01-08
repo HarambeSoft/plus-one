@@ -1,7 +1,7 @@
 package harambesoft.com.plusone.views;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,6 +22,9 @@ public class ChoiceItemView extends LinearLayout {
     @BindView(R.id.textViewChoice)
     TextView textViewChoice;
 
+    @BindView(R.id.separator)
+    View separator;
+
     public ChoiceItemView(Context context, OptionModel option) {
         super(context);
         View view = View.inflate(context, R.layout.item_choice, this);
@@ -36,10 +39,17 @@ public class ChoiceItemView extends LinearLayout {
         params.setMargins(20, 10, 20, 10);
 
         this.setLayoutParams(params);
-        this.setBackgroundColor(Color.WHITE);
         this.setOrientation(LinearLayout.HORIZONTAL);
+        this.setGravity(Gravity.CENTER);
 
         this.option = option;
         textViewChoice.setText(option.getContent());
+    }
+
+    public void showSeparator(boolean bool) {
+        if (!bool)
+            separator.setVisibility(INVISIBLE);
+        else
+            separator.setVisibility(VISIBLE);
     }
 }

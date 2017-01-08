@@ -114,6 +114,8 @@ public class PollFragment extends Fragment {
             ChoiceItemView choiceItemView = new ChoiceItemView(getActivity(), options.get(i));
             layoutChoices.addView(choiceItemView);
         }
+
+        ((ChoiceItemView) layoutChoices.getChildAt(options.size() - 1)).showSeparator(false); // Hide last separator
     }
 
     @OnClick(R.id.buttonShowComments)
