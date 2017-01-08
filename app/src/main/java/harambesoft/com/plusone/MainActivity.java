@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.container, new NewPollFragment(), "NewPollTag")
+                        .replace(R.id.container, new NewPollFragment(), "NewPollFragmentTag")
                         .commit();
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 //        .setAction("Action", null).show();
@@ -158,14 +158,14 @@ public class MainActivity extends AppCompatActivity
 
             // User is logged in, redirect to ActivityStream
             getFragmentManager().beginTransaction()
-                    .replace(R.id.container, new ActivityStreamFragment(), "ActivityStreamTag")
+                    .replace(R.id.container, new ActivityStreamFragment(), "ActivityStreamFragmentTag")
                     .commit();
 
             return true;
         } else {
             // Redirect to login screen
             getFragmentManager().beginTransaction()
-                    .replace(R.id.container, new SignInFragment(), "SignInTag")
+                    .replace(R.id.container, new SignInFragment(), "SignInFragmentTag")
                     .commit();
             return false;
         }
@@ -202,18 +202,18 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.replace(R.id.container, new PollFragment(), "PollFragmentTag");
                 fragmentTransaction.commit();
             }
-            else if(currentFragment.getTag().equals("SignUpTag")) {
+            else if(currentFragment.getTag().equals("SignUpFragmentTag")) {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.container, new SignInFragment(), "SignInTag");
+                fragmentTransaction.replace(R.id.container, new SignInFragment(), "SignInFragmentTag");
                 fragmentTransaction.commit();
             }
-            else if(currentFragment.getTag().equals("SignInTag")) {
+            else if(currentFragment.getTag().equals("SignInFragmentTag")) {
                 super.onBackPressed();
             }
             else
             {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.container, new ActivityStreamFragment(), "ActivityStreamTag");
+                fragmentTransaction.replace(R.id.container, new ActivityStreamFragment(), "ActivityStreamFragmentTag");
                 fragmentTransaction.commit();
             }
 
@@ -232,11 +232,11 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_activity_stream) {
             getFragmentManager().beginTransaction()
-                    .replace(R.id.container, new ActivityStreamFragment(), "ActivityStreamTag")
+                    .replace(R.id.container, new ActivityStreamFragment(), "ActivityStreamFragmentTag")
                     .commit();
         } else if (id == R.id.nav_categories) {
             getFragmentManager().beginTransaction()
-                    .replace(R.id.container, new CategoriesFragment(), "CategoriesTag")
+                    .replace(R.id.container, new CategoriesFragment(), "CategoriesFragmentTag")
                     .commit();
         } else if (id == R.id.nav_discover) {
             android.app.FragmentManager fragmentManager = getFragmentManager();
@@ -245,18 +245,18 @@ public class MainActivity extends AppCompatActivity
             fragment.setSketch(sketch);
 
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, fragment, "DiscoverTag")
+                    .replace(R.id.container, fragment, "DiscoverFragmentTag")
                     .commit();
             FrameLayout frameLayout = (FrameLayout) findViewById(R.id.container);
             Sketch.viewHeight= frameLayout.getHeight();
             Sketch.viewWidth = frameLayout.getWidth();
         } else if (id == R.id.nav_me) {
             getFragmentManager().beginTransaction()
-                    .replace(R.id.container, new MeFragment(), "MeTag")
+                    .replace(R.id.container, new MeFragment(), "MeFragmentTag")
                     .commit();
         } else if (id == R.id.nav_settings) {
             getFragmentManager().beginTransaction()
-                    .replace(R.id.container, new SettingsFragment(), "SettingsTag")
+                    .replace(R.id.container, new SettingsFragment(), "SettingsFragmentTag")
                     .commit();
         } else if (id == R.id.nav_logout) {
             // Logout
