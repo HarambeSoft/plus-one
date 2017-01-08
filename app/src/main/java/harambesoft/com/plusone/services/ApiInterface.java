@@ -99,4 +99,9 @@ public interface ApiInterface {
     Call<SimpleResponseModel> unvotePollOption(@Path("poll_id") String pollID,
                                              @Path("option_id") String option_id,
                                              @Query("api_token") String api_token);
+
+    @GET("user/{user_id}/poll/{poll_id}/votes")
+    Call<ResponseModel<List<Integer>>> getVotesOfUserOnPoll(@Path("user_id") String userID,
+                                                            @Path("poll_id") String pollID,
+                                                            @Query("api_token") String api_token);
 }
