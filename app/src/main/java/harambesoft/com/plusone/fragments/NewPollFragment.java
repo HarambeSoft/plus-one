@@ -311,8 +311,7 @@ public class NewPollFragment extends Fragment implements BackPressedListener {
                 // Set different image for imaged-choices
                 for (int i = 0; i < choicesList.size(); ++i) {
                     if (futureUploadUris.containsKey(i)) {
-                        choicesList.get(i).buttonAddImage.setImageBitmap(null);
-                        choicesList.get(i).buttonAddImage.setImageResource(R.drawable.ic_menu_gallery);
+                        choicesList.get(i).buttonAddImage.setBackgroundResource(R.drawable.ic_menu_gallery);
                     }
                 }
 
