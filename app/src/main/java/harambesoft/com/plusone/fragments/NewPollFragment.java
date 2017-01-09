@@ -308,8 +308,10 @@ public class NewPollFragment extends Fragment implements BackPressedListener {
                 Uri uri = data.getData();
                 futureUploadUris.put(lastImageRequestOfChoice, uri);
 
+                // Set different image for imaged-choices
                 for (int i = 0; i < choicesList.size(); ++i) {
                     if (futureUploadUris.containsKey(i)) {
+                        choicesList.get(i).buttonAddImage.setImageBitmap(null);
                         choicesList.get(i).buttonAddImage.setImageResource(R.drawable.ic_menu_gallery);
                     }
                 }
