@@ -103,122 +103,118 @@ public class Sketch extends PApplet {
         System.out.println("downloading thread");
         reorganizePixels();
     }
-boolean safe = true;
+    boolean safe = true;
     public void draw() {
-        background(52);
-        //DRAW BACKGROUND IMAGE
-        pushMatrix();
-        translate(0,0,-10);
-        backgroundImg.beginShape();
-        backgroundImg.tint((255 / (frameCount+1)),(255 / (frameCount+1)),(255 / (frameCount+1)));
-        backgroundImg.endShape();
-        shape(backgroundImg,0,0,viewWidth,viewHeight);
-        popMatrix();
-        if(userLongtitude==0 && userLatitude==0) {
-            fill(0);
-            text("No Signal!", viewWidth / 2, viewHeight / 2);
-            if(CurrentUser.latitude().length()!=0){
-                userLatitude = Double.parseDouble(CurrentUser.latitude());
-                userLongtitude = Double.parseDouble(CurrentUser.longitude());
-                loadingImage = true;
-            }
-        }else{
 
-            // IF GPS VALUES ARE VALID THEN DRAW SOME COOL! INDICATOR AT THE CENTER
-            //CHECK THE CHANGED GPS COORDINATES IF CHANGED LOAD IMAGE
+        if(sphere == false){
 
-            //DOWNLOAD FOR NEW IMAGE
-            if (loadingImage) {
-                image = null;
-                zoom = "&zoom=" + scaleTemp;
-                println(zoom + " zoom scale");
-                if(CurrentUser.latitude().length()!=0)
-                    thread("load");
+            background(52);
+            //DRAW BACKGROUND IMAGE
+            pushMatrix();
+            translate(0,0,-10);
+            backgroundImg.beginShape();
+            backgroundImg.tint((255 / (frameCount+1)),(255 / (frameCount+1)),(255 / (frameCount+1)));
+            backgroundImg.endShape();
+            shape(backgroundImg,0,0,viewWidth,viewHeight);
+            popMatrix();
+            if(userLongtitude==0 && userLatitude==0) {
+                fill(0);
+                text("No Signal!", viewWidth / 2, viewHeight / 2);
+                if(CurrentUser.latitude().length()!=0){
+                    userLatitude = Double.parseDouble(CurrentUser.latitude());
+                    userLongtitude = Double.parseDouble(CurrentUser.longitude());
+                    loadingImage = true;
+                }
+            }else{
 
-                println(urlbase + center +userLatitude+","+userLongtitude+ zoom + size + scale+ keyf);
-                loadingImage = false;
-            }
-            //ROTATE IMAGE
-            if(mousePressed){
-                //movingPolls += mouseX - pmouseX;
-                //movingPixels += mouseY - pmouseY;
-            }
-            //PUT THE IMAGE
-            if(image!=null){
-                pushMatrix();
-                translate(viewWidth/2,viewHeight/2);
-                rotateZ(radians(rotationAngle/10));
-                image(image, -viewWidth + movingPolls, -viewHeight + movingPixels,viewWidth*2,viewHeight*2);
-                if(safe)
-                drawRects();
-                popMatrix();
-            }
-            //DRAW THE BUTTONS
-            noStroke();
-            fill(240,200);
-            rectMode(CENTER);
-            rect(viewWidth-(viewWidth/20), viewHeight/20,viewHeight/10,viewHeight/10);
-            textSize(viewHeight/20);
-            textAlign(CENTER);
-            fill(0);
-            text("+",viewWidth-(viewWidth/20) - (textWidth("+")/2), viewHeight/20 + (textWidth("+")/2 ));
-            fill(40,200);
-            rect(viewWidth-(viewWidth/20), viewHeight/20 + viewHeight/10,viewHeight/10,viewHeight/10);
-            fill(255);
-            text("-",viewWidth-(viewWidth/20) - (textWidth("+")/2),textWidth("-") + 3*viewHeight/20 );
-            if(image != null){
-                translate(0,0,20);
+                // IF GPS VALUES ARE VALID THEN DRAW SOME COOL! INDICATOR AT THE CENTER
+                //CHECK THE CHANGED GPS COORDINATES IF CHANGED LOAD IMAGE
 
+                //DOWNLOAD FOR NEW IMAGE
+                if (loadingImage) {
+                    image = null;
+                    zoom = "&zoom=" + scaleTemp;
+                    println(zoom + " zoom scale");
+                    if(CurrentUser.latitude().length()!=0)
+                        thread("load");
 
-                if(userAtCenter){
-
-                    noStroke();
+                    println(urlbase + center +userLatitude+","+userLongtitude+ zoom + size + scale+ keyf);
+                    loadingImage = false;
+                }
+                //ROTATE IMAGE
+                if(mousePressed){
+                    //movingPolls += mouseX - pmouseX;
+                    //movingPixels += mouseY - pmouseY;
+                }
+                //PUT THE IMAGE
+                if(image!=null){
                     pushMatrix();
-                    translate(0,0,viewWidth/25);
-                    pushMatrix();
-                    fill(0, 255,0,255);
                     translate(viewWidth/2,viewHeight/2);
-                    rotateZ(meScale);rotateY(meScale1);rotateX(meScale2);
-                    translate(noise(meScale)*3, noise(meScale1)*3);
-                    ellipse(0,0,  noise(meScale)*viewWidth/50,noise(meScale)*viewWidth/50);
+                    rotateZ(radians(rotationAngle/10));
+                    image(image, -viewWidth + movingPolls, -viewHeight + movingPixels,viewWidth*2,viewHeight*2);
+                    if(safe)
+                        drawRects();
                     popMatrix();
-                    pushMatrix();
-                    fill(0,0,255,255);
-                    translate(viewWidth/2,viewHeight/2);
-                    rotateZ(meScale2);rotateY(meScale);rotateX(meScale1);
-                    translate(noise(meScale1)*3, noise(meScale2)*3);
-                    ellipse(0,0, noise(meScale2)*viewWidth/50, noise(meScale2)*viewWidth/50);
-                    popMatrix();
-                    pushMatrix();
-                    fill(255,0,0,255);
-                    translate(viewWidth/2,viewHeight/2);
-                    rotateZ(meScale1);rotateY(meScale2);rotateX(meScale);
-                    translate(noise(meScale2)*3, noise(meScale)*3);
-                    ellipse(0,0, noise(meScale1)*viewWidth/50,noise(meScale1)*viewWidth/50);
-                    popMatrix();
-                    popMatrix();
-                    meScale1+=0.015;
-                    meScale2+=0.01;
-                    meScale+=0.02;
+                }
+                //DRAW THE BUTTONS
+                noStroke();
+                fill(240,200);
+                rectMode(CENTER);
+                rect(viewWidth-(viewWidth/20), viewHeight/20,viewHeight/10,viewHeight/10);
+                textSize(viewHeight/20);
+                textAlign(CENTER);
+                fill(0);
+                text("+",viewWidth-(viewWidth/20) - (textWidth("+")/2), viewHeight/20 + (textWidth("+")/2 ));
+                fill(40,200);
+                rect(viewWidth-(viewWidth/20), viewHeight/20 + viewHeight/10,viewHeight/10,viewHeight/10);
+                fill(255);
+                text("-",viewWidth-(viewWidth/20) - (textWidth("+")/2),textWidth("-") + 3*viewHeight/20 );
+                if(image != null){
+                    translate(0,0,20);
+
+
+                    if(userAtCenter){
+
+                        noStroke();
+                        pushMatrix();
+                        translate(0,0,viewWidth/25);
+                        pushMatrix();
+                        fill(0, 255,0,255);
+                        translate(viewWidth/2,viewHeight/2);
+                        rotateZ(meScale);rotateY(meScale1);rotateX(meScale2);
+                        translate(noise(meScale)*3, noise(meScale1)*3);
+                        ellipse(0,0,  noise(meScale)*viewWidth/50,noise(meScale)*viewWidth/50);
+                        popMatrix();
+                        pushMatrix();
+                        fill(0,0,255,255);
+                        translate(viewWidth/2,viewHeight/2);
+                        rotateZ(meScale2);rotateY(meScale);rotateX(meScale1);
+                        translate(noise(meScale1)*3, noise(meScale2)*3);
+                        ellipse(0,0, noise(meScale2)*viewWidth/50, noise(meScale2)*viewWidth/50);
+                        popMatrix();
+                        pushMatrix();
+                        fill(255,0,0,255);
+                        translate(viewWidth/2,viewHeight/2);
+                        rotateZ(meScale1);rotateY(meScale2);rotateX(meScale);
+                        translate(noise(meScale2)*3, noise(meScale)*3);
+                        ellipse(0,0, noise(meScale1)*viewWidth/50,noise(meScale1)*viewWidth/50);
+                        popMatrix();
+                        popMatrix();
+                        meScale1+=0.015;
+                        meScale2+=0.01;
+                        meScale+=0.02;
+
+                    }
 
                 }
-
             }
+        }else{
+            dra();
         }
 
     }
     public void mousePressed() {
-
-        if (mouseX >= viewWidth - (viewWidth / 10) && mouseY <= viewHeight / 10) {
-            keyPressed();
-
-            return;
-        }
-        else if (mouseX >= viewWidth - (viewWidth / 10) && mouseY <= viewHeight / 5) {
-            zoomOut();
-            return;
-        }
-        else{   // MOVE IN THE MAPS
+           // MOVE IN THE MAPS
 
             for (int i=0;i<pixelCoords.size();i++) {
                 if ((mouseX-viewWidth/2)+(viewWidth/40) +(viewWidth/80)>= pixelCoords.get(i)[0] && (mouseX-viewWidth/2)-(viewWidth/40) +(viewWidth/80)<=pixelCoords.get(i)[0] ){
@@ -231,7 +227,21 @@ boolean safe = true;
             }
             userAtCenter = false;
 
+        if (mouseX >= viewWidth - (viewWidth / 10) && mouseY <= viewHeight / 10) {
+            keyPressed();
+
+            return;
         }
+        else if (mouseX >= viewWidth - (viewWidth / 10) && mouseY <= viewHeight / 5) {
+            zoomOut();
+            return;
+        }else {
+            System.out.println("3th");
+            sphere = !sphere;
+            setu();
+        }
+
+
     }
     public void keyPressed(){ // ZOOM IN
         if(scaleTemp ==19) {loadingImage = false;return;}
@@ -274,8 +284,8 @@ boolean safe = true;
         for (int i=0;i<pools.size();i++){
             pushMatrix();
             if (pixelCoords!=null)
-            if(i<=pixelCoords.size()-1)
-                translate((pixelCoords.get(i)[0].floatValue())+movingPolls,(pixelCoords.get(i)[1].floatValue())+movingPixels,8);
+                if(i<=pixelCoords.size()-1)
+                    translate((pixelCoords.get(i)[0].floatValue())+movingPolls,(pixelCoords.get(i)[1].floatValue())+movingPixels,8);
             box(viewWidth/40);
             popMatrix();
         }
@@ -475,7 +485,95 @@ boolean safe = true;
         }
     }
 
+    PImage img;
 
+    int numPointsW;
+    int numPointsH_2pi;
+    int numPointsH;
+    int ptsW, ptsH;
+    float[] coorX;
+    float[] coorY;
+    float[] coorZ;
+    float[] multXZ;
+    public void initializeSphere(int numPtsW, int numPtsH_2pi) {
+
+        // The number of points around the width and height
+        numPointsW=numPtsW+1;
+        numPointsH_2pi=numPtsH_2pi;  // How many actual pts around the sphere (not just from top to bottom)
+        numPointsH=ceil((float)numPointsH_2pi/2)+1;  // How many pts from top to bottom (abs(....) b/c of the possibility of an odd numPointsH_2pi)
+
+        coorX=new float[numPointsW];   // All the x-coor in a horizontal circle radius 1
+        coorY=new float[numPointsH];   // All the y-coor in a vertical circle radius 1
+        coorZ=new float[numPointsW];   // All the z-coor in a horizontal circle radius 1
+        multXZ=new float[numPointsH];  // The radius of each horizontal circle (that you will multiply with coorX and coorZ)
+
+        for (int i=0; i<numPointsW ;i++) {  // For all the points around the width
+            float thetaW=i*2*PI/(numPointsW-1);
+            coorX[i]=sin(thetaW);
+            coorZ[i]=cos(thetaW);
+        }
+
+        for (int i=0; i<numPointsH; i++) {  // For all points from top to bottom
+            if (PApplet.parseInt(numPointsH_2pi/2) != (float)numPointsH_2pi/2 && i==numPointsH-1) {  // If the numPointsH_2pi is odd and it is at the last pt
+                float thetaH=(i-1)*2*PI/(numPointsH_2pi);
+                coorY[i]=cos(PI+thetaH);
+                multXZ[i]=0;
+            }
+            else {
+                //The numPointsH_2pi and 2 below allows there to be a flat bottom if the numPointsH is odd
+                float thetaH=i*2*PI/(numPointsH_2pi);
+
+                //PI+ below makes the top always the point instead of the bottom.
+                coorY[i]=cos(PI+thetaH);
+                multXZ[i]=sin(thetaH);
+            }
+        }
+    }
+    public void textureSphere(float rx, float ry, float rz, PImage t) {
+        // These are so we can map certain parts of the image on to the shape
+        float changeU=4.0f*t.width/(float)(numPointsW-1);
+        float changeV=t.height/(float)(numPointsH-1);
+        float u=0;  // Width variable for the texture
+        float v=0;  // Height variable for the texture
+
+        beginShape(TRIANGLE_STRIP);
+        texture(t);
+        for (int i=0; i<(numPointsH-1); i++) {  // For all the rings but top and bottom
+            // Goes into the array here instead of loop to save time
+            float coory=coorY[i];
+            float cooryPlus=coorY[i+1];
+
+            float multxz=multXZ[i];
+            float multxzPlus=multXZ[i+1];
+
+            for (int j=0; j<numPointsW; j++) { // For all the pts in the ring
+                normal(-coorX[j]*multxz, -coory, -coorZ[j]*multxz);
+                vertex(coorX[j]*multxz*rx, coory*ry, coorZ[j]*multxz*rz, u, v);
+                normal(-coorX[j]*multxzPlus, -cooryPlus, -coorZ[j]*multxzPlus);
+                vertex(coorX[j]*multxzPlus*rx, cooryPlus*ry, coorZ[j]*multxzPlus*rz, u, v+changeV);
+                u+=changeU;
+            }
+            v+=changeV;
+            u=0;
+        }
+        endShape();
+    }
+    boolean sphere = false;
+    public void setu(){
+        img=loadImage(url);
+        background(0);
+        noStroke();
+        ptsW=30;
+        ptsH=30;
+        initializeSphere(100,100);
+    }
+    public void dra(){
+        background(52);
+        pushMatrix();
+        translate(viewWidth/2,viewHeight/2,-mouseX*4 + 500);
+        rotateX(radians(mouseY/10));
+        rotateY(radians(-45));
+        textureSphere(100, 100, 100, img);
+        popMatrix();
+    }
 }
-
-
