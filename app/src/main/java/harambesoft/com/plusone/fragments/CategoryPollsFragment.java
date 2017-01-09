@@ -103,7 +103,7 @@ public class CategoryPollsFragment extends Fragment {
 
                 if (pollModelList.size() == 0)
                     Toast.makeText(App.context, "Nothing here.", Toast.LENGTH_SHORT).show();
-                
+
                 pollsAdapter.notifyDataSetChanged();
             }
 
